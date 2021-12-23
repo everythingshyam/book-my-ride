@@ -5,9 +5,16 @@
 using namespace std;
 
 const int maxUserCount = 100;
+int userBikeCount;
+int userTaxiCount;
 const int maxVehicleCount = 30;
-const int maxVehicleCount = 30;
+int BikeCount;
+int TaxiCount;
 const int maxStaffCount = 10;
+int staffCount;
+const int maxLocCount = 200;
+int locCount;
+
 struct UserBike
 {
     int isActive; //0 if booking is expired, 1 if active
@@ -19,10 +26,8 @@ struct UserBike
     string Date_Booking;
     string Time_Booking;
 
-    string Date_Start;
+    string Date_Travel;
     string Time_Start;
-
-    string Date_End;
     string Time_End;
 
     int isAllotted;
@@ -90,9 +95,18 @@ struct Admin
     string passWord;
 } admin[1]; //Always 1
 
-//Don't think much of this class below, just remember the function names and what they do.
-class FileManager
+struct Location
 {
+    string locName;
+    string locID; //4 lettered capital letter short name, like if name is Pimpri, ID will be PIMP, easier for user to input
+    long locX;    //x coordinate of location
+    long locY;
+};
+
+//Don't think much of this class below, just remember the function names and what they do.
+class Support
+{
+public:
     void wait(int noSec)
     {
         int f = 0;
@@ -226,6 +240,7 @@ class FileManager
 
     void import()
     {
+        int dataCount; //temp line
         //importing from PatientRecords1024.txt
         FILE *fp = fopen("FileName.txt", "r");
         if (fp == NULL)
@@ -235,7 +250,7 @@ class FileManager
             printf("\nNew File has been created.");
             fclose(fp);
         }
-        dataCount = fread(x, sizeof(struct UserTaxi), 100, fp);
+        dataCount = fread(userTaxi, sizeof(struct UserTaxi), 100, fp);
         printf("\nFile imported successfully.");
         fclose(fp);
 
@@ -245,6 +260,7 @@ class FileManager
     }
     void backup()
     {
+        int dataCount; //temp line
         //Encrypting all data
 
         //ENCRYPTION COMPLETED
@@ -256,15 +272,16 @@ class FileManager
             printf("/nBackup File is empty!");
             exit(1);
         }
-        fwrite(x, sizeof(struct UserTaxi), dataCount, fp);
+        fwrite(userTaxi, sizeof(struct UserTaxi), dataCount, fp);
         printf("\nBackup File updated successfully.");
         fclose(fp);
     }
 };
 
 //this is the class where most of us need to work
-class BookMyRide : public FileManager
+class BookMyRide : public Support
 {
+public:
     int userMode = 0;
     /*
     indicates the mode user is in
@@ -302,7 +319,11 @@ class BookMyRide : public FileManager
 
 int main()
 {
-
+    //Main Menu here first, will be like switch inside switch
+    cout << "hello there...";
+    Support S;
+    S.wait(5);
+    cout << "\nHello again";
     return 0;
 }
 
