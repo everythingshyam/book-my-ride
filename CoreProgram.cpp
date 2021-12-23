@@ -101,7 +101,7 @@ struct Location
     string locID; //4 lettered capital letter short name, like if name is Pimpri, ID will be PIMP, easier for user to input
     long locX;    //x coordinate of location
     long locY;
-};
+} location[maxLocCount];
 
 //Don't think much of this class below, just remember the function names and what they do.
 class Support
@@ -277,6 +277,28 @@ public:
         fclose(fp);
     }
 };
+
+//keep in mind follwing methods and variables as you proceed
+/*
+const int maxUserCount = 100;
+int userBikeCount;
+int userTaxiCount;
+const int maxVehicleCount = 30;
+int BikeCount;
+int TaxiCount;
+const int maxStaffCount = 10;
+int staffCount;
+const int maxLocCount = 200;
+int locCount;
+
+struct userBike[maxUserCount];
+struct userTaxi[maxUserCount];
+struct bike[maxVehicleCount];
+struct taxi[maxVehicleCount];
+struct staff[maxStaffCount];
+struct location[maxLocCount];
+
+*/
 
 //this is the class where most of us need to work
 class BookMyRide : public Support
