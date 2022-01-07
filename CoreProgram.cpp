@@ -4,20 +4,16 @@
 #include <time.h>
 using namespace std;
 
+//Max prespecified Values
 const int maxUserCount = 100;
-int userBikeCount;
-int userTaxiCount;
 const int maxVehicleCount = 30;
-int BikeCount;
-int TaxiCount;
 const int maxStaffCount = 10;
-int staffCount;
 const int maxLocCount = 200;
-int locCount;
 
 struct UserBike
 {
     int isActive; //0 if booking is expired, 1 if active
+    string UID;
     string Name;
     string password;
     string MobNo;
@@ -33,10 +29,12 @@ struct UserBike
     int isAllotted;
     string BikeCode;
 } userBike[maxUserCount];
+int userBikeCount;
 
 struct UserTaxi
 {
     int isActive; //0 if booking is expired, 1 if active
+    int UID;
     string Name;
     string password;
     string MobNo;
@@ -54,18 +52,20 @@ struct UserTaxi
     int isAllotted;
     string TaxiCode;
 } userTaxi[maxUserCount];
+int userTaxiCount;
 
 struct Bike
 {
     int isAvail;
 
     string BikeCode;
-    string Name;
+    string Name; //name of driver not bike
     string MobNo;
     string EmailID;
     string Date_Birth;
     string Date_Joining;
 } bike[maxVehicleCount];
+int BikeCount;
 
 struct Taxi
 {
@@ -80,17 +80,19 @@ struct Taxi
     string Date_Birth;
     string Date_Joining;
 } taxi[maxVehicleCount];
+int TaxiCount;
 
 struct Staff
 {
-    string StaffCode;
+    string StaffCode; //treated as UID if required
     string Name;
     string passWord;
 } staff[maxStaffCount];
+int staffCount;
 
 struct Admin
 {
-    string AdminCode;
+    string AdminCode; //treated as UID if required
     string Name;
     string passWord;
 } admin[1]; //Always 1
@@ -102,6 +104,7 @@ struct Location
     long locX;    //x coordinate of location
     long locY;
 } location[maxLocCount];
+int locCount;
 
 //Don't think much of this class below, just remember the function names and what they do.
 class Support
@@ -261,6 +264,7 @@ public:
 int main()
 {
     //Main Menu here first, will be like switch inside switch
+    string UID; //UserId to use for calling function
     Support S;
     S.wait(5);
     cout << "\nHello again";
