@@ -4,6 +4,12 @@
 #include <time.h>
 using namespace std;
 
+//UID (User ID, TaxiID etc. ) rules
+/*
+    6 char string
+
+*/
+
 //Max prespecified Values
 const int maxUserCount = 100;
 const int maxVehicleCount = 30;
@@ -227,6 +233,7 @@ class BookMyRide : public Support
 {
 public:
     int userMode = 0;
+    int userIndex = 0;
     /*
     indicates the mode user is in
     -1: Logged out of everything(UNSAFE)
@@ -248,17 +255,19 @@ public:
 
     void addVehicle();
     void editVehicle();
-    void removeVehicle();
+    void removeVehicle(); //hishita
+
     void showVehicles();
     void resolveHelp();
-    void showMyDetails();
+    void showMyDetails(); //vanshika
 
     void addStaff();
     void editStaff();
-    void removeStaff();
+    void removeStaff(); //ritik
+
     void viewStaff();
     void viewOrgDetails();
-    void editOrgDetails();
+    void editOrgDetails(); //mehak
 };
 
 int main()
