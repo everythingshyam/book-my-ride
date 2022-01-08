@@ -7,7 +7,21 @@ using namespace std;
 //UID (User ID, TaxiID etc. ) rules
 /*
     6 char string
+    First char tells what kind of data is it...
+        U   User
+        S   Staff
+        A   Admin
+        B   Bike
+        L   Location
+        Z   for None of the above, such as for default value
 
+    Second char tells additional details, Z if not needed
+        For example, UB**** means user of bike, UT*** means that of taxi.
+    Last four char represent serial no
+
+    Example:
+    UB0030  user of bike, serial no=30
+    when adding new data , UID needs to be created using no from 0 to maxCount, whatever is available
 */
 
 //Max prespecified Values
@@ -16,6 +30,7 @@ const int maxVehicleCount = 30;
 const int maxStaffCount = 10;
 const int maxLocCount = 200;
 
+//since we aren't going to create user Account and all, storing least data is good.
 struct UserBike
 {
     int isActive; //0 if booking is expired, 1 if active
@@ -23,7 +38,6 @@ struct UserBike
     string Name;
     string password;
     string MobNo;
-    string Email;
 
     string Date_Booking;
     string Time_Booking;
@@ -33,18 +47,17 @@ struct UserBike
     string Time_End;
 
     int isAllotted;
-    string BikeCode;
+    string BikeUID;
 } userBike[maxUserCount];
 int userBikeCount;
 
 struct UserTaxi
 {
-    int isActive; //0 if booking is expired, 1 if active
+    int isActive; //0 if booking is expired(and removed from struct), 1 if active
     int UID;
     string Name;
     string password;
     string MobNo;
-    string Email;
 
     string Date_Booking;
     string Time_Booking;
@@ -56,7 +69,7 @@ struct UserTaxi
     string Time_End;
 
     int isAllotted;
-    string TaxiCode;
+    string TaxiUID;
 } userTaxi[maxUserCount];
 int userTaxiCount;
 
@@ -64,7 +77,7 @@ struct Bike
 {
     int isAvail;
 
-    string BikeCode;
+    string UID;
     string Name; //name of driver not bike
     string MobNo;
     string EmailID;
@@ -79,7 +92,7 @@ struct Taxi
     int capacity;
     int seatsOccupied;
 
-    string TaxiCode;
+    string UID;
     string Name;
     string MobNo;
     string EmailID;
@@ -90,7 +103,7 @@ int TaxiCount;
 
 struct Staff
 {
-    string StaffCode; //treated as UID if required
+    string UID; //treated as UID if required
     string Name;
     string passWord;
 } staff[maxStaffCount];
@@ -98,7 +111,7 @@ int staffCount;
 
 struct Admin
 {
-    string AdminCode; //treated as UID if required
+    string UID; //treated as UID if required
     string Name;
     string passWord;
 } admin[1]; //Always 1
@@ -112,7 +125,22 @@ struct Location
 } location[maxLocCount];
 int locCount;
 
-//Don't think much of this class below, just remember the function names and what they do.
+//following data used for user Identification
+string userModeArray[5] = {"Logged Out(Safe)", "User (Bike)", "User (Taxi)", "Staff", "Admin"};
+int userIndex = -1;
+int userMode = 0;
+string currentUID = "ZZ0000";
+/*
+    indicates the mode user is in
+    -1: Logged out of everything(UNSAFE)____even if not handled accessing -1 index of userModeArray will terminate the program, thereby providing security
+    0: Logged out but Safe
+    1: Logged in as User_Bike
+    2: Logged in as User_Taxi
+    3: Logged in as Staff
+    4: Logged in as Admin
+    */
+
+//Don't think much of this class below (Support), just remember the function names and what they do.
 class Support
 {
 public:
@@ -141,12 +169,31 @@ public:
     void screenReset()
     {
         system("cls");
-        printf("\n--------------------------------------------------------");
+        cout << "\n------------------------------------------------------------------------------";
         time_t mytime;
         mytime = time(NULL);
         printf(ctime(&mytime));
-        cout << "\n------------------------------***Book My Ride***--------------------------------";
-        printf("\n--------------------------------------------------------------------------------");
+        cout << "\n------------------------------[ BOOK MY RIDE ]--------------------------------";
+        cout << "\nUSERMODE : " << userModeArray[userMode] << "\t\t\t\t";
+        switch (userMode)
+        {
+        case 1:
+            cout << "USER ID : " << userBike[userIndex].UID;
+            break;
+        case 2:
+            cout << "USER ID : " << userTaxi[userIndex].UID;
+            break;
+        case 3:
+            cout << "STAFF ID : " << staff[userIndex].UID;
+            break;
+        case 4:
+            cout << "ADMIN ID : " << admin[userIndex].UID;
+            break;
+        default:
+            cout << "NIL";
+            break;
+        }
+        printf("\n----------------------------------------------------------------------------------");
     }
 
     void encrypt(string *s)
@@ -171,7 +218,7 @@ public:
     {
         return a;
     }
-
+    ////////////////////////////////////////////////////////////////////////////////
     void import()
     {
         //importing from UserTaxi.txt
@@ -189,6 +236,7 @@ public:
 
         //Decrypting all data
     }
+    ////////////////////////////////////////////////////////////////////////////////
     void backup()
     {
         //Encrypting all data
@@ -203,6 +251,12 @@ public:
         fwrite(userTaxi, sizeof(struct UserTaxi), userTaxiCount, fp);
         printf("\nTaxi Users Database updated successfully.");
         fclose(fp);
+    }
+    ////////////////////////////////////////////////////////////////////////////////
+    bool authenticate(int userModeIn)
+    {
+
+        return true;
     }
 };
 
@@ -232,16 +286,6 @@ struct location[maxLocCount];
 class BookMyRide : public Support
 {
 public:
-    int userMode = 0;
-    int userIndex = 0;
-    /*
-    indicates the mode user is in
-    -1: Logged out of everything(UNSAFE)
-    0: Logged out but Safe
-    1: Logged in as User
-    2: Logged in as Staff
-    3: Logged in as Admin
-    */
     void authorize(int n); //storing n into userMode if user verifies the passwords and all
                            //otherwise store -1 in userMode
                            //give three chances to enter password
@@ -272,14 +316,98 @@ public:
 
 int main()
 {
-    //Main Menu here first, will be like switch inside switch
-    string UID; //UserId to use for calling function
-    Support S;
-    S.wait(5);
-    cout << "\nHello again";
-    S.screenReset();
-    S.import();
-    S.backup();
+    // currentUID, UserMode, UserIndex and ARRAY userIndexArray available if needed
+
+    BookMyRide BMRobj;
+    BMRobj.screenReset();
+    BMRobj.import();
+    int choice = 0;
+    while (choice != -1)
+    {
+        cout << "\nMain Menu";
+        cout << "\n1.  Use for Bike booking & related";
+        cout << "\n2.  Use for Taxi booking & related";
+        cout << "\n3.  Login as Staff";
+        cout << "\n4.  Login as Admin";
+        cout << "\n-1. QUIT PROGRAM!";
+        cout << "\nEnter your Choice_";
+        cin >> choice;
+        switch (choice)
+        {
+        case -1: //EXIT
+        {
+            cout << "\nHappy to help:-)";
+        }
+        break;
+        case 1: //UserBike Section
+        {
+            userMode = 1;
+            if (BMRobj.authenticate(userMode))
+            {
+                //Show your creativity here
+            }
+            else
+            {
+                cout << "\nUnable to Authenticate for Bike booking section!";
+            }
+        }
+        break;
+        case 2: //UserTaxi Section
+        {
+            userMode = 2;
+            if (BMRobj.authenticate(userMode))
+            {
+                //Show your creativity here
+            }
+            else
+            {
+                cout << "\nUnable to Authenticate for Taxi booking section";
+            }
+        }
+        break;
+        case 3: //Staff Section
+        {
+            userMode = 3;
+            if (BMRobj.authenticate(userMode))
+            {
+                //Show your creativity here
+            }
+            else
+            {
+                cout << "\nUnable to Authenticate as staff!";
+            }
+        }
+        break;
+        case 4: //Admin Section
+        {
+            userMode = 4;
+            if (BMRobj.authenticate(userMode))
+            {
+                //Show your creativity here
+            }
+            else
+            {
+                cout << "\nUnable to Authenticate as Admin!";
+                userMode = -1; //if unable to authenticate as admin, it will be considered as someone tried to breach the program!
+            }
+        }
+        break;
+        default: //Invalid Choice
+        {
+            cout << "\nINVALID CHOICE ENTERED";
+        }
+        break;
+        } //switch closed
+        if (userMode == -1)
+        {
+            cout << "\nSecurity issue detected!\nExiting the program...";
+            break; //takes out of while loop
+        }
+        //resetting userMode and other things here
+        userMode = 0;
+    } //while closed
+    BMRobj.backup();
+    cout << "\n\\END OF PROGRAM.";
     return 0;
 }
 
