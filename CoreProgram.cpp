@@ -84,7 +84,7 @@ struct Bike
     string Date_Birth;
     string Date_Joining;
 } bike[maxVehicleCount];
-int BikeCount;
+int bikeCount;
 
 struct Taxi
 {
@@ -99,7 +99,7 @@ struct Taxi
     string Date_Birth;
     string Date_Joining;
 } taxi[maxVehicleCount];
-int TaxiCount;
+int taxiCount;
 
 struct Staff
 {
@@ -115,6 +115,7 @@ struct Admin
     string Name;
     string passWord;
 } admin[1]; //Always 1
+int adminCount = 1;
 
 struct Location
 {
@@ -221,8 +222,21 @@ public:
     ////////////////////////////////////////////////////////////////////////////////
     void import()
     {
+        //importing from UserBike.txt
+        FILE *fp = fopen("UserBike.txt", "r");
+        if (fp == NULL)
+        {
+            printf("\nBike Users Database Not Found!");
+            fp = fopen("UserBike.txt", "w");
+            printf("\nNew Bike Users Database has been created.");
+            fclose(fp);
+        }
+        userBikeCount = fread(userBike, sizeof(struct UserBike), maxUserCount, fp);
+        printf("\nBike Users Database imported successfully.");
+        fclose(fp);
+
         //importing from UserTaxi.txt
-        FILE *fp = fopen("UserTaxi.txt", "r");
+        fp = fopen("UserTaxi.txt", "r");
         if (fp == NULL)
         {
             printf("\nTaxi Users Database Not Found!");
@@ -234,6 +248,70 @@ public:
         printf("\nTaxi Users Database imported successfully.");
         fclose(fp);
 
+        //importing from Bike Database
+        fp = fopen("Bike.txt", "r");
+        if (fp == NULL)
+        {
+            printf("\nBike Database Not Found!");
+            fp = fopen("Bike.txt", "w");
+            cout << "\nNew Bike Database has been created.";
+            fclose(fp);
+        }
+        bikeCount = fread(bike, sizeof(struct Bike), maxVehicleCount, fp);
+        printf("\nBike Database imported successfully.");
+        fclose(fp);
+
+        //importing from Taxi Database
+        fp = fopen("Taxi.txt", "r");
+        if (fp == NULL)
+        {
+            printf("\nTaxi Database Not Found!");
+            fp = fopen("Taxi.txt", "w");
+            cout << "\nNew Taxi Database has been created.";
+            fclose(fp);
+        }
+        taxiCount = fread(taxi, sizeof(struct Taxi), maxVehicleCount, fp);
+        printf("\nTaxi Database imported successfully.");
+        fclose(fp);
+
+        //importing from Staff Database
+        fp = fopen("Staff.txt", "r");
+        if (fp == NULL)
+        {
+            printf("\nStaff Database Not Found!");
+            fp = fopen("Staff.txt", "w");
+            cout << "\nNew Staff Database has been created.";
+            fclose(fp);
+        }
+        staffCount = fread(staff, sizeof(struct Staff), maxStaffCount, fp);
+        printf("\nStaff Database imported successfully.");
+        fclose(fp);
+
+        //importing from Admin Database
+        fp = fopen("Admin.txt", "r");
+        if (fp == NULL)
+        {
+            printf("\nAdmin Database Not Found!");
+            fp = fopen("Admin.txt", "w");
+            cout << "\nNew Admin Database has been created.";
+            fclose(fp);
+        }
+        adminCount = fread(admin, sizeof(struct Admin), adminCount, fp);
+        printf("\nAdmin Database imported successfully.");
+        fclose(fp);
+
+        //importing from Vehicle Database
+        fp = fopen("Location.txt", "r");
+        if (fp == NULL)
+        {
+            printf("\nLocation Database Not Found!");
+            fp = fopen("Location.txt", "w");
+            cout << "\nNew Location Database has been created.";
+            fclose(fp);
+        }
+        locCount = fread(location, sizeof(struct Location), maxLocCount, fp);
+        printf("\nLocation Database imported successfully.");
+        fclose(fp);
         //Decrypting all data
     }
     ////////////////////////////////////////////////////////////////////////////////
@@ -241,8 +319,19 @@ public:
     {
         //Encrypting all data
 
+        //updating UserBike.txt
+        FILE *fp = fopen("UserBike.txt", "w");
+        if (fp == NULL)
+        {
+            printf("/nBike Users Database is empty!");
+            exit(1);
+        }
+        fwrite(userBike, sizeof(struct UserBike), userBikeCount, fp);
+        printf("\nBike Users Database updated successfully.");
+        fclose(fp);
+
         //updating UserTaxi.txt
-        FILE *fp = fopen("UserTaxi.txt", "w");
+        fp = fopen("UserTaxi.txt", "w");
         if (fp == NULL)
         {
             printf("/nTaxi Users Database is empty!");
@@ -251,11 +340,66 @@ public:
         fwrite(userTaxi, sizeof(struct UserTaxi), userTaxiCount, fp);
         printf("\nTaxi Users Database updated successfully.");
         fclose(fp);
+
+        //updating Bike.txt
+        fp = fopen("Bike.txt", "w");
+        if (fp == NULL)
+        {
+            printf("/nBike Database is empty!");
+            exit(1);
+        }
+        fwrite(bike, sizeof(struct Bike), bikeCount, fp);
+        printf("\nBike Database updated successfully.");
+        fclose(fp);
+
+        //updating Taxi.txt
+        fp = fopen("Taxi.txt", "w");
+        if (fp == NULL)
+        {
+            printf("/nTaxi Database is empty!");
+            exit(1);
+        }
+        fwrite(taxi, sizeof(struct Taxi), taxiCount, fp);
+        printf("\nTaxi Database updated successfully.");
+        fclose(fp);
+
+        //updating Staff.txt
+        fp = fopen("Staff.txt", "w");
+        if (fp == NULL)
+        {
+            printf("/nStaff Database is empty!");
+            exit(1);
+        }
+        fwrite(staff, sizeof(struct Staff), staffCount, fp);
+        printf("\nStaff Database updated successfully.");
+        fclose(fp);
+
+        //updating Admin.txt
+        fp = fopen("Admin.txt", "w");
+        if (fp == NULL)
+        {
+            printf("/nAdmin Database is empty!");
+            exit(1);
+        }
+        fwrite(admin, sizeof(struct Admin), adminCount, fp);
+        printf("\nAdmin Database updated successfully.");
+        fclose(fp);
+
+        //updating Location.txt
+        fp = fopen("Location.txt", "w");
+        if (fp == NULL)
+        {
+            printf("/nLocation Database is empty!");
+            exit(1);
+        }
+        fwrite(location, sizeof(struct Location), locCount, fp);
+        printf("\nLocation Database updated successfully.");
+        fclose(fp);
     }
     ////////////////////////////////////////////////////////////////////////////////
     bool authenticate(int userModeIn)
     {
-
+        //not designed yet...so, returning true.
         return true;
     }
 };
