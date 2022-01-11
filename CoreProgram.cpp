@@ -469,6 +469,271 @@ public:
     void editOrgDetails(); //mehak
 };
 
+void BookMyRide::editVehicle()
+{
+    int choice = 0, choice2 = 0; //choice2 for inner switch case
+    int indexTemp = 0;           //for loops,to store index no of bike/taxi
+    string UIDinput, dataInput;
+    int f = 0;                          //flag to check if entered UID is found or not
+    if (userMode == 3 || userMode == 4) //if user is staff or admin, then only allowed to edit
+    {
+        cout << "Which vehicle do you want to edit-";
+        cout << "\n1. Bike";
+        cout << "\n2. Car";
+        cout << "\n-1. GO BACK";
+        cout << "\nEnter your choice_";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case -1: //Go back
+        {
+            cout << "\nGoing back...";
+        }
+        break;
+        case 1: //Edit bike
+        {
+            if (bikeCount > 0) //if there is any bike, then only editing is possible
+            {
+                f = 0; //resetting the flag
+                cout << "\nEnter UID of Bike to edit_";
+                fflush(stdin);
+                cin >> UIDinput;
+                for (indexTemp = 0; indexTemp < bikeCount; indexTemp++)
+                {
+                    if (bike[indexTemp].UID == UIDinput)
+                    {
+                        f = 1; //flag if entered UID is found
+                        break;
+                    }
+                }
+                if (f == 1)
+                {
+                    while (choice2 != -1) //loop because user may want to edit several things at a time
+                    {
+                        cout << "\nWhat do you want to edit?";
+                        cout << "\n1. Name"; //name of driver not bike
+                        cout << "\n2. MobNo";
+                        cout << "\n3. EmailID";
+                        cout << "\n4. Date_Birth";
+                        cout << "\n5. Date_Joining";
+                        cout << "\n-1 GO BACK";
+
+                        switch (choice2)
+                        {
+                        case -1: //Go back
+                        {
+                            cout << "\nGoing back...";
+                        }
+                        break;
+                        case 1: //change name
+                        {
+                            cout << "\nCurrent Name:" << bike[indexTemp].Name;
+                            cout << "\nEnter new Name_";
+                            fflush(stdin);
+                            cin >> dataInput;
+                            bike[indexTemp].Name = dataInput;
+                            cout << "\nName of UID " << UIDinput << " changed.";
+                        }
+                        break;
+                        case 2: //change MobNo
+                        {
+                            cout << "\nCurrent MobNo:" << bike[indexTemp].MobNo;
+                            cout << "\nEnter new MobNo_";
+                            fflush(stdin);
+                            cin >> dataInput;
+                            bike[indexTemp].MobNo = dataInput;
+                            cout << "\nMobNo of UID " << UIDinput << " changed.";
+                        }
+                        break;
+                        case 3: //change EmailID
+                        {
+                            cout << "\nCurrent EmailID:" << bike[indexTemp].EmailID;
+                            cout << "\nEnter new EmailID_";
+                            fflush(stdin);
+                            cin >> dataInput;
+                            bike[indexTemp].EmailID = dataInput;
+                            cout << "\nEmailID of UID " << UIDinput << " changed.";
+                        }
+                        break;
+                        case 4: //change Date_Birth
+                        {
+                            cout << "\nCurrent Date_Birth:" << bike[indexTemp].Date_Birth;
+                            cout << "\nEnter new Date_Birth_";
+                            fflush(stdin);
+                            cin >> dataInput;
+                            bike[indexTemp].Date_Birth = dataInput;
+                            cout << "\nDate_Birth of UID " << UIDinput << " changed.";
+                        }
+                        break;
+                        case 5: //change Date_joining
+                        {
+                            cout << "\nCurrent Date_Joining:" << bike[indexTemp].Date_Joining;
+                            cout << "\nEnter new Date_Joining_";
+                            fflush(stdin);
+                            cin >> dataInput;
+                            bike[indexTemp].Date_Joining = dataInput;
+                            cout << "\nDate_Joining of UID " << UIDinput << " changed.";
+                        }
+                        break;
+                        default:
+                        {
+                            cout << "\nInvalid choice entered!";
+                        }
+                        break;
+                        }
+                    }
+                }
+                else
+                {
+                    cout << "\nEntered UID is not found!";
+                }
+            }
+            else
+            {
+                cout << "\nNo bike records to look into!";
+            }
+        }
+        break;
+        case 2: //Edit Car
+        {
+            if (taxiCount > 0) //if there is any taxi, then only editing is possible
+            {
+                f = 0; //resetting the flag
+                cout << "\nEnter UID of taxi to edit_";
+                fflush(stdin);
+                cin >> UIDinput;
+                for (indexTemp = 0; indexTemp < taxiCount; indexTemp++)
+                {
+                    if (taxi[indexTemp].UID == UIDinput)
+                    {
+                        f = 1; //flag if entered UID is found
+                        break;
+                    }
+                }
+                if (f == 1)
+                {
+                    while (choice2 != -1) //loop because user may want to edit several things at a time
+                    {
+                        cout << "\nWhat do you want to edit?";
+                        cout << "\n1. Name"; //name of driver not taxi
+                        cout << "\n2. MobNo";
+                        cout << "\n3. EmailID";
+                        cout << "\n4. Date_Birth";
+                        cout << "\n5. Date_Joining";
+                        cout << "\n-1 GO BACK";
+
+                        switch (choice2)
+                        {
+                        case -1: //Go back
+                        {
+                            cout << "\nGoing back...";
+                        }
+                        break;
+                        case 1: //change name
+                        {
+                            cout << "\nCurrent Name:" << taxi[indexTemp].Name;
+                            cout << "\nEnter new Name_";
+                            fflush(stdin);
+                            cin >> dataInput;
+                            taxi[indexTemp].Name = dataInput;
+                            cout << "\nName of UID " << UIDinput << " changed.";
+                        }
+                        break;
+                        case 2: //change MobNo
+                        {
+                            cout << "\nCurrent MobNo:" << taxi[indexTemp].MobNo;
+                            cout << "\nEnter new MobNo_";
+                            fflush(stdin);
+                            cin >> dataInput;
+                            taxi[indexTemp].MobNo = dataInput;
+                            cout << "\nMobNo of UID " << UIDinput << " changed.";
+                        }
+                        break;
+                        case 3: //change EmailID
+                        {
+                            cout << "\nCurrent EmailID:" << taxi[indexTemp].EmailID;
+                            cout << "\nEnter new EmailID_";
+                            fflush(stdin);
+                            cin >> dataInput;
+                            taxi[indexTemp].EmailID = dataInput;
+                            cout << "\nEmailID of UID " << UIDinput << " changed.";
+                        }
+                        break;
+                        case 4: //change Date_Birth
+                        {
+                            cout << "\nCurrent Date_Birth:" << taxi[indexTemp].Date_Birth;
+                            cout << "\nEnter new Date_Birth_";
+                            fflush(stdin);
+                            cin >> dataInput;
+                            taxi[indexTemp].Date_Birth = dataInput;
+                            cout << "\nDate_Birth of UID " << UIDinput << " changed.";
+                        }
+                        break;
+                        case 5: //change Date_joining
+                        {
+                            cout << "\nCurrent Date_Joining:" << taxi[indexTemp].Date_Joining;
+                            cout << "\nEnter new Date_Joining_";
+                            fflush(stdin);
+                            cin >> dataInput;
+                            taxi[indexTemp].Date_Joining = dataInput;
+                            cout << "\nDate_Joining of UID " << UIDinput << " changed.";
+                        }
+                        break;
+                        default:
+                        {
+                            cout << "\nInvalid choice entered!";
+                        }
+                        break;
+                        }
+                    }
+                }
+                else
+                {
+                    cout << "\nEntered UID is not found!";
+                }
+            }
+            else
+            {
+                cout << "\nNo taxi records to look into!";
+            }
+        }
+        break;
+        default:
+        {
+            cout << "\nInvalid Vehicle type entered!";
+        }
+        }
+    }
+}
+
+void BookMyRide::viewStaff()
+{
+    int indexTemp = -1; //to run loops and store index no to operate on
+    if (userMode == 4)  //only admin is allowed to view staff list
+    {
+        if (staffCount > 0) //if there is atleast one staff, then only we can print
+        {
+            cout << "\nSr. No\tUID\tName";
+            for (int indexTemp = 0; indexTemp < staffCount; indexTemp++)
+            {
+                cout << "\n"
+                     << indexTemp + 1 << "\t" << staff[indexTemp].UID << "\t" << staff[indexTemp];
+            }
+        }
+        else
+        {
+            cout << "\nStaff list is empty!";
+        }
+    }
+    else
+    {
+        cout << "\nYou aren't allowed to view staff list!\nUnauthorised access detected!";
+        //because if he isn't allowed, how did he get to that option!!! security!!!
+        userMode = -1;
+        //above line to exit program, to mark that unauthorise access is detected
+    }
+}
 int main()
 {
     // currentUID, UserMode, UserIndex and ARRAY userIndexArray available if needed
