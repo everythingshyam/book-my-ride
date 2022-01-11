@@ -220,7 +220,17 @@ public:
         return a;
     }
     ////////////////////////////////////////////////////////////////////////////////
-    void import()
+    void encryptAll()
+    {
+        //encrypt all structs to be backed up...
+    }
+    ////////////////////////////////////////////////////////////////////////////////
+    void decryptAll()
+    {
+        //decrypt all structs imported...
+    }
+    ////////////////////////////////////////////////////////////////////////////////
+    void import() //Completed
     {
         //importing from UserBike.txt
         FILE *fp = fopen("UserBike.txt", "r");
@@ -313,12 +323,13 @@ public:
         printf("\nLocation Database imported successfully.");
         fclose(fp);
         //Decrypting all data
+        decryptAll();
     }
     ////////////////////////////////////////////////////////////////////////////////
     void backup()
     {
         //Encrypting all data
-
+        encryptAll();
         //updating UserBike.txt
         FILE *fp = fopen("UserBike.txt", "w");
         if (fp == NULL)
