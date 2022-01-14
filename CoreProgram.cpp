@@ -718,7 +718,11 @@ void BookMyRide::viewStaff()
             for (int indexTemp = 0; indexTemp < staffCount; indexTemp++)
             {
                 cout << "\n"
-                     << indexTemp + 1 << "\t" << staff[indexTemp].UID << "\t" << staff[indexTemp];
+                     << indexTemp + 1
+                     << "\t"
+                     << staff[indexTemp].UID
+                     << "\t";
+                //  << staff[indexTemp];
             }
         }
         else
