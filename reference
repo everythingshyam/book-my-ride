@@ -9,6 +9,7 @@
 #include<cctype>//Header File
 #include<windows.h>//Header File
 using namespace std;
+
 void CheckBookingRecord();//Function Prototype
 ofstream MYFILE;
 string NewWorkerName;
@@ -34,8 +35,7 @@ int main()
 //*                             DiSpLaYiNg WeLcOmE ScReEn                                                 *
 //****************************
       int count=0;
-      system("color 1E");//Setting The Color Of Console
-   cout<<endl;
+      
    cout<<"\t************\n"; 
    cout<<"\t*         Wel Come           *\n";
       cout<<"\t*            To              *\n"; 
@@ -100,7 +100,7 @@ do{
  cout<<"*********"<<endl;
  cout<<endl;   
  cout<<"**********"<<endl;
- cout<<"*<2> For Login Worker    *"<<endl;
+ cout<<"*<2> For Login Staff    *"<<endl;
  cout<<"**********"<<endl;
  cout<<endl;
  cout<<"******"<<endl;
