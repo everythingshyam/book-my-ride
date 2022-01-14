@@ -170,7 +170,7 @@ public:
     void screenReset()
     {
         system("cls");
-        cout << "\n------------------------------------------------------------------------------";
+        cout << "\n---------------------------------------------------------";
         time_t mytime;
         mytime = time(NULL);
         printf(ctime(&mytime));
