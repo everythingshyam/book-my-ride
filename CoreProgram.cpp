@@ -12,6 +12,7 @@ using namespace std;
         S   Staff
         A   Admin
         B   Bike
+        T   Taxi
         L   Location
         Z   for None of the above, such as for default value
 
@@ -410,7 +411,99 @@ public:
     ////////////////////////////////////////////////////////////////////////////////
     bool authenticate(int userModeIn)
     {
-        //not designed yet...so, returning true.
+        string UIDin, PWDin;
+        int choice = 0, found = 0; //found used to check if user found or not
+        switch (userModeIn)
+        {
+        case -1: //unsafe
+        {
+            cout << "\nUnauthorised access detected!";
+        }
+        break;
+        case 1: //UserBike
+        {
+            cout << "\nUser(Bike) Log In/New User";
+            cout << "\n\t1. Log In";
+            cout << "\n\t2. New User";
+            cout << "\n\t-1. GO BACK";
+            cout << "\nEnter your choice_";
+            cin >> choice;
+            switch (choice)
+            {
+            case -1:
+            {
+                cout << "\nGoing back...";
+                wait(1);
+            }
+            break;
+            case 1: //log in as user(bike)
+            {
+                //authenticating with the records
+                if (userBikeCount > 0)
+                {
+                    cout << "\nUser Bike Authentication";
+                    cout << "\n\tEnter UID: ";
+                    cin >> UIDin;
+                    cout << "\n\t Enter password: ";
+                    cin >> PWDin;
+
+                    for (int a = 0; a < userBikeCount; a++)
+                    {
+                        if (userBike[a].UID == UIDin && userBike[a].password == PWDin)
+                        {
+                            found = 1;
+                            userIndex = a;
+                            string currentUID = userBike[a].UID;
+                            cout << "\nAuthenticated as user(Bike).\nWelcome " << userBike[a].Name << "!";
+                            wait(1);
+                            break;
+                        }
+                    }
+                    if (found != 1)
+                    {
+                        cout << "\nEntered credentials do not match any of the records!";
+                    }
+                }
+                else
+                {
+                    cout << "\nNo user(bike) records available to look into!";
+                }
+            }
+            break;
+            case 2: //new User
+            {
+                cout << "\nNew User for Bike Booking:";
+                cout << "\nAlright, let's get you in!";
+                cout << "\nEnter your name: ";
+            }
+            break;
+            default:
+            {
+                cout << "\nInvalid Input!";
+            }
+            break;
+            }
+        }
+        break;
+        case 2: //UserTaxi
+        {
+        }
+        break;
+        case 3: //Staff
+        {
+        }
+        break;
+        case 4: //Admin
+        {
+        }
+        break;
+        default:
+        {
+            cout << "\nUnexpected behaviour while authentication!";
+        }
+        break;
+        }
+        //not designed completely yet...so, returning true.
         return true;
     }
 };
