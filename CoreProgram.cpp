@@ -562,6 +562,34 @@ public:
     void editOrgDetails(); //mehak
 };
 
+void BookMyRide:: addStaff(){
+
+    if(userMode==4){
+
+        if(staffCount < maxStaffCount){
+            int tempindex = staffCount++;
+
+        cout << "Enter your name : ";
+            getline(cin, staff[tempindex].Name);
+        cout << "Enter your Password : ";
+        
+            cin>>staff[tempindex].passWord;
+            //UID allotment remaining 
+        
+    
+
+        }
+        else{
+            cout<<"Stafflist is full ! Can not add more staff."<<endl;
+        }
+    }
+    else{
+        cout<<"Access not allowed !";
+
+        userMode = -1;
+    }
+
+}
 void BookMyRide::editVehicle()
 {
     int choice = 0, choice2 = 0; //choice2 for inner switch case
