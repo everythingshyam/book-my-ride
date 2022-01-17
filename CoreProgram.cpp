@@ -1,29 +1,10 @@
 #include <iostream>
 #include <stdlib.h>
-#include <string.h>
+#include <string>
 #include <time.h>
 using namespace std;
 
 //UID (User ID, TaxiID etc. ) rules
-/*
-    6 char string
-    First char tells what kind of data is it...
-        U   User
-        S   Staff
-        A   Admin
-        B   Bike
-        T   Taxi
-        L   Location
-        Z   for None of the above, such as for default value
-
-    Second char tells additional details, Z if not needed
-        For example, UB**** means user of bike, UT*** means that of taxi.
-    Last four char represent serial no
-
-    Example:
-    UB0030  user of bike, serial no=30
-    when adding new data , UID needs to be created using no from 0 to maxCount, whatever is available
-*/
 
 //Max prespecified Values
 const int maxUserCount = 100;
@@ -563,156 +544,159 @@ public:
     void editOrgDetails(); //mehak
 };
 
-void BookMyRide:: removeStaff(){
-    if(userMode==4)
+void BookMyRide::removeStaff()
+{
+    if (userMode == 4)
     {
 
-        if(staffCount==0)
+        if (staffCount == 0)
         {
-            cout<<"Stafflist is empty ! Nothing to Delete !"<<endl;
+            cout << "Stafflist is empty ! Nothing to Delete !" << endl;
         }
         else
         {
-            cout<< "Enter the UID you want to Delete: ";
-            int tempUID,flag=-1;
-            cin>> tempUID;
-            
-            for(int i=0;i<staffCount;staffCount++)
+            cout << "Enter the UID you want to Delete: ";
+            int tempUID, flag = -1;
+            cin >> tempUID;
+
+            for (int i = 0; i < staffCount; staffCount++)
             {
                 if (tempUID == staff[i].UID)
                 {
-                   flag = i;
-                   break;
+                    flag = i;
+                    break;
                 }
             }
-            if(flag==-1)
+            if (flag == -1)
             {
-                cout<<"Entered UID not found !";
+                cout << "Entered UID not found !";
             }
             else
             {
-            if(flag==staffCount-1) 
-            {
-                staffCount--;
-            }  
-            else
-            {
-                string tempnp;
-                int tempU;
-                for(int i=flag;i<staffCount-1;i++){
-                    tempU = staff[i].UID;
-                    staff[i].UID=staff[i+1].UID;
-                    staff[i+1].UID=tempU;
-
-                    tempnp = staff[i].Name;
-                    staff[i].Name=staff[i+1].Name;
-                    staff[i+1].Name=tempnp;
-
-                    tempnp = staff[i].passWord;
-                    staff[i].passWord=staff[i+1].passWord;
-                    staff[i+1].passWord=tempnp;
-
+                if (flag == staffCount - 1)
+                {
+                    staffCount--;
                 }
-                staffCount--;
-            } 
+                else
+                {
+                    string tempnp;
+                    int tempU;
+                    for (int i = flag; i < staffCount - 1; i++)
+                    {
+                        tempU = staff[i].UID;
+                        staff[i].UID = staff[i + 1].UID;
+                        staff[i + 1].UID = tempU;
 
+                        tempnp = staff[i].Name;
+                        staff[i].Name = staff[i + 1].Name;
+                        staff[i + 1].Name = tempnp;
+
+                        tempnp = staff[i].passWord;
+                        staff[i].passWord = staff[i + 1].passWord;
+                        staff[i + 1].passWord = tempnp;
+                    }
+                    staffCount--;
+                }
             }
-
         }
-
     }
-    else{
-        cout<<"Access not allowed !";
+    else
+    {
+        cout << "Access not allowed !";
 
         userMode = -1;
     }
-
 }
-void BookMyRide:: editStaff(){
-      if(userMode==4){
+void BookMyRide::editStaff()
+{
+    if (userMode == 4)
+    {
 
-        if(staffCount==0)
+        if (staffCount == 0)
         {
-            cout<<"Stafflist is empty ! Nothing to edit !"<<endl;
+            cout << "Stafflist is empty ! Nothing to edit !" << endl;
         }
-        else{
-            cout<< "Enter the UID you want to edit: ";
-            int tempUID,flag=-1;
-            cin>> tempUID;
-            
-            for(int i=0;i<staffCount;staffCount++){
+        else
+        {
+            cout << "Enter the UID you want to edit: ";
+            int tempUID, flag = -1;
+            cin >> tempUID;
+
+            for (int i = 0; i < staffCount; staffCount++)
+            {
                 if (tempUID == staff[i].UID)
                 {
-                   flag = i;
-                   break;
+                    flag = i;
+                    break;
                 }
             }
-            if(flag==-1){
-                cout<<"Entered UID not found !";
+            if (flag == -1)
+            {
+                cout << "Entered UID not found !";
             }
-            else{
-                cout<<"Enter your choice";
-                cout<< "1. Change Name \n2.Change Password:"<<endl;
-                int choice ;
+            else
+            {
+                cout << "Enter your choice";
+                cout << "1. Change Name \n2.Change Password:" << endl;
+                int choice;
                 string temp;
 
-                cin>>choice;
-                if (choice==1)
+                cin >> choice;
+                if (choice == 1)
                 {
-                    cout<< "Enter new Name: \n";
+                    cout << "Enter new Name: \n";
                     fflush(stdin);
                     getline(cin, temp);
-                    staff[flag].Name=temp;
-
+                    staff[flag].Name = temp;
                 }
-                else if(choice==2){
-                    cout<<"Enter new Password: ";
-                    cin>>temp;
-                    staff[flag].passWord=temp;
+                else if (choice == 2)
+                {
+                    cout << "Enter new Password: ";
+                    cin >> temp;
+                    staff[flag].passWord = temp;
                 }
-                else{
-                    cout<< "Enter a valid Input: ";
+                else
+                {
+                    cout << "Enter a valid Input: ";
                 }
-                
             }
-
         }
-
     }
-    else{
-        cout<<"Access not allowed !";
+    else
+    {
+        cout << "Access not allowed !";
 
         userMode = -1;
     }
-
 }
-void BookMyRide:: addStaff(){
+void BookMyRide::addStaff()
+{
 
-    if(userMode==4){
+    if (userMode == 4)
+    {
 
-        if(staffCount < maxStaffCount){
+        if (staffCount < maxStaffCount)
+        {
             int tempindex = staffCount++;
 
-        cout << "Enter your name : ";
+            cout << "Enter your name : ";
             getline(cin, staff[tempindex].Name);
-        cout << "Enter your Password : ";
-        
-            cin>>staff[tempindex].passWord;
-            //UID allotment remaining 
-        
-    
+            cout << "Enter your Password : ";
 
+            cin >> staff[tempindex].passWord;
+            //UID allotment remaining
         }
-        else{
-            cout<<"Stafflist is full ! Can not add more staff."<<endl;
+        else
+        {
+            cout << "Stafflist is full ! Can not add more staff." << endl;
         }
     }
-    else{
-        cout<<"Access not allowed !";
+    else
+    {
+        cout << "Access not allowed !";
 
         userMode = -1;
     }
-
 }
 void BookMyRide::editVehicle()
 {
