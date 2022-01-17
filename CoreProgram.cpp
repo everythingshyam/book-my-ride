@@ -1315,6 +1315,44 @@ void BookMyRide::editOrgDetails()
     }
 }
 
+void BookMyRide::addOrgDetails()
+{
+    if (userMode == 4)
+    {
+        cout << "Enter New Admin Name\n";
+        getline(cin, temp);
+        admin[0].Name = temp;
+
+        cout << "Enter New password" << endl;
+        cin >> admin[0].password;
+
+        cout << "Enter New Organization Name\n";
+        getline(cin, temp);
+        admin[0].OrgName = temp;
+
+        cout << "Enter New Organization Address\n";
+        getline(cin, temp);
+        admin[0].OrgAdrs = temp;
+
+        cout << "Enter New Organization Name\n";
+        cin >> temp;
+        admin[0].MobNo = temp;
+
+        cout << "Going Back..." << endl;
+        wait(2);
+
+        break;
+    }
+
+    else
+    {
+        cout << "\nYou aren't allowed to  Add Organization Details!\nUnauthorised access detected!";
+        //because if he isn't allowed, how did he get to that option!!! security!!!
+        userMode = -1;
+        //above line to exit program, to mark that unauthorise access is detected
+    }
+}
+
 int main()
 {
     // currentUID, UserMode, currentIndex and ARRAY currentIndexArray available if needed
@@ -1327,10 +1365,10 @@ int main()
     //atleast admin details is mandatory to be present. If not, function call to Add Admin Details
     if (adminCount < 1)
     {
-        cout << "\nAdmin Details Not Present. Directing to add Admin Details";
+        cout << "\nAdmin Details Not Present.\nDirecting to add Admin Details";
         BMRobj.wait(2);
         userMode = 4;
-        BMRobj.editOrgDetails();
+        BMRobj.addOrgDetails();
         userMode = 0; //resetting userMode after important work is done
     }
 
