@@ -5,6 +5,7 @@
 #include <cstring>
 #include <time.h>
 #include <conio.h>
+#include <math.h>
 using namespace std;
 
 //for date and time related tasks
@@ -889,7 +890,7 @@ public:
     void authorize(int n); //storing n into userMode if user verifies the passwords and all
                            //otherwise store -1 in userMode
                            //give three chances to enter password
-
+    //code ok
     void bookBike()
     {
         if (userMode == 1)
@@ -950,8 +951,10 @@ public:
         }
     }
 
-    void cancelBike();
-
+    void cancelBike()
+    {
+    }
+    //code ok
     void bookTaxi()
     {
 
@@ -1013,14 +1016,22 @@ public:
         }
     }
 
-    void cancelTaxi();
+    void cancelTaxi()
+    {
+    }
 
-    void removeBooking();
+    void removeBooking()
+    {
+    }
 
-    void showBookings();
+    void showBookings()
+    {
+    }
 
-    void getHelp(); //shyam
-
+    void getHelp() //shyam
+    {
+    }
+    //code ok
     void showLocations()
     {
         if (userMode != -1)
@@ -1047,8 +1058,10 @@ public:
         }
     }
 
-    void addLocation();
-
+    void addLocation()
+    {
+    }
+    //code ok
     int isAvailBike()
     {
         if (userMode != -1)
@@ -1068,7 +1081,7 @@ public:
         }
         return -1;
     }
-
+    //code ok
     int isAvailTaxi()
     {
         if (userMode != -1)
@@ -1088,7 +1101,7 @@ public:
         }
         return -1;
     }
-
+    //code ok
     int calculateDistance(int index1, int index2)
     {
         if (index1 < locCount && index2 < locCount)
@@ -1105,7 +1118,7 @@ public:
         }
         return -1;
     }
-
+    //code ok
     void addVehicle()
     {
         int choice = 0, f = 0;
@@ -1246,7 +1259,7 @@ public:
             }
         }
     }
-
+    //code ok
     void editVehicle()
     {
         int choice = 0, choice2 = 0; //choice2 for inner switch case
@@ -1473,7 +1486,7 @@ public:
             }
         }
     }
-
+    //code ok
     void removeVehicle() //hishita
     {
         int choice = 0;
@@ -1632,7 +1645,7 @@ public:
             userMode = -1;
         }
     }
-
+    //code ok
     void viewHelpList()
     {
         if (userMode == 3)
@@ -1661,7 +1674,7 @@ public:
             userMode = -1;
         }
     }
-
+    //code ok
     void showVehicles()
     {
         int indexTemp = -1;
@@ -1732,7 +1745,7 @@ public:
             userMode = -1;
         }
     }
-
+    //code ok
     void resolveHelp()
     {
         if (userMode == 3)
@@ -1814,7 +1827,7 @@ public:
             userMode = -1;
         }
     }
-
+    //code ok
     void showMyDetails() //vanshika
     {
         if (userMode != -1)
@@ -1868,7 +1881,7 @@ public:
             userMode = -1;
         }
     }
-
+    //code ok
     void addStaff()
     {
 
@@ -1927,7 +1940,7 @@ public:
             userMode = -1;
         }
     }
-
+    //code ok
     void editStaff()
     {
         if (userMode == 4)
@@ -1994,7 +2007,7 @@ public:
             userMode = -1;
         }
     }
-
+    //code ok
     void removeStaff() //ritik
     {
         if (userMode == 4)
@@ -2059,7 +2072,7 @@ public:
             userMode = -1;
         }
     }
-
+    //code ok
     void viewStaff()
     {
         int indexTemp = -1; //to run loops and store index no to operate on
@@ -2091,7 +2104,7 @@ public:
             //above line to exit program, to mark that unauthorise access is detected
         }
     }
-
+    //code ok
     void viewOrgDetails()
     {
         if (userMode != -1)
@@ -2118,7 +2131,7 @@ public:
             //above line to exit program, to mark that unauthorise access is detected
         }
     }
-
+    //code ok
     void editOrgDetails() //mehak
     {
         if (userMode == 4)
@@ -2197,7 +2210,7 @@ public:
             //above line to exit program, to mark that unauthorise access is detected
         }
     }
-
+    //code ok
     void addOrgDetails()
     {
         string temp = "NIL";
@@ -2455,9 +2468,28 @@ int main()
         case 3: //Staff Section
         {
             userMode = 3;
+            int choice2 = 0;
             if (BMRobj.authenticate(userMode))
             {
                 //Show your creativity here
+                while (choice2 != -1)
+                {
+                    BMRobj.screenReset();
+                    cout << "\nAdmin Menu:";
+                    cout << "\n1. Add Vehicle";
+                    cout << "\n2. Edit Vehicle";
+                    cout << "\n3. Remove Vehicle";
+                    cout << "\n4. View Vehicles";
+                    cout << "\n\n5. Add Location";
+                    cout << "\n6. Edit Location";
+                    cout << "\n7. Remove Location";
+                    cout << "\n8. View Locations";
+                    cout << "\n9. View My Details";
+                    cout << "\n10. Edit My Details";
+                    cout << "\n-1 GO BACK";
+                    cout << "\nEnter your choice_";
+                    cin >> choice2;
+                }
             }
             else
             {
@@ -2467,13 +2499,71 @@ int main()
         break;
         case 4: //Admin Section
         {
+
             userMode = 4;
+            int choice2 = 0;
             if (BMRobj.authenticate(userMode))
             {
                 //Show your creativity here
-                BMRobj.screenReset();
-                cout << "Entered";
-                BMRobj.wait(5);
+                while (choice2 != -1)
+                {
+                    BMRobj.screenReset();
+                    cout << "\nAdmin Menu:";
+                    cout << "\n1. Add Staff";
+                    cout << "\n2. Edit Staff";
+                    cout << "\n3. Remove Staff";
+                    cout << "\n4. View Staff";
+                    cout << "\n5. View Org Details";
+                    cout << "\n6. Edit Org Details";
+                    cout << "\n-1 GO BACK";
+                    cout << "\nEnter your choice_";
+                    cin >> choice2;
+
+                    switch (choice2)
+                    {
+                    case 1: //add staff
+                    {
+                        BMRobj.addStaff();
+                    }
+                    break;
+                    case 2: //edit staff
+                    {
+                        BMRobj.editStaff();
+                    }
+                    break;
+                    case 3: //remove staff
+                    {
+                        BMRobj.removeStaff();
+                    }
+                    break;
+                    case 4: //view staff
+                    {
+                        BMRobj.viewStaff();
+                    }
+                    break;
+                    case 5: //view org details
+                    {
+                        BMRobj.viewOrgDetails();
+                    }
+                    break;
+                    case 6: //edit org details
+                    {
+                        BMRobj.editOrgDetails();
+                    }
+                    break;
+                    case -1:
+                    {
+                        cout << "\nGoing back";
+                        BMRobj.wait(2);
+                    }
+                    break;
+                    default:
+                    {
+                        cout << "\nInvalid choice entered!";
+                    }
+                    break;
+                    }
+                }
             }
             else
             {
