@@ -108,7 +108,7 @@ do{
  cout<<"******"<<endl;
  cout<<endl;
  cout<<"SElEct: ";
- cin>>Choice;
+ fflush(stdin);cin>>Choice;
 
     int choice = atoi( Choice.c_str() );
  switch(choice)
@@ -132,9 +132,9 @@ do{
      Sleep(500);//For Pause
      cout<<"Hint:- admin\n";
      cout<<"\nUserName: ";
-     cin>>UserName;
+     fflush(stdin);cin>>UserName;
      cout<<"Password: ";
-     cin>>Password;
+     fflush(stdin);cin>>Password;
  
      if(UserName== AdminName && Password == AdminPassword)
      {
@@ -165,7 +165,7 @@ do{
         cout<<endl;
         cout<<"<7> To Log Out"<<endl;
         cout<<"Select :";
-                             cin>>Choice;
+                             fflush(stdin);cin>>Choice;
         int choice = atoi( Choice.c_str() );
                              switch(choice)
                     {
@@ -239,7 +239,7 @@ do{
                                              cout<<"Enter The Amount That You Want To Increment or Decrement On Km Per Charges :";
                                              do
             {
-             cin>>Charges;
+             fflush(stdin);cin>>Charges;
              wrong = cin.fail();//if type is opposite
              if(wrong)
               cout<<"Error Wrong Input\nEnter again"<<endl;
@@ -250,7 +250,7 @@ do{
             *PChargesPerKm+=Charges;
             cout<<"\nThe Changes Has Been Done SuccessFully"<<endl;
            cout<<"Do you Want TO Change The Rate Again(Y/N):  ";
-           cin>>Wish;
+           fflush(stdin);cin>>Wish;
            }while(Wish=='Y' || Wish=='y');
             break;
                                       }//end of case 4
@@ -260,10 +260,10 @@ do{
            cout<<"\t WELCOME"<<endl;
            cout<<endl;
            cout<<"Enter The New Worker User Name: ";
-           cin>>NewWorkerName;
+           fflush(stdin);cin>>NewWorkerName;
            cout<<endl;
            cout<<"Enter New Worker Password: ";
-           cin>>NewWorkerPassword;
+           fflush(stdin);cin>>NewWorkerPassword;
            cout<<endl;
            cout<<"The Account Has Been Made Successfully\n";
            cout<<endl;
@@ -314,9 +314,9 @@ do{
                     cout<<"\t********"<<endl;
         cout<<"\nHint:- worker\n";
         cout<<"UserName: ";
-                       cin>>UserName;
+                       fflush(stdin);cin>>UserName;
                        cout<<"Password: ";
-                       cin>>Password;
+                       fflush(stdin);cin>>Password;
          
                        if(UserName== "worker" && Password == "worker" || UserName== NewWorkerName && Password == NewWorkerPassword )
                        {
@@ -352,7 +352,7 @@ do{
     cout<<endl;
  
  cout<<"Select :";
- cin>>Choice;
+ fflush(stdin);cin>>Choice;
     int choice = atoi( Choice.c_str() );
     switch(choice)
  {
@@ -384,7 +384,7 @@ do{
                cout<<"<5> To Go Back to Previous Menu"<<endl;
                cout<<endl;
                   cout<<"Select :";
-               cin>>Choice;
+               fflush(stdin);cin>>Choice;
                   int choice = atoi( Choice.c_str() );//converting string to int
                   switch(choice)
                {
@@ -436,7 +436,7 @@ do{
                              cout<<"\t********"<<endl;
                              cout<<endl;
                              cout<<"Enter The Cab Id Number To UPdate status: ";
-        cin>>UpdatingStatus;
+        fflush(stdin);cin>>UpdatingStatus;
            long int choice = atoi( UpdatingStatus.c_str() );
                              switch(choice)
         {
@@ -445,7 +445,7 @@ do{
          {
           char Statuss;
           cout<<"The Cab Id Number 215 Returned Or Not(Y/N) :";
-          cin>>Statuss;
+          fflush(stdin);cin>>Statuss;
           if(toupper(Statuss=='N'))
           {
            CABSTATUS[1]=0;
@@ -460,7 +460,7 @@ do{
          {
           char Statuss;
           cout<<"The Cab Id Number 210 Returned Or Not(Y/N) :";
-          cin>>Statuss;
+          fflush(stdin);cin>>Statuss;
           if(toupper(Statuss=='N'))
           {
            CABSTATUS[2]=0;
@@ -475,7 +475,7 @@ do{
          {
           char Statuss;
           cout<<"The Cab Id Number 456 Returned Or Not(Y/N) :";
-          cin>>Statuss;
+          fflush(stdin);cin>>Statuss;
           if(toupper(Statuss=='N'))
           {
            CABSTATUS[3]=0;
@@ -490,7 +490,7 @@ do{
          {
           char Statuss;
           cout<<"The Cab Id Number 789 Returned Or Not(Y/N) :";
-          cin>>Statuss;
+          fflush(stdin);cin>>Statuss;
           if(toupper(Statuss=='N'))
           {
            CABSTATUS[4]=0;
@@ -505,7 +505,7 @@ do{
          {
           char Statuss;
           cout<<"The Cab Id Number 789 Returned Or Not(Y/N) :";
-          cin>>Statuss;
+          fflush(stdin);cin>>Statuss;
           if(toupper(Statuss=='N'))
           {
            CABSTATUS[5]=0;
@@ -523,7 +523,7 @@ do{
           }
         }
         cout<<"Do You Want To update The Another CAb Status(Y/N): ";
-        cin>>Wish;
+        fflush(stdin);cin>>Wish;
         }while(Wish=='Y' || Wish=='y');
         break;
                            }//end of case 2
