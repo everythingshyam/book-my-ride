@@ -96,8 +96,11 @@ struct Admin
     int UID; //treated as UID if required
     string Name;
     string passWord;
+    string OrgName;
+    string OrgAdrs;
+    string MobNo;
 } admin[1]; //Always 1
-int adminCount = 1;
+int adminCount;
 
 struct Location
 {
@@ -544,6 +547,131 @@ public:
     void editOrgDetails(); //mehak
 };
 
+void BookMyRide::addStaff()
+{
+
+    if (userMode == 4)
+    {
+
+        if (staffCount < maxStaffCount)
+        {
+            int tempindex = staffCount++;
+
+            cout << "Enter your name : ";
+            getline(cin, staff[tempindex].Name);
+            cout << "Enter your Password : ";
+
+            cin >> staff[tempindex].passWord;
+            //UID allotment remaining
+        }
+        else
+        {
+            cout << "Stafflist is full ! Can not add more staff." << endl;
+        }
+    }
+    else
+    {
+        cout << "Access not allowed !";
+
+        userMode = -1;
+    }
+}
+
+void BookMyRide::viewStaff()
+{
+    int indexTemp = -1; //to run loops and store index no to operate on
+    if (userMode == 4)  //only admin is allowed to view staff list
+    {
+        if (staffCount > 0) //if there is atleast one staff, then only we can print
+        {
+            cout << "\nSr. No\tUID\tName";
+            for (int indexTemp = 0; indexTemp < staffCount; indexTemp++)
+            {
+                cout << "\n"
+                     << indexTemp + 1
+                     << "\t"
+                     << staff[indexTemp].UID
+                     << "\t";
+                //  << staff[indexTemp];
+            }
+        }
+        else
+        {
+            cout << "\nStaff list is empty!";
+        }
+    }
+    else
+    {
+        cout << "\nYou aren't allowed to view staff list!\nUnauthorised access detected!";
+        //because if he isn't allowed, how did he get to that option!!! security!!!
+        userMode = -1;
+        //above line to exit program, to mark that unauthorise access is detected
+    }
+}
+
+void BookMyRide::editStaff()
+{
+    if (userMode == 4)
+    {
+
+        if (staffCount == 0)
+        {
+            cout << "Stafflist is empty ! Nothing to edit !" << endl;
+        }
+        else
+        {
+            cout << "Enter the UID you want to edit: ";
+            int tempUID, flag = -1;
+            cin >> tempUID;
+
+            for (int i = 0; i < staffCount; staffCount++)
+            {
+                if (tempUID == staff[i].UID)
+                {
+                    flag = i;
+                    break;
+                }
+            }
+            if (flag == -1)
+            {
+                cout << "Entered UID not found !";
+            }
+            else
+            {
+                cout << "Enter your choice";
+                cout << "1. Change Name \n2.Change Password:" << endl;
+                int choice;
+                string temp;
+
+                cin >> choice;
+                if (choice == 1)
+                {
+                    cout << "Enter new Name: \n";
+                    fflush(stdin);
+                    getline(cin, temp);
+                    staff[flag].Name = temp;
+                }
+                else if (choice == 2)
+                {
+                    cout << "Enter new Password: ";
+                    cin >> temp;
+                    staff[flag].passWord = temp;
+                }
+                else
+                {
+                    cout << "Enter a valid Input: ";
+                }
+            }
+        }
+    }
+    else
+    {
+        cout << "Access not allowed !";
+
+        userMode = -1;
+    }
+}
+
 void BookMyRide::removeStaff()
 {
     if (userMode == 4)
@@ -607,97 +735,7 @@ void BookMyRide::removeStaff()
         userMode = -1;
     }
 }
-void BookMyRide::editStaff()
-{
-    if (userMode == 4)
-    {
 
-        if (staffCount == 0)
-        {
-            cout << "Stafflist is empty ! Nothing to edit !" << endl;
-        }
-        else
-        {
-            cout << "Enter the UID you want to edit: ";
-            int tempUID, flag = -1;
-            cin >> tempUID;
-
-            for (int i = 0; i < staffCount; staffCount++)
-            {
-                if (tempUID == staff[i].UID)
-                {
-                    flag = i;
-                    break;
-                }
-            }
-            if (flag == -1)
-            {
-                cout << "Entered UID not found !";
-            }
-            else
-            {
-                cout << "Enter your choice";
-                cout << "1. Change Name \n2.Change Password:" << endl;
-                int choice;
-                string temp;
-
-                cin >> choice;
-                if (choice == 1)
-                {
-                    cout << "Enter new Name: \n";
-                    fflush(stdin);
-                    getline(cin, temp);
-                    staff[flag].Name = temp;
-                }
-                else if (choice == 2)
-                {
-                    cout << "Enter new Password: ";
-                    cin >> temp;
-                    staff[flag].passWord = temp;
-                }
-                else
-                {
-                    cout << "Enter a valid Input: ";
-                }
-            }
-        }
-    }
-    else
-    {
-        cout << "Access not allowed !";
-
-        userMode = -1;
-    }
-}
-void BookMyRide::addStaff()
-{
-
-    if (userMode == 4)
-    {
-
-        if (staffCount < maxStaffCount)
-        {
-            int tempindex = staffCount++;
-
-            cout << "Enter your name : ";
-            getline(cin, staff[tempindex].Name);
-            cout << "Enter your Password : ";
-
-            cin >> staff[tempindex].passWord;
-            //UID allotment remaining
-        }
-        else
-        {
-            cout << "Stafflist is full ! Can not add more staff." << endl;
-        }
-    }
-    else
-    {
-        cout << "Access not allowed !";
-
-        userMode = -1;
-    }
-}
 void BookMyRide::editVehicle()
 {
     int choice = 0, choice2 = 0; //choice2 for inner switch case
@@ -937,37 +975,106 @@ void BookMyRide::editVehicle()
     }
 }
 
-void BookMyRide::viewStaff()
+void BookMyRide::viewOrgDetails()
 {
-    int indexTemp = -1; //to run loops and store index no to operate on
-    if (userMode == 4)  //only admin is allowed to view staff list
+    if (userMode != -1)
     {
-        if (staffCount > 0) //if there is atleast one staff, then only we can print
+        cout << "Organization Details" << endl;
+        if (adminCount == 1) //details are available
         {
-            cout << "\nSr. No\tUID\tName";
-            for (int indexTemp = 0; indexTemp < staffCount; indexTemp++)
-            {
-                cout << "\n"
-                     << indexTemp + 1
-                     << "\t"
-                     << staff[indexTemp].UID
-                     << "\t";
-                //  << staff[indexTemp];
-            }
+            cout << "Name " << admin[0].OrgName << endl;
+            cout << "Address " << admin[0].OrgAdrs << "\n";
+            cout << "Mobile Number " << admin[0].MobNo << "\n";
+            cout << "****************************************" << endl;
+            cout << "Administrator" << admin[0].Name;
         }
         else
         {
-            cout << "\nStaff list is empty!";
+            cout << "No Admin details Found" << endl;
         }
     }
     else
     {
-        cout << "\nYou aren't allowed to view staff list!\nUnauthorised access detected!";
+        cout << "\nYou aren't allowed to view Organization Details!\nUnauthorised access detected!";
         //because if he isn't allowed, how did he get to that option!!! security!!!
         userMode = -1;
         //above line to exit program, to mark that unauthorise access is detected
     }
 }
+
+void BookMyRide::editOrgDetails()
+{
+    if (userMode == 4)
+    {
+        int choice = 1;
+        string temp;
+        while (choice != -1)
+        {
+            cout << "What Do You Want To Change\n";
+            cout << "1. Name\n";
+            cout << "2. passWord \n";
+            cout << "3. OrgName\n";
+            cout << "4. OrgAdrs\n";
+            cout << "5. MobNo\n";
+            cout << "-1 To Go Back" << endl;
+
+            cout << "Enter Your Choice" << endl;
+            cin >> choice;
+
+            switch (choice)
+            {
+            case 1:
+            {
+                cout << "Enter New Admin Name\n";
+                getline(cin, temp);
+                admin[0].Name = temp;
+            }
+            break;
+            case 2:
+            {
+                cout << "Enter New Password" << endl;
+                cin >> admin[0].passWord;
+            }
+            break;
+            case 3:
+            {
+                cout << "Enter New Organization Name\n";
+                getline(cin, temp);
+                admin[0].OrgName = temp;
+            }
+            break;
+            case 4:
+            {
+                cout << "Enter New Organization Address\n";
+                getline(cin, temp);
+                admin[0].OrgAdrs = temp;
+            }
+            break;
+            case 5:
+            {
+                cout << "Enter New Organization Name\n";
+                cin >> temp;
+                admin[0].MobNo = temp;
+            }
+            break;
+            case -1:
+            {
+                cout << "Going Back..." << endl;
+                wait(2);
+            }
+            break;
+            }
+        }
+    }
+    else
+    {
+        cout << "\nYou aren't allowed to  Edit Organization Details!\nUnauthorised access detected!";
+        //because if he isn't allowed, how did he get to that option!!! security!!!
+        userMode = -1;
+        //above line to exit program, to mark that unauthorise access is detected
+    }
+}
+
 int main()
 {
     // currentUID, UserMode, UserIndex and ARRAY userIndexArray available if needed
