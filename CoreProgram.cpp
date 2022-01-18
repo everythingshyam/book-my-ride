@@ -158,95 +158,8 @@ int currentUID = 0;
     4: Logged in as Admin
     */
 
-//Don't think much of this class below (Support), just remember the function names and what they do.
-class Support
+extern "C"
 {
-public:
-    void wait(int noSec)
-    {
-        int f = 0;
-        clock_t start_wait;
-        clock_t end_wait;
-
-        start_wait = clock();
-        end_wait = clock() + noSec * CLK_TCK;
-
-        // printf("\nLoading.");
-
-        while (clock() < end_wait)
-        {
-            if ((clock() - start_wait) % 400 == 0)
-            {
-                if (f != (clock() - start_wait))
-                    printf(".");
-                f = (clock() - start_wait);
-            }
-        }
-    }
-
-    void screenReset()
-    {
-        system("cls");
-        cout << "\n---------------------------------------------------------";
-        time_t mytime;
-        mytime = time(NULL);
-        printf(ctime(&mytime));
-        cout << "\n------------------------------[ " << admin[0].OrgName << " ]--------------------------------";
-        cout << "\nUSERMODE : " << userModeArray[userMode] << "\t\t\t\t";
-        switch (userMode)
-        {
-        case 1:
-            cout << "USER ID : " << userBike[currentIndex].UID;
-            break;
-        case 2:
-            cout << "USER ID : " << userTaxi[currentIndex].UID;
-            break;
-        case 3:
-            cout << "STAFF ID : " << staff[currentIndex].UID;
-            break;
-        case 4:
-            cout << "ADMIN ID : " << admin[currentIndex].UID;
-            break;
-        default:
-            cout << "NIL";
-            break;
-        }
-        printf("\n----------------------------------------------------------------------------------");
-    }
-
-    void encrypt(string *s)
-    {
-        /*
-		Logic for encryption
-		
-		to be thought yet
-	*/
-    }
-    ////////////////////////////////////////////////////////////////////////////////
-    void decrypt(string *s)
-    {
-    }
-    ////////////////////////////////////////////////////////////////////////////////
-    int encryptInt(int a)
-    {
-        return a;
-    }
-    ////////////////////////////////////////////////////////////////////////////////
-    int decryptInt(int a)
-    {
-        return a;
-    }
-    ////////////////////////////////////////////////////////////////////////////////
-    void encryptAll()
-    {
-        //encrypt all structs to be backed up...
-    }
-    ////////////////////////////////////////////////////////////////////////////////
-    void decryptAll()
-    {
-        //decrypt all structs imported...
-    }
-    ////////////////////////////////////////////////////////////////////////////////
     void import() //Completed
     {
         // memset(userBike, 0, sizeof(UserBike));
@@ -362,13 +275,13 @@ public:
         printf("\nLocation Database imported successfully.");
         fclose(fp);
         //Decrypting all data
-        decryptAll();
+        // decryptAll();
     }
     ////////////////////////////////////////////////////////////////////////////////
     void backup()
     {
         //Encrypting all data
-        encryptAll();
+        // encryptAll();
         //updating UserBike.txt
         FILE *fp = fopen("UserBike.txt", "w");
         if (fp == NULL)
@@ -457,6 +370,97 @@ public:
         printf("\nLocation Database updated successfully.");
         fclose(fp);
     }
+}
+//Don't think much of this class below (Support), just remember the function names and what they do.
+class Support
+{
+public:
+    void wait(int noSec)
+    {
+        int f = 0;
+        clock_t start_wait;
+        clock_t end_wait;
+
+        start_wait = clock();
+        end_wait = clock() + noSec * CLK_TCK;
+
+        // printf("\nLoading.");
+
+        while (clock() < end_wait)
+        {
+            if ((clock() - start_wait) % 400 == 0)
+            {
+                if (f != (clock() - start_wait))
+                    printf(".");
+                f = (clock() - start_wait);
+            }
+        }
+    }
+
+    void screenReset()
+    {
+        system("cls");
+        cout << "\n---------------------------------------------------------";
+        time_t mytime;
+        mytime = time(NULL);
+        printf(ctime(&mytime));
+        cout << "\n------------------------------[ " << admin[0].OrgName << " ]--------------------------------";
+        cout << "\nUSERMODE : " << userModeArray[userMode] << "\t\t\t\t";
+        switch (userMode)
+        {
+        case 1:
+            cout << "USER ID : " << userBike[currentIndex].UID;
+            break;
+        case 2:
+            cout << "USER ID : " << userTaxi[currentIndex].UID;
+            break;
+        case 3:
+            cout << "STAFF ID : " << staff[currentIndex].UID;
+            break;
+        case 4:
+            cout << "ADMIN ID : " << admin[currentIndex].UID;
+            break;
+        default:
+            cout << "NIL";
+            break;
+        }
+        printf("\n----------------------------------------------------------------------------------");
+    }
+
+    void encrypt(string *s)
+    {
+        /*
+		Logic for encryption
+		
+		to be thought yet
+	*/
+    }
+    ////////////////////////////////////////////////////////////////////////////////
+    void decrypt(string *s)
+    {
+    }
+    ////////////////////////////////////////////////////////////////////////////////
+    int encryptInt(int a)
+    {
+        return a;
+    }
+    ////////////////////////////////////////////////////////////////////////////////
+    int decryptInt(int a)
+    {
+        return a;
+    }
+    ////////////////////////////////////////////////////////////////////////////////
+    void encryptAll()
+    {
+        //encrypt all structs to be backed up...
+    }
+    ////////////////////////////////////////////////////////////////////////////////
+    void decryptAll()
+    {
+        //decrypt all structs imported...
+    }
+    ////////////////////////////////////////////////////////////////////////////////
+
     ////////////////////////////////////////////////////////////////////////////////
     bool authenticate(int userModeIn)
     {
@@ -2297,7 +2301,7 @@ int main()
     // currentUID, UserMode, currentIndex and ARRAY currentIndexArray available if needed
 
     BookMyRide BMRobj;
-    BMRobj.import();
+    import();
     BMRobj.wait(3);
     BMRobj.screenReset();
     choice = 0;
@@ -2486,7 +2490,7 @@ int main()
                     cout << "\n8. View Locations";
                     cout << "\n9. View My Details";
                     cout << "\n10. Edit My Details";
-                    cout << "\n-1 GO BACK";
+                    cout << "\n-1 LOG OUT";
                     cout << "\nEnter your choice_";
                     cin >> choice2;
                 }
@@ -2515,7 +2519,7 @@ int main()
                     cout << "\n4. View Staff";
                     cout << "\n5. View Org Details";
                     cout << "\n6. Edit Org Details";
-                    cout << "\n-1 GO BACK";
+                    cout << "\n-1 LOG OUT";
                     cout << "\nEnter your choice_";
                     cin >> choice2;
 
@@ -2586,7 +2590,7 @@ int main()
         //resetting userMode and other things here
         userMode = 0;
     } //while closed
-    BMRobj.backup();
+    backup();
     cout << "\n\\END OF PROGRAM.";
     return 0;
 }
