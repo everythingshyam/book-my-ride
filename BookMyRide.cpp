@@ -1,11 +1,11 @@
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream> //for input output
+#include <stdio.h>  //for iput output
+#include <stdlib.h> //memory allocation related
 #include <string>
-#include <cstring>
-#include <time.h>
-#include <conio.h>
-#include <math.h>
+#include <cstring> //for string related
+#include <time.h>  //for printing time
+#include <conio.h> //for changing theme
+#include <math.h>  //for math operations, sqrt,pow
 using namespace std;
 
 //UID (User ID, TaxiID etc. ) rules
