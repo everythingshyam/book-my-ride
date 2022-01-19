@@ -52,9 +52,6 @@ struct UserBike
     string password;
     string MobNo;
 
-    int hhStart, mmStart;
-    int hhEnd, mmEnd;
-
     int locInd1, locInd2;
 
     int isAllotted;
@@ -68,9 +65,6 @@ struct UserTaxi
     string Name;
     string password;
     string MobNo;
-
-    int hhStart, mmStart;
-    int hhEnd, mmEnd;
 
     int locInd1, locInd2;
 
@@ -375,6 +369,43 @@ extern "C"
 class Support
 {
 public:
+    void setTheme()
+    {
+        int choice = 0;
+        //changing theme of the prompt
+        cout << "\nThemes Available:";
+        cout << "\n0. Default";
+        cout << "\n1. Ocean";
+        cout << "\n2. Forest";
+        cout << "\n3. Desert";
+        cout << "\nEnter your choice_";
+        fflush(stdin);
+        cin >> choice; //will be uncommented once program is finalised
+        // choice = 3;
+        switch (choice)
+        {
+        case 1:
+        {
+            system("color 10");
+        }
+        break;
+        case 2:
+        {
+            system("color 20");
+        }
+        break;
+        case 3:
+        {
+            system("color 60");
+        }
+        break;
+        default:
+        {
+            system("color 07");
+        }
+        break;
+        } //switch
+    }
     void wait(int noSec)
     {
         int f = 0;
@@ -397,6 +428,14 @@ public:
         }
     }
 
+    void holdByInput()
+    {
+        char holder;
+        cout << "\nEnter any character to continue_";
+        fflush(stdin);
+        cin >> holder;
+    }
+
     void screenReset()
     {
         system("cls");
@@ -404,21 +443,21 @@ public:
         time_t mytime;
         mytime = time(NULL);
         printf(ctime(&mytime));
-        cout << "\n------------------------------[ " << admin[0].OrgName << " ]--------------------------------";
+        cout << "\n-------------------------[ " << admin[0].OrgName << " ]---------------------------";
         cout << "\nUSERMODE : " << userModeArray[userMode] << "\t\t\t\t";
         switch (userMode)
         {
         case 1:
-            cout << "USER ID : " << userBike[currentIndex].UID;
+            cout << userBike[currentIndex].Name << " (" << userBike[currentIndex].UID << ")";
             break;
         case 2:
-            cout << "USER ID : " << userTaxi[currentIndex].UID;
+            cout << userTaxi[currentIndex].Name << " (" << userTaxi[currentIndex].UID << ")";
             break;
         case 3:
-            cout << "STAFF ID : " << staff[currentIndex].UID;
+            cout << staff[currentIndex].Name << " (" << staff[currentIndex].UID << ")";
             break;
         case 4:
-            cout << "ADMIN ID : " << admin[currentIndex].UID;
+            cout << admin[currentIndex].Name << " (" << admin[currentIndex].UID << ")";
             break;
         default:
             cout << "NIL";
@@ -426,40 +465,6 @@ public:
         }
         printf("\n----------------------------------------------------------------------------------");
     }
-
-    void encrypt(string *s)
-    {
-        /*
-		Logic for encryption
-		
-		to be thought yet
-	*/
-    }
-    ////////////////////////////////////////////////////////////////////////////////
-    void decrypt(string *s)
-    {
-    }
-    ////////////////////////////////////////////////////////////////////////////////
-    int encryptInt(int a)
-    {
-        return a;
-    }
-    ////////////////////////////////////////////////////////////////////////////////
-    int decryptInt(int a)
-    {
-        return a;
-    }
-    ////////////////////////////////////////////////////////////////////////////////
-    void encryptAll()
-    {
-        //encrypt all structs to be backed up...
-    }
-    ////////////////////////////////////////////////////////////////////////////////
-    void decryptAll()
-    {
-        //decrypt all structs imported...
-    }
-    ////////////////////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////////////////////
     bool authenticate(int userModeIn)
@@ -499,8 +504,10 @@ public:
                     cout << "\nUser Bike Authentication";
                     cout << "\n\tEnter UID: ";
                     fflush(stdin);
+                    fflush(stdin);
                     cin >> UIDin;
                     cout << "\n\t Enter password: ";
+                    fflush(stdin);
                     fflush(stdin);
                     cin >> PWDin;
 
@@ -525,6 +532,7 @@ public:
                 {
                     cout << "\nNo user(bike) records available to look into!";
                 }
+                holdByInput();
             }
             break;
             case 2: //new User
@@ -536,20 +544,18 @@ public:
 
                     cout << "\nEnter your name: ";
                     fflush(stdin);
+                    fflush(stdin);
                     getline(cin, userBike[userBikeCount].Name);
 
                     cout << "\nEnter new password: ";
+                    fflush(stdin);
                     fflush(stdin);
                     cin >> userBike[userBikeCount].password;
 
                     cout << "\nEnter your Mobile No: ";
                     fflush(stdin);
+                    fflush(stdin);
                     cin >> userBike[userBikeCount].MobNo;
-
-                    userBike[userBikeCount].hhStart = -1;
-                    userBike[userBikeCount].hhEnd = -1;
-                    userBike[userBikeCount].mmStart = -1;
-                    userBike[userBikeCount].mmEnd = -1;
 
                     userBike[userBikeCount].locInd1 = -1;
                     userBike[userBikeCount].locInd2 = -1;
@@ -574,12 +580,14 @@ public:
                             break;
                     }
                     userBike[userBikeCount].UID;
+                    cout << "\nUID allotted: " << userBike[userBikeCount].UID;
 
                     cout << "\nNew User Added";
                     userMode = 1;
                     currentIndex = userBikeCount - 1;
                     currentUID = userBike[userBikeCount].UID;
                     userBikeCount++;
+                    holdByInput();
                     return true;
                 } //if there is still space, closed
                 else
@@ -604,6 +612,7 @@ public:
             cout << "\n\t-1. GO BACK";
             cout << "\nEnter your choice_";
             fflush(stdin);
+            fflush(stdin);
             cin >> choice;
             switch (choice)
             {
@@ -621,8 +630,10 @@ public:
                     cout << "\nUser Taxi Authentication";
                     cout << "\n\tEnter UID: ";
                     fflush(stdin);
+                    fflush(stdin);
                     cin >> UIDin;
                     cout << "\n\t Enter password: ";
+                    fflush(stdin);
                     fflush(stdin);
                     cin >> PWDin;
 
@@ -658,6 +669,7 @@ public:
 
                     cout << "\nEnter your name: ";
                     fflush(stdin);
+                    fflush(stdin);
                     getline(cin, userTaxi[userTaxiCount].Name);
 
                     cout << "\nEnter new password: ";
@@ -667,11 +679,6 @@ public:
                     cout << "\nEnter your Mobile No: ";
                     fflush(stdin);
                     cin >> userTaxi[userTaxiCount].MobNo;
-
-                    userTaxi[userTaxiCount].hhStart = -1;
-                    userTaxi[userTaxiCount].hhEnd = -1;
-                    userTaxi[userTaxiCount].mmStart = -1;
-                    userTaxi[userTaxiCount].mmEnd = -1;
 
                     userTaxi[userTaxiCount].locInd1 = -1;
                     userTaxi[userTaxiCount].locInd2 = -1;
@@ -696,12 +703,14 @@ public:
                             break;
                     }
                     userTaxi[userTaxiCount].UID;
+                    cout << "\nUID allotted: " << userTaxi[userTaxiCount].UID;
 
                     cout << "\nNew User Added";
-                    userMode = 2;
-                    currentIndex = userTaxiCount - 1;
                     currentUID = userTaxi[userTaxiCount].UID;
+                    userMode = 2;
+                    currentIndex = userTaxiCount;
                     userTaxiCount++;
+                    holdByInput();
                     return true;
                 } //if there is still space, closed
                 else
@@ -725,6 +734,7 @@ public:
             cout << "\n\t-1. GO BACK";
             cout << "\nEnter your choice_";
             fflush(stdin);
+            fflush(stdin);
             cin >> choice;
             switch (choice)
             {
@@ -742,8 +752,10 @@ public:
                     cout << "\nStaff Authentication:";
                     cout << "\n\tEnter UID: ";
                     fflush(stdin);
+                    fflush(stdin);
                     cin >> UIDin;
                     cout << "\n\t Enter password: ";
+                    fflush(stdin);
                     fflush(stdin);
                     cin >> PWDin;
 
@@ -785,6 +797,7 @@ public:
             cout << "\n\t1. Log In";
             cout << "\n\t-1. GO BACK";
             cout << "\nEnter your choice_";
+            fflush(stdin);
             cin >> choice;
             switch (choice)
             {
@@ -801,8 +814,10 @@ public:
                 {
                     cout << "\nadmin Authentication:";
                     cout << "\n\tEnter UID: ";
+                    fflush(stdin);
                     cin >> UIDin;
                     cout << "\n\t Enter password: ";
+                    fflush(stdin);
                     cin >> PWDin;
 
                     for (int a = 0; a < adminCount; a++)
@@ -876,11 +891,11 @@ struct location[maxLocCount];
 //     void inputDate(int *dd, int *mm, int *yy)
 //     {
 //         cout << "Date: ";
-//         cin >> &dd;
+//         fflush(stdin);cin>> &dd;
 //         cout << "Month: ";
-//         cin >> &mm;
+//         fflush(stdin);cin>> &mm;
 //         cout << "Year: ";
-//         cin >> &yy;
+//         fflush(stdin);cin>> &yy;
 //     }
 //     void inputTime(int *h, int *m)
 //     {
@@ -891,10 +906,164 @@ struct location[maxLocCount];
 class BookMyRide : public Support
 {
 public:
-    void authorize(int n); //storing n into userMode if user verifies the passwords and all
-                           //otherwise store -1 in userMode
-                           //give three chances to enter password
-    //code ok
+    // void authorize(int n); //storing n into userMode if user verifies the passwords and all
+    //otherwise store -1 in userMode
+    //give three chances to enter password
+
+    // void manageBookings()
+    // {
+    // }
+    //
+    void tickOff()
+    {
+        if (userMode == 3)
+        {
+            int choice = 0;
+            cout << "\nWhich type of booking to tick off?";
+            cout << "\n1. Bike";
+            cout << "\n2. Taxi";
+            cout << "\n-1 GO BACK";
+            cout << "\nEnter your choice_";
+            fflush(stdin);
+            cin >> choice;
+            switch (choice)
+            {
+            case 1: //bike
+            {
+                if (userBikeCount > 0)
+                {
+                    int UIDin, f = 0;
+                    int tempIndex;
+                    cout << "\nEnter the UID of the user_";
+                    fflush(stdin);
+                    cin >> UIDin;
+                    for (int a = 0; a < userBikeCount; a++)
+                    {
+                        if (userBike[a].UID == UIDin)
+                        {
+                            tempIndex = a;
+                            f = 1;
+                            break;
+                        }
+                    }
+                    if (f == 1)
+                    {
+                        if (userBike[tempIndex].isAllotted)
+                        {
+                            cout << "\nClearing the booking record...";
+
+                            userBike[tempIndex].locInd1 = -1;
+                            userBike[tempIndex].locInd2 = -1;
+
+                            userBike[tempIndex].isAllotted = 0;
+
+                            //for removing  bike booking status from  bike struct
+                            for (int a = 0; a < bikeCount; a++)
+                            {
+                                if (bike[a].UID == userBike[tempIndex].BikeUID)
+                                {
+                                    bike[a].isAvail = 1;
+                                    bike[a].userIndex = -1;
+                                    userBike[tempIndex].BikeUID = -1;
+                                    cout << "\nBooking Removed.";
+                                    wait(2);
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            cout << "\nNo booking found with this UID!";
+                        }
+                    }
+                    else
+                    {
+                        cout << "\nEntered UID not found!";
+                    }
+                }
+                else
+                {
+                    cout << "\nThere are no users of Bike Booking right now.";
+                }
+            }
+            break;
+            case 2: //taxi
+            {
+                if (userTaxiCount > 0)
+                {
+                    int UIDin, f = 0;
+                    int tempIndex;
+                    cout << "\nEnter the UID of the user_";
+                    fflush(stdin);
+                    cin >> UIDin;
+                    for (int a = 0; a < userTaxiCount; a++)
+                    {
+                        if (userTaxi[a].UID == UIDin)
+                        {
+                            tempIndex = a;
+                            f = 1;
+                            break;
+                        }
+                    }
+                    if (f == 1)
+                    {
+                        if (userTaxi[tempIndex].isAllotted)
+                        {
+                            cout << "\nClearing the booking record...";
+
+                            userTaxi[tempIndex].locInd1 = -1;
+                            userTaxi[tempIndex].locInd2 = -1;
+
+                            userTaxi[tempIndex].isAllotted = 0;
+
+                            //for removing  taxi booking status from  taxi struct
+                            for (int a = 0; a < taxiCount; a++)
+                            {
+                                if (taxi[a].UID == userTaxi[tempIndex].TaxiUID)
+                                {
+                                    taxi[a].isAvail = 1;
+                                    taxi[a].userIndex = -1;
+                                    userTaxi[tempIndex].TaxiUID = -1;
+                                    cout << "\nBooking Removed.";
+                                    wait(2);
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            cout << "\nNo booking found with this UID!";
+                        }
+                    }
+                    else
+                    {
+                        cout << "\nEntered UID not found!";
+                    }
+                }
+                else
+                {
+                    cout << "\nThere are no users of Taxi Booking right now.";
+                }
+            }
+            break;
+            case -1:
+            {
+                cout << "\nGoing back.";
+            }
+            break;
+            default:
+            {
+                cout << "\nInvalid choice entered!";
+            }
+            } //switch case closed
+        }
+        else
+        {
+            cout << "\nUnauthorised Access Detected!";
+            userMode = -1;
+        }
+    }
+    //code done
     void bookBike()
     {
         if (userMode == 1)
@@ -903,39 +1072,49 @@ public:
             {
                 if (locCount >= 2)
                 {
-                    cout << "\nHere are the list of locations:";
-                    showLocations();
-
-                    int loc1, loc2; //stores first UIDs, then index nos of locations
-                    int bikeIndex, dist;
-
-                    cout << "\nFrom (Enter Serial No)_";
-                    cin >> loc1;
-                    cout << "\nTo (Enter Serial No)_";
-                    cin >> loc2;
-
-                    if (loc1 < locCount && loc2 < locCount)
+                    if (userBike[currentIndex].isAllotted == 0)
                     {
-                        userBike[currentIndex].BikeUID = bike[isAvailBike()].UID;
-                        bikeIndex = isAvailBike();
-                        userBike[currentIndex].locInd1 = loc1;
-                        userBike[currentIndex].locInd2 = loc2;
-                        dist = calculateDistance(loc1, loc2);
+                        cout << "\nHere are the list of locations:";
+                        showLocations();
 
-                        bike[bikeIndex].isAvail = 0;
-                        bike[bikeIndex].userIndex = currentIndex;
+                        int loc1, loc2; //stores first UIDs, then index nos of locations
+                        int bikeIndex, dist;
 
-                        cout << "\nBooking Details:";
-                        cout << "\nFROM: " << location[loc1].locName << " (" << location[loc1].UID << ")";
-                        cout << "\nTO: " << location[loc2].locName << " (" << location[loc1].UID << ")";
-                        cout << "\nDistance: " << dist << " km";
-                        cout << "\nExpected Time Taken: " << (float)dist / bikeMileage << " hours";
-                        cout << "\n Bike UID: " << userBike[currentIndex].BikeUID;
-                        cout << "\n Driver Contact: \t" << bike[bikeIndex].Name << "\t" << bike[bikeIndex].MobNo;
+                        cout << "\nFrom (Enter Serial No)_";
+                        fflush(stdin);
+                        cin >> loc1;
+                        cout << "\nTo (Enter Serial No)_";
+                        fflush(stdin);
+                        cin >> loc2;
+
+                        if (loc1 < locCount && loc2 < locCount)
+                        {
+                            userBike[currentIndex].BikeUID = bike[isAvailBike()].UID;
+                            bikeIndex = isAvailBike();
+                            userBike[currentIndex].locInd1 = loc1;
+                            userBike[currentIndex].locInd2 = loc2;
+                            dist = calculateDistance(loc1, loc2);
+
+                            bike[bikeIndex].isAvail = 0;
+                            bike[bikeIndex].userIndex = currentIndex;
+
+                            cout << "\nBooking Details:";
+                            cout << "\nFROM: " << location[loc1].locName << " (" << location[loc1].UID << ")";
+                            cout << "\nTO: " << location[loc2].locName << " (" << location[loc1].UID << ")";
+                            // cout << "\nDistance: " << dist << " km";
+                            // cout << "\nExpected Time Taken: " << (float)dist / bikeMileage << " hours";
+                            cout << "\n Bike UID: " << userBike[currentIndex].BikeUID;
+                            cout << "\n Driver Contact: \t" << bike[bikeIndex].Name << "\t" << bike[bikeIndex].MobNo;
+                            userBike[currentIndex].isAllotted = 1;
+                        }
+                        else
+                        {
+                            cout << "\nAtleast one of the entered location indices is invalid.";
+                        }
                     }
                     else
                     {
-                        cout << "\nAtleast one of the entered location indices is invalid.";
+                        cout << "\nYou already have a booking";
                     }
                 }
                 else
@@ -945,7 +1124,7 @@ public:
             }
             else
             {
-                cout << "\nNo bikes available";
+                cout << "\nNo bikes available.";
             }
         }
         else
@@ -954,53 +1133,97 @@ public:
             userMode = -1;
         }
     }
-
+    //code done
     void cancelBike()
     {
+        if (userMode == 1)
+        {
+            if (userBike[currentIndex].isAllotted)
+            {
+                cout << "\nClearing the booking record...";
+
+                userBike[currentIndex].locInd1 = -1;
+                userBike[currentIndex].locInd2 = -1;
+
+                userBike[currentIndex].isAllotted = 0;
+
+                //for removing bike booking status from bike struct
+                for (int a = 0; a < bikeCount; a++)
+                {
+                    if (bike[a].UID == userBike[currentIndex].BikeUID)
+                    {
+                        bike[a].isAvail = 1;
+                        bike[a].userIndex = -1;
+                        userBike[currentIndex].BikeUID = -1;
+                        cout << "\nBooking Removed.";
+                        wait(2);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                cout << "\nYou haven't booked any travel yet";
+            }
+        }
+        else
+        {
+            cout << "\nYou aren't allowed to perform this change.";
+        }
     }
-    //code ok
+    //code done
     void bookTaxi()
     {
 
-        if (userMode == 1)
+        if (userMode == 2)
         {
             if (isAvailTaxi() != -1)
             {
                 if (locCount >= 2)
                 {
-                    cout << "\nHere are the list of locations:";
-                    showLocations();
-
-                    int loc1, loc2; //stores first UIDs, then index nos of locations
-                    int taxiIndex, dist;
-
-                    cout << "\nFrom (Enter Serial No)_";
-                    cin >> loc1;
-                    cout << "\nTo (Enter Serial No)_";
-                    cin >> loc2;
-
-                    if (loc1 < locCount && loc2 < locCount)
+                    if (userTaxi[currentIndex].isAllotted == 0)
                     {
-                        userTaxi[currentIndex].TaxiUID = taxi[isAvailTaxi()].UID;
-                        taxiIndex = isAvailTaxi();
-                        userTaxi[currentIndex].locInd1 = loc1;
-                        userTaxi[currentIndex].locInd2 = loc2;
-                        dist = calculateDistance(loc1, loc2);
+                        cout << "\nHere are the list of locations:";
+                        showLocations();
 
-                        taxi[taxiIndex].isAvail = 0;
-                        taxi[taxiIndex].userIndex = currentIndex;
+                        int loc1, loc2; //stores first UIDs, then index nos of locations
+                        int taxiIndex, dist;
 
-                        cout << "\nBooking Details:";
-                        cout << "\nFROM: " << location[loc1].locName << " (" << location[loc1].UID << ")";
-                        cout << "\nTO: " << location[loc2].locName << " (" << location[loc1].UID << ")";
-                        cout << "\nDistance: " << dist << " km";
-                        cout << "\nExpected Time Taken: " << (float)dist / taxiMileage << " hours";
-                        cout << "\n Taxi UID: " << userTaxi[currentIndex].TaxiUID;
-                        cout << "\n Driver Contact: \t" << taxi[taxiIndex].Name << "\t" << taxi[taxiIndex].MobNo;
+                        cout << "\nFrom (Enter Serial No)_";
+                        fflush(stdin);
+                        cin >> loc1;
+                        cout << "\nTo (Enter Serial No)_";
+                        fflush(stdin);
+                        cin >> loc2;
+
+                        if (loc1 < locCount && loc2 < locCount)
+                        {
+                            userTaxi[currentIndex].TaxiUID = taxi[isAvailTaxi()].UID;
+                            taxiIndex = isAvailTaxi();
+                            userTaxi[currentIndex].locInd1 = loc1;
+                            userTaxi[currentIndex].locInd2 = loc2;
+                            dist = calculateDistance(loc1, loc2);
+
+                            taxi[taxiIndex].isAvail = 0;
+                            taxi[taxiIndex].userIndex = currentIndex;
+
+                            cout << "\nBooking Details:";
+                            cout << "\nFROM: " << location[loc1].locName << " (" << location[loc1].UID << ")";
+                            cout << "\nTO: " << location[loc2].locName << " (" << location[loc1].UID << ")";
+                            // cout << "\nDistance: " << dist << " km";
+                            // cout << "\nExpected Time Taken: " << (float)dist / taxiMileage << " hours";
+                            cout << "\n Taxi UID: " << userTaxi[currentIndex].TaxiUID;
+                            cout << "\n Driver Contact: \t" << taxi[taxiIndex].Name << "\t" << taxi[taxiIndex].MobNo;
+                            userTaxi[currentIndex].isAllotted = 1;
+                        }
+                        else
+                        {
+                            cout << "\nAtleast one of the entered location indices is invalid.";
+                        }
                     }
                     else
                     {
-                        cout << "\nAtleast one of the entered location indices is invalid.";
+                        cout << "\nYou already have a booking";
                     }
                 }
                 else
@@ -1019,30 +1242,275 @@ public:
             userMode = -1;
         }
     }
-
+    //code done
     void cancelTaxi()
     {
-    }
+        if (userMode == 2)
+        {
+            if (userTaxi[currentIndex].isAllotted)
+            {
+                cout << "\nClearing the booking record...";
 
-    void removeBooking()
+                userTaxi[currentIndex].locInd1 = -1;
+                userTaxi[currentIndex].locInd2 = -1;
+
+                userTaxi[currentIndex].isAllotted = 0;
+
+                //for removing taxi booking status from taxi struct
+                for (int a = 0; a < taxiCount; a++)
+                {
+                    if (taxi[a].UID == userTaxi[currentIndex].TaxiUID)
+                    {
+                        taxi[a].isAvail = 1;
+                        taxi[a].userIndex = -1;
+                        userTaxi[currentIndex].TaxiUID = -1;
+                        cout << "\nBooking Removed.";
+                        wait(2);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                cout << "\nYou haven't booked any travel yet";
+            }
+        }
+        else
+        {
+            cout << "\nYou aren't allowed to perform this change.";
+        }
+    }
+    //code done
+    void showMyBooking()
     {
-    }
+        if (userMode == 1)
+        {
+            if (userBike[currentIndex].isAllotted == 1)
+            {
+                int a, f = 0;
+                for (a = 0; a < bikeCount; a++)
+                {
+                    if (userBike[currentIndex].BikeUID == bike[a].UID)
+                    {
+                        f = 1;
+                        break;
+                    }
+                }
 
-    void showBookings()
+                if (f == 1)
+                {
+                    cout << "\nBike booking details";
+
+                    cout << "\nFrom " << location[userBike[currentIndex].locInd1].locName;
+                    cout << "To " << location[userBike[currentIndex].locInd2].locName;
+                    cout << "\nBike Contact: " << bike[a].Name << " (" << bike[a].MobNo << ")";
+                    cout << "\n-------------------------------";
+                }
+                else
+                {
+                    cout << "\nBike not found:-(.\nKindly book again.\nExtremely Sorry for incovenience.\nProceeding to remove booking.\n";
+                    cancelBike();
+                }
+            }
+            else
+            {
+                cout << "\nYou haven't booked any travel yet.";
+            }
+        }
+        else if (userMode == 2)
+        {
+            if (userTaxi[currentIndex].isAllotted == 1)
+            {
+                int a, f = 0;
+                for (a = 0; a < taxiCount; a++)
+                {
+                    if (userTaxi[currentIndex].TaxiUID == taxi[a].UID)
+                    {
+                        f = 1;
+                        break;
+                    }
+                }
+
+                if (f == 1)
+                {
+                    cout << "\nTaxi booking details";
+
+                    cout << "\nFrom " << location[userTaxi[currentIndex].locInd1].locName;
+                    cout << "To " << location[userTaxi[currentIndex].locInd2].locName;
+                    cout << "\nTaxi Contact: " << taxi[a].Name << " (" << taxi[a].MobNo << ")";
+                    cout << "\n-------------------------------";
+                }
+                else
+                {
+                    cout << "\nTaxi not found:-(.\nKindly book again.\nExtremely Sorry for incovenience.\nProceeding to remove booking.\n";
+                    cancelTaxi();
+                }
+            }
+            else
+            {
+                cout << "\nYou haven't booked any travel yet.";
+            }
+        }
+        else
+        {
+            cout << "\nUnauthorised Access Detected!";
+            userMode = -1;
+        }
+    }
+    //code done
+    void showBookingList()
     {
-    }
+        int counter = 0;
+        if (userMode == 3 || userMode == 4)
+        {
+            //for bike
+            counter = 0;
+            cout << "\nBike Bookings";
+            cout << "\nIndex No\tBike UID\tUser Index\t Name";
+            for (int a = 0; a < bikeCount; a++)
+            {
+                if (bike[a].isAvail == 0)
+                {
+                    cout << "\n"
+                         << counter++ << "\t\t" << bike[a].UID << "\t\t" << bike[a].userIndex << "\t\t" << userBike[bike[a].userIndex].Name;
+                }
+            }
+            cout << "\n---------------------------------------------";
+            if (counter == 0)
+                cout << "\nBike booking list empty.";
 
+            //for taxi
+            counter = 0;
+            cout << "\nTaxi Bookings";
+            cout << "\nIndex No\tTaxi UID\tUser Index\t Name";
+            for (int a = 0; a < taxiCount; a++)
+            {
+                if (taxi[a].isAvail == 0)
+                {
+                    cout << "\n"
+                         << counter++ << "\t\t" << taxi[a].UID << "\t\t" << taxi[a].userIndex << "\t\t" << userTaxi[taxi[a].userIndex].Name;
+                }
+            }
+            cout << "\n---------------------------------------------";
+            if (counter == 0)
+                cout << "\nTaxi booking list empty.";
+        }
+        else
+        {
+            cout << "\nUnauthorised access detected!";
+            userMode = -1;
+        }
+    }
+    //code done
     void getHelp() //shyam
     {
+        if (userMode == 1)
+        {
+            if (helpCount < maxHelpCount)
+            {
+                cout << "\nAdding new help request...";
+
+                if (helpCount == 0)
+                {
+                    help[helpCount].UID = 0;
+                    cout << "\nUID allotted : " << help[helpCount].UID;
+                }
+                else
+                {
+                    for (int a = 0; a < maxHelpCount; a++)
+                    {
+                        int f = 0;
+                        for (int b = 0; b < helpCount; b++)
+                        {
+                            if (a == help[b].UID)
+                            {
+                                f = 1;
+                                break;
+                            }
+                        }
+                        if (f != 1)
+                        {
+                            cout << "\nUID allotted : " << a;
+                            help[helpCount].UID = a;
+                            break;
+                        }
+                    }
+                }
+
+                help[helpCount].userMode = 1;
+                help[helpCount].userUID = userBike[currentIndex].UID;
+                cout << "\nEnter details in short:\n";
+                fflush(stdin);
+                fflush(stdin);
+                getline(cin, help[helpCount].comment);
+                cout << "\nWe will contact you ASAP.";
+                helpCount++;
+            }
+            else
+            {
+                cout << "\nHelp List is full.";
+            }
+            cout << "\nBy the way, you may contact us directly IFF URGENT.\nContact: " << admin[0].MobNo;
+        }
+
+        else if (userMode == 2)
+        {
+            if (helpCount < maxHelpCount)
+            {
+                cout << "\nAdding new help request...";
+
+                if (helpCount == 0)
+                {
+                    help[helpCount].UID = 0;
+                    cout << "\nUID allotted : " << help[helpCount].UID;
+                }
+                for (int a = 0; a < maxHelpCount; a++)
+                {
+                    int f = 0;
+                    for (int b = 0; b < helpCount; b++)
+                    {
+                        if (a == help[b].UID)
+                        {
+                            f = 1;
+                            break;
+                        }
+                    }
+                    if (f != 1)
+                    {
+                        cout << "\nUID allotted : " << a;
+                        help[helpCount].UID = a;
+                        break;
+                    }
+                }
+
+                help[helpCount].userMode = 2;
+                help[helpCount].userUID = userTaxi[currentIndex].UID;
+                cout << "\nEnter details in short:\n";
+                fflush(stdin);
+                fflush(stdin);
+                getline(cin, help[helpCount].comment);
+                cout << "\nWe will contact you ASAP.";
+            }
+            else
+            {
+                cout << "\nHelp List is full.";
+            }
+            cout << "\nBy the way, you may contact us directly IFF URGENT.\nContact: " << admin[0].MobNo;
+        }
+        else
+        {
+            cout << "\nUnauthorised access detected!";
+            userMode = -1; //if not already
+        }
     }
-    //code ok
+    //code done
     void showLocations()
     {
         if (userMode != -1)
         {
             if (locCount > 0)
             {
-                cout << "\nIndex No\tUID\tName";
+                cout << "\nIndex\tUID\tName";
                 cout << "\n-------------------------------------------------------------------";
                 for (int a = 0; a < locCount; a++)
                 {
@@ -1061,15 +1529,494 @@ public:
             cout << "\nUnauthorised Access Detected!";
         }
     }
-
+    //code done
     void addLocation()
     {
+        if (userMode == 3)
+        {
+            if (locCount < maxLocCount)
+            {
+
+                cout << "Add New Location:";
+                cout << "\nName: ";
+                fflush(stdin);
+                cin >> location[locCount].locName;
+                cout << "\nCoordinates: ";
+                cout << "\nX: ";
+                fflush(stdin);
+                cin >> location[locCount].locX;
+                cout << "\nY: ";
+                fflush(stdin);
+                cin >> location[locCount].locY;
+
+                //PROGRAM FOR UID ALLOTTMENT
+                if (locCount == 0)
+                {
+                    location[locCount].UID = 0;
+                    cout << "\nUID allotted : 0";
+                }
+                else
+                {
+                    for (int a = 0; a < maxLocCount; a++)
+                    {
+                        int f = 0;
+                        for (int b = 0; b < locCount; b++)
+                        {
+                            if (a == location[b].UID)
+                            {
+                                f = 1;
+                                break;
+                            }
+                        }
+                        if (f != 1)
+                        {
+                            cout << "\nUID allotted : " << a;
+                            location[locCount].UID = a;
+                            break;
+                        }
+                    }
+                }
+                locCount++;
+            }
+            else
+            {
+                cout << "\nLocation List is already full!";
+            }
+        }
+        else
+        {
+            cout << "\nUnauthorised Access Detected!";
+            userMode = -1;
+        }
     }
-    //code ok
+    //code done
+    void editLocation()
+    {
+        if (userMode == 3)
+        {
+            if (locCount > 0)
+            {
+                int UIDin;
+                cout << "\nEnter UID of Location to edit_";
+                fflush(stdin);
+                cin >> UIDin;
+
+                int f = 0, a = 0; //a stores the index no of required position
+
+                for (a = 0; a < locCount; a++)
+                {
+                    if (UIDin == location[a].UID)
+                    {
+                        f = 1;
+                        break;
+                    }
+                }
+                if (f == 1)
+                {
+                    f = 0;
+                    int choice = 0;
+                    while (choice != -1)
+                    {
+                        cout << "\nWhich parameter do you want to edit:";
+                        cout << "\n1. Location Name";
+                        cout << "\n2. X-Coordinate";
+                        cout << "\n3. Y-Coordinate";
+                        cout << "\n-1 Go Back";
+                        cout << "\nEnter your choice_";
+                        fflush(stdin);
+                        cin >> choice;
+
+                        switch (choice)
+                        {
+                        case 1: //location name
+                        {
+                            cout << "\nEnter new location name_";
+                            fflush(stdin);
+                            getline(cin, location[a].locName);
+                        }
+                        break;
+                        case 2: //x coordinate
+                        {
+                            cout << "\nEnter new x-coordinate_";
+                            fflush(stdin);
+                            cin >> location[a].locX;
+                        }
+                        break;
+                        case 3: //y coordinate
+                        {
+                            cout << "\nEnter new y-coordinate_";
+                            fflush(stdin);
+                            cin >> location[a].locY;
+                        }
+                        break;
+                        case -1: //Go back
+                        {
+                            cout << "\nAlright.";
+                        }
+                        break;
+                        default: //invalid choice
+                        {
+                            cout << "\nInvalid choice entered!";
+                        }
+                        break;
+                        }
+                    }
+                }
+                else
+                {
+                    cout << "\nEntered UID isn't present in the records!";
+                }
+            }
+            else
+            {
+                cout << "\nLocation Database is empty!";
+            }
+        }
+        else
+        {
+            cout << "\nUnauthorised Access Detected!";
+            userMode = -1;
+        }
+    }
+    //code done
+    bool canRemoveLocation(int index)
+    {
+        for (int a = 0; a < userBikeCount; a++)
+        {
+            if (userBike[a].isAllotted == 1)
+                if (userBike[a].locInd1 == index || userBike[a].locInd2 == index)
+                    return false;
+        }
+        for (int a = 0; a < userTaxiCount; a++)
+        {
+            if (userTaxi[a].isAllotted == 1)
+                if (userTaxi[a].locInd1 == index || userTaxi[a].locInd2 == index)
+                    return false;
+        }
+        return true;
+    }
+    //code done
+    void removeLocation()
+    {
+        if (userMode = 3)
+        {
+            int UIDin;
+            cout << "\nEnter UID of Location to delete_";
+            fflush(stdin);
+            cin >> UIDin;
+
+            int f = 0, a = 0; //a stores the index no of required position
+
+            for (a = 0; a < locCount; a++)
+            {
+                if (UIDin == location[a].UID)
+                {
+                    f = 1;
+                    break;
+                }
+            }
+            if (f == 1)
+            {
+                if (canRemoveLocation(a))
+                {
+
+                    f = 0;
+                    if (a < locCount - 1)
+                    {
+                        for (int b = a; b < locCount - 1; b++)
+                        {
+                            string tempStr;
+                            int tempIn;
+
+                            tempStr = location[a].locName;
+                            location[a].locName = location[a + 1].locName;
+                            location[a + 1].locName = tempStr;
+
+                            tempIn = location[a].locX;
+                            location[a].locX = location[a + 1].locX;
+                            location[a + 1].locX = tempIn;
+
+                            tempIn = location[a].locY;
+                            location[a].locY = location[a + 1].locY;
+                            location[a + 1].locY = tempIn;
+                        }
+                    }
+                    locCount--;
+                }
+                else
+                {
+                    cout << "\nCannot Delete Vehicle!\nIt can be deleted only when it has no bookings";
+                }
+            }
+            else
+            {
+                cout << "\nEntered UID isn't present in the records!";
+            }
+        }
+        else
+        {
+            cout << "\nUnauthorised access detected!";
+            userMode = -1;
+        }
+    }
+    //code done
+    void editSelf() //for staff and users
+    {
+        if (userMode == 1)
+        {
+            if (userBikeCount > 0)
+            {
+                int UIDin = userBike[currentIndex].UID;
+
+                int f = 0, a = 0;
+                for (a = 0; a < userBikeCount; a++)
+                {
+                    if (userBike[a].UID == userBike[a].UID)
+                    {
+                        f = 1;
+                        break;
+                    }
+                }
+                if (f == 1)
+                {
+                    if (a != currentIndex)
+                    {
+                        cout << "\nDiscrepancy found in userBike.\nResolved.";
+                        currentIndex = a;
+                    }
+                    f = 0;
+                    int choice = 0;
+                    while (choice != -1)
+                    {
+                        cout << "\nWhich parameter do you want to edit:";
+                        cout << "\n1. Name";
+                        cout << "\n2. Password";
+                        cout << "\n3. Mobile No";
+                        cout << "\n-1 Go Back";
+                        cout << "\nEnter your choice_";
+                        fflush(stdin);
+                        cin >> choice;
+
+                        switch (choice)
+                        {
+                        case 1:
+                        {
+                            cout << "\nEnter new name_";
+                            fflush(stdin);
+                            getline(cin, userBike[currentIndex].Name);
+                        }
+                        break;
+                        case 2:
+                        {
+                            cout << "\nEnter new password_";
+                            fflush(stdin);
+                            cin >> userBike[currentIndex].password;
+                        }
+                        break;
+                        case 3:
+                        {
+                            cout << "\nEnter new mobile No_";
+                            fflush(stdin);
+                            cin >> userBike[currentIndex].MobNo;
+                        }
+                        break;
+                        case -1: //Go back
+                        {
+                            cout << "\nAlright.";
+                        }
+                        break;
+                        default: //invalid choice
+                        {
+                            cout << "\nInvalid choice entered!";
+                        }
+                        break;
+                        } //switch closed
+                    }     //while closed
+                }
+                else
+                {
+                    userMode = -1;
+                }
+            }
+            else
+            {
+                userMode = -1;
+            }
+        }
+        else if (userMode == 2)
+        {
+            if (userTaxiCount > 0)
+            {
+                int UIDin = userTaxi[currentIndex].UID;
+
+                int f = 0, a = 0;
+                for (a = 0; a < userTaxiCount; a++)
+                {
+                    if (userTaxi[a].UID == userTaxi[a].UID)
+                    {
+                        f = 1;
+                        break;
+                    }
+                }
+                if (f == 1)
+                {
+                    if (a != currentIndex)
+                    {
+                        cout << "\nDiscrepancy found in userTaxi.\nResolved.";
+                        currentIndex = a;
+                    }
+                    f = 0;
+                    int choice = 0;
+                    while (choice != -1)
+                    {
+                        cout << "\nWhich parameter do you want to edit:";
+                        cout << "\n1. Name";
+                        cout << "\n2. Password";
+                        cout << "\n3. Mobile No";
+                        cout << "\n-1 Go Back";
+                        cout << "\nEnter your choice_";
+                        fflush(stdin);
+                        cin >> choice;
+
+                        switch (choice)
+                        {
+                        case 1:
+                        {
+                            cout << "\nEnter new name_";
+                            fflush(stdin);
+                            getline(cin, userTaxi[currentIndex].Name);
+                        }
+                        break;
+                        case 2:
+                        {
+                            cout << "\nEnter new password_";
+                            fflush(stdin);
+                            cin >> userTaxi[currentIndex].password;
+                        }
+                        break;
+                        case 3:
+                        {
+                            cout << "\nEnter new mobile No_";
+                            fflush(stdin);
+                            cin >> userTaxi[currentIndex].MobNo;
+                        }
+                        break;
+                        case -1: //Go back
+                        {
+                            cout << "\nAlright.";
+                        }
+                        break;
+                        default: //invalid choice
+                        {
+                            cout << "\nInvalid choice entered!";
+                        }
+                        break;
+                        } //switch closed
+                    }     //while closed
+                }
+                else
+                {
+                    userMode = -1;
+                }
+            }
+            else
+            {
+                userMode = -1;
+            }
+        }
+        else if (userMode == 3)
+        {
+            if (staffCount > 0)
+            {
+                int UIDin = staff[currentIndex].UID;
+
+                int f = 0, a = 0;
+                for (a = 0; a < staffCount; a++)
+                {
+                    if (staff[a].UID == staff[a].UID)
+                    {
+                        f = 1;
+                        break;
+                    }
+                }
+                if (f == 1)
+                {
+                    if (a != currentIndex)
+                    {
+                        cout << "\nDiscrepancy found in staff.\nResolved temporarily.";
+                        currentIndex = a;
+                    }
+                    f = 0;
+                    int choice = 0;
+                    while (choice != -1)
+                    {
+                        cout << "\nWhich parameter do you want to edit:";
+                        cout << "\n1. Name";
+                        cout << "\n2. Password";
+                        cout << "\n3. Mobile No";
+                        cout << "\n-1 Go Back";
+                        cout << "\nEnter your choice_";
+                        fflush(stdin);
+                        cin >> choice;
+
+                        switch (choice)
+                        {
+                        case 1:
+                        {
+                            cout << "\nEnter new name_";
+                            fflush(stdin);
+                            getline(cin, staff[currentIndex].Name);
+                        }
+                        break;
+                        case 2:
+                        {
+                            cout << "\nEnter new password_";
+                            fflush(stdin);
+                            cin >> staff[currentIndex].password;
+                        }
+                        break;
+                        case 3:
+                        {
+                            cout << "\nEnter new mobile No_";
+                            fflush(stdin);
+                            cin >> staff[currentIndex].MobNo;
+                        }
+                        break;
+                        case -1: //Go back
+                        {
+                            cout << "\nAlright.";
+                        }
+                        break;
+                        default: //invalid choice
+                        {
+                            cout << "\nInvalid choice entered!";
+                        }
+                        break;
+                        } //switch closed
+                    }     //while closed
+                }
+                else
+                {
+                    userMode = -1;
+                }
+            }
+            else
+            {
+                userMode = -1;
+            }
+        }
+        else
+        {
+            cout << "\nUnauthorised access detected!";
+            userMode = -1;
+        }
+    }
+    //code done
     int isAvailBike()
     {
         if (userMode != -1)
         {
+            // cout << "\nbikeCount= " << bikeCount; //testing
             if (bikeCount > 0)
             {
                 for (int a = 0; a < bikeCount; a++)
@@ -1085,7 +2032,7 @@ public:
         }
         return -1;
     }
-    //code ok
+    //code done
     int isAvailTaxi()
     {
         if (userMode != -1)
@@ -1105,7 +2052,7 @@ public:
         }
         return -1;
     }
-    //code ok
+    //code done
     int calculateDistance(int index1, int index2)
     {
         if (index1 < locCount && index2 < locCount)
@@ -1118,11 +2065,16 @@ public:
             x2 = location[index2].locX;
             y2 = location[index2].locY;
 
-            dist = sqrt((double)(x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+            // cout << "\nCalculating Distance";
+            // int l1 = (x2 - x1) * (x2 - x1);
+            // int l2 = (y2 - y1) * (y2 - y1);
+            // cout << "\t" << l1 << "\t" << l2;
+            // dist = sqrtf(l1 + l2);
+            dist = 0;
         }
         return -1;
     }
-    //code ok
+    //code done
     void addVehicle()
     {
         int choice = 0, f = 0;
@@ -1131,9 +2083,10 @@ public:
         {
             cout << "Which vehicle details do you want to add-";
             cout << "\n1. Bike";
-            cout << "\n2. Car";
+            cout << "\n2. Taxi";
             cout << "\n-1. GO BACK";
             cout << "\nEnter your choice_";
+            fflush(stdin);
             fflush(stdin);
             cin >> choice;
 
@@ -1150,17 +2103,47 @@ public:
                 {
                     f = 0; //resetting the flag
 
-                    cin >> bike[bikeCount].UID;
+                    // //PROGRAM FOR UID ALLOTTMENT
+                    // if (bikeCount == 0)
+                    // {
+                    //     bike[bikeCount].UID = 0;
+                    //     cout << "\nUID allotted : 0";
+                    // }
+                    // else
+                    // {
+                    //     for (int a = 0; a < maxVehicleCount; a++)
+                    //     {
+                    //         int f = 0;
+                    //         for (int b = 0; b < bikeCount; b++)
+                    //         {
+                    //             if (a == bike[b].UID)
+                    //             {
+                    //                 f = 1;
+                    //                 break;
+                    //             }
+                    //         }
+                    //         if (f != 1)
+                    //         {
+                    //             cout << "\nUID allotted : " << a;
+                    //             staff[bikeCount].UID = a;
+                    //             break;
+                    //         }
+                    //     }
+                    // }
+
                     cout << "\nEnter Name of Driver: ";
                     fflush(stdin);
                     getline(cin, bike[bikeCount].Name);
                     cout << "\nEnter Mobile no. of Driver: ";
                     fflush(stdin);
+                    fflush(stdin);
                     cin >> bike[bikeCount].MobNo;
                     cout << "\nEnter Email id: ";
                     fflush(stdin);
+                    fflush(stdin);
                     cin >> bike[bikeCount].EmailID;
                     cout << "\nEnter Date of Joining: ";
+                    fflush(stdin);
                     fflush(stdin);
                     cin >> bike[bikeCount].Date_Joining;
 
@@ -1192,7 +2175,7 @@ public:
                         }
                     }
                     ///////////////////////////////
-
+                    bike[bikeCount].isAvail = 1;
                     bikeCount++;
                 }
                 else
@@ -1212,11 +2195,14 @@ public:
                     getline(cin, taxi[taxiCount].Name);
                     cout << "\nEnter Mobile no. of Driver: ";
                     fflush(stdin);
+                    fflush(stdin);
                     cin >> taxi[taxiCount].MobNo;
                     cout << "\nEnter Email id: ";
                     fflush(stdin);
+                    fflush(stdin);
                     cin >> taxi[taxiCount].EmailID;
                     cout << "\nEnter Date of Joining: ";
+                    fflush(stdin);
                     fflush(stdin);
                     cin >> taxi[taxiCount].Date_Joining;
 
@@ -1247,6 +2233,7 @@ public:
                             }
                         }
                     }
+                    taxi[taxiCount].isAvail = 1;
                     taxiCount++;
                 }
                 else
@@ -1263,7 +2250,7 @@ public:
             }
         }
     }
-    //code ok
+    //code done
     void editVehicle()
     {
         int choice = 0, choice2 = 0; //choice2 for inner switch case
@@ -1278,6 +2265,7 @@ public:
             cout << "\n2. Car";
             cout << "\n-1. GO BACK";
             cout << "\nEnter your choice_";
+            fflush(stdin);
             fflush(stdin);
             cin >> choice;
 
@@ -1314,7 +2302,9 @@ public:
                             cout << "\n3. Email ID";
                             cout << "\n4. Date_Joining";
                             cout << "\n-1 GO BACK";
-
+                            cout << "\nEnter your choice";
+                            fflush(stdin);
+                            cin >> choice2;
                             switch (choice2)
                             {
                             case -1: //Go back
@@ -1327,7 +2317,6 @@ public:
                                 cout << "\nCurrent Name:" << bike[indexTemp].Name;
                                 cout << "\nEnter new Name_";
                                 fflush(stdin);
-                                fflush(stdin);
                                 cin >> dataInput;
                                 bike[indexTemp].Name = dataInput;
                                 cout << "\nName of UID " << UIDinput << " changed.";
@@ -1337,7 +2326,6 @@ public:
                             {
                                 cout << "\nCurrent Mobile No:" << bike[indexTemp].MobNo;
                                 cout << "\nEnter new Mobile No_";
-                                fflush(stdin);
                                 fflush(stdin);
                                 cin >> dataInput;
                                 bike[indexTemp].MobNo = dataInput;
@@ -1349,7 +2337,6 @@ public:
                                 cout << "\nCurrent Email ID:" << bike[indexTemp].EmailID;
                                 cout << "\nEnter new Email ID_";
                                 fflush(stdin);
-                                fflush(stdin);
                                 cin >> dataInput;
                                 bike[indexTemp].EmailID = dataInput;
                                 cout << "\nEmailID of UID " << UIDinput << " changed.";
@@ -1359,7 +2346,6 @@ public:
                             {
                                 cout << "\nCurrent Date_Joining:" << bike[indexTemp].Date_Joining;
                                 cout << "\nEnter new Date_Joining_";
-                                fflush(stdin);
                                 fflush(stdin);
                                 cin >> dataInput;
                                 bike[indexTemp].Date_Joining = dataInput;
@@ -1393,6 +2379,7 @@ public:
                     cout << "\nEnter UID of taxi to edit_";
                     fflush(stdin);
                     fflush(stdin);
+                    fflush(stdin);
                     cin >> UIDinput;
                     for (indexTemp = 0; indexTemp < taxiCount; indexTemp++)
                     {
@@ -1412,7 +2399,9 @@ public:
                             cout << "\n3. Email ID";
                             cout << "\n4. Date_Joining";
                             cout << "\n-1 GO BACK";
-
+                            cout << "\nEnter your choice";
+                            fflush(stdin);
+                            cin >> choice2;
                             switch (choice2)
                             {
                             case -1: //Go back
@@ -1426,6 +2415,7 @@ public:
                                 cout << "\nEnter new Name_";
                                 fflush(stdin);
                                 fflush(stdin);
+                                fflush(stdin);
                                 cin >> dataInput;
                                 taxi[indexTemp].Name = dataInput;
                                 cout << "\nName of UID " << UIDinput << " changed.";
@@ -1435,6 +2425,7 @@ public:
                             {
                                 cout << "\nCurrent Mobile No:" << taxi[indexTemp].MobNo;
                                 cout << "\nEnter new Mobile No_";
+                                fflush(stdin);
                                 fflush(stdin);
                                 fflush(stdin);
                                 cin >> dataInput;
@@ -1448,6 +2439,7 @@ public:
                                 cout << "\nEnter new EmailID_";
                                 fflush(stdin);
                                 fflush(stdin);
+                                fflush(stdin);
                                 cin >> dataInput;
                                 taxi[indexTemp].EmailID = dataInput;
                                 cout << "\nEmailID of UID " << UIDinput << " changed.";
@@ -1457,6 +2449,7 @@ public:
                             {
                                 cout << "\nCurrent Date_Joining:" << taxi[indexTemp].Date_Joining;
                                 cout << "\nEnter new Date_Joining_";
+                                fflush(stdin);
                                 fflush(stdin);
                                 fflush(stdin);
                                 cin >> dataInput;
@@ -1489,8 +2482,35 @@ public:
             }
             }
         }
+        else
+        {
+            cout << "\nUnauthorised access detected!";
+            userMode = -1;
+        }
     }
-    //code ok
+    //code done
+    bool canRemoveBike(int index)
+    {
+        for (int a = 0; a < userBikeCount; a++)
+        {
+            if (userBike[a].isAllotted = 1)
+                if (userBike[a].BikeUID == bike[index].UID)
+                    return false;
+        }
+        return true;
+    }
+    //code done
+    bool canRemoveTaxi(int index)
+    {
+        for (int a = 0; a < userTaxiCount; a++)
+        {
+            if (userTaxi[a].isAllotted = 1)
+                if (userTaxi[a].TaxiUID == taxi[index].UID)
+                    return false;
+        }
+        return true;
+    }
+    //code done
     void removeVehicle() //hishita
     {
         int choice = 0;
@@ -1502,6 +2522,7 @@ public:
             cout << "\n2. Car";
             cout << "\n-1. GO BACK";
             cout << "\nEnter your choice_";
+            fflush(stdin);
             fflush(stdin);
             cin >> choice;
 
@@ -1540,37 +2561,44 @@ public:
                     }
                     else
                     {
-                        if (flag == bikeCount - 1)
+                        if (canRemoveBike(flag))
                         {
-                            bikeCount--;
+                            if (flag == bikeCount - 1)
+                            {
+                                bikeCount--;
+                            }
+                            else
+                            {
+                                string tempnp;
+                                int tempU;
+                                for (int i = flag; i < bikeCount - 1; i++)
+                                {
+                                    tempU = bike[i].UID;
+                                    bike[i].UID = bike[i + 1].UID;
+                                    bike[i + 1].UID = tempU;
+
+                                    tempnp = bike[i].Name;
+                                    bike[i].Name = bike[i + 1].Name;
+                                    bike[i + 1].Name = tempnp;
+
+                                    tempnp = bike[i].MobNo;
+                                    bike[i].MobNo = bike[i + 1].MobNo;
+                                    bike[i + 1].MobNo = tempnp;
+
+                                    tempnp = bike[i].EmailID;
+                                    bike[i].EmailID = bike[i + 1].EmailID;
+                                    bike[i + 1].EmailID = tempnp;
+
+                                    tempnp = bike[i].Date_Joining;
+                                    bike[i].Date_Joining = bike[i + 1].Date_Joining;
+                                    bike[i + 1].Date_Joining = tempnp;
+                                }
+                                bikeCount--;
+                            }
                         }
                         else
                         {
-                            string tempnp;
-                            int tempU;
-                            for (int i = flag; i < bikeCount - 1; i++)
-                            {
-                                tempU = bike[i].UID;
-                                bike[i].UID = bike[i + 1].UID;
-                                bike[i + 1].UID = tempU;
-
-                                tempnp = bike[i].Name;
-                                bike[i].Name = bike[i + 1].Name;
-                                bike[i + 1].Name = tempnp;
-
-                                tempnp = bike[i].MobNo;
-                                bike[i].MobNo = bike[i + 1].MobNo;
-                                bike[i + 1].MobNo = tempnp;
-
-                                tempnp = bike[i].EmailID;
-                                bike[i].EmailID = bike[i + 1].EmailID;
-                                bike[i + 1].EmailID = tempnp;
-
-                                tempnp = bike[i].Date_Joining;
-                                bike[i].Date_Joining = bike[i + 1].Date_Joining;
-                                bike[i + 1].Date_Joining = tempnp;
-                            }
-                            bikeCount--;
+                            cout << "\nCannot Delete! It can be deleted only when it hasn't been booked.";
                         }
                     }
                 }
@@ -1588,6 +2616,7 @@ public:
                     cout << "Enter the UID of Taxi you want to Delete: ";
                     int tempUID, flag = -1;
                     fflush(stdin);
+                    fflush(stdin);
                     cin >> tempUID;
 
                     for (int i = 0; i < taxiCount; taxiCount++)
@@ -1604,37 +2633,44 @@ public:
                     }
                     else
                     {
-                        if (flag == taxiCount - 1)
+                        if (canRemoveTaxi(flag))
                         {
-                            taxiCount--;
+                            if (flag == taxiCount - 1)
+                            {
+                                taxiCount--;
+                            }
+                            else
+                            {
+                                string tempnp;
+                                int tempU;
+                                for (int i = flag; i < taxiCount - 1; i++)
+                                {
+                                    tempU = taxi[i].UID;
+                                    taxi[i].UID = taxi[i + 1].UID;
+                                    taxi[i + 1].UID = tempU;
+
+                                    tempnp = taxi[i].Name;
+                                    taxi[i].Name = taxi[i + 1].Name;
+                                    taxi[i + 1].Name = tempnp;
+
+                                    tempnp = taxi[i].MobNo;
+                                    taxi[i].MobNo = taxi[i + 1].MobNo;
+                                    taxi[i + 1].MobNo = tempnp;
+
+                                    tempnp = taxi[i].EmailID;
+                                    taxi[i].EmailID = taxi[i + 1].EmailID;
+                                    taxi[i + 1].EmailID = tempnp;
+
+                                    tempnp = taxi[i].Date_Joining;
+                                    taxi[i].Date_Joining = taxi[i + 1].Date_Joining;
+                                    taxi[i + 1].Date_Joining = tempnp;
+                                }
+                                taxiCount--;
+                            }
                         }
                         else
                         {
-                            string tempnp;
-                            int tempU;
-                            for (int i = flag; i < taxiCount - 1; i++)
-                            {
-                                tempU = taxi[i].UID;
-                                taxi[i].UID = taxi[i + 1].UID;
-                                taxi[i + 1].UID = tempU;
-
-                                tempnp = taxi[i].Name;
-                                taxi[i].Name = taxi[i + 1].Name;
-                                taxi[i + 1].Name = tempnp;
-
-                                tempnp = taxi[i].MobNo;
-                                taxi[i].MobNo = taxi[i + 1].MobNo;
-                                taxi[i + 1].MobNo = tempnp;
-
-                                tempnp = taxi[i].EmailID;
-                                taxi[i].EmailID = taxi[i + 1].EmailID;
-                                taxi[i + 1].EmailID = tempnp;
-
-                                tempnp = taxi[i].Date_Joining;
-                                taxi[i].Date_Joining = taxi[i + 1].Date_Joining;
-                                taxi[i + 1].Date_Joining = tempnp;
-                            }
-                            taxiCount--;
+                            cout << "\nCannot Delete! It can be deleted only when it hasn't been booked.";
                         }
                     }
                 }
@@ -1649,7 +2685,7 @@ public:
             userMode = -1;
         }
     }
-    //code ok
+    //code done
     void viewHelpList()
     {
         if (userMode == 3)
@@ -1657,7 +2693,7 @@ public:
             if (helpCount > 0)
             {
                 cout << "\n-------------------------------------------------------------------";
-                cout << "\nHelp UID\tUser Type\tUser UID";
+                cout << "\nHelpUID\tUser Type\tUser UID";
                 for (int a = 0; a < helpCount; a++)
                 {
 
@@ -1678,7 +2714,7 @@ public:
             userMode = -1;
         }
     }
-    //code ok
+    //code done
     void showVehicles()
     {
         int indexTemp = -1;
@@ -1687,11 +2723,13 @@ public:
             int choice = 0;
             while (choice != -1)
             {
+                screenReset();
                 cout << "\nDisplay Vehicle Details Menu:";
                 cout << "\n1. Bike List";
                 cout << "\n2. Taxi List";
                 cout << "\n-1 GO BACK";
                 cout << "\nEnter your choice_";
+                fflush(stdin);
                 cin >> choice;
                 switch (choice)
                 {
@@ -1710,6 +2748,7 @@ public:
                     {
                         cout << "\nBike List is empty!";
                     }
+                    holdByInput();
                 }
                 break;
                 case 2:
@@ -1727,20 +2766,21 @@ public:
                     {
                         cout << "\nTaxi List is empty!";
                     }
+                    holdByInput();
                 }
                 break;
                 case -1:
                 {
                     cout << "\nGoing back";
-                    wait(2);
                 }
                 break;
                 default:
                 {
                     cout << "\nInvalid Choice entered";
+                    holdByInput();
                 }
                 break;
-                }
+                } //switch closed
             }
         }
         else
@@ -1749,7 +2789,7 @@ public:
             userMode = -1;
         }
     }
-    //code ok
+    //code done
     void resolveHelp()
     {
         if (userMode == 3)
@@ -1761,6 +2801,7 @@ public:
                 {
                     viewHelpList();
                     cout << "\nEnter Help UID to resolve_";
+                    fflush(stdin);
                     cin >> UIDin;
 
                     int f = -1;
@@ -1774,12 +2815,13 @@ public:
                     }
                     if (f >= 0)
                     {
-                        cout << "\nHelp UID\tUser Type\tUser UID";
+                        cout << "\nHelp UID\tUser Type\tUser UID\n";
                         cout << help[f].UID << "\t" << help[f].userMode << "\t" << help[f].userUID
                              << "\nComment:" << help[f].comment;
 
                         int choice2 = 0;
                         cout << "\nPress 1 to confirm, 0 to cancel_";
+                        fflush(stdin);
                         cin >> choice2;
                         if (choice2 == 1) //delete that record
                         {
@@ -1831,7 +2873,7 @@ public:
             userMode = -1;
         }
     }
-    //code ok
+    //code done
     void showMyDetails() //vanshika
     {
         if (userMode != -1)
@@ -1885,27 +2927,33 @@ public:
             userMode = -1;
         }
     }
-    //code ok
+    //code done
     void addStaff()
     {
 
         if (userMode == 4)
         {
 
+            // cout << "\nstaff count=" << staffCount; //testing
             if (staffCount < maxStaffCount)
             {
-                int tempindex = staffCount++;
+                int tempindex = staffCount;
 
                 cout << "Enter your name : ";
                 fflush(stdin);
                 getline(cin, staff[tempindex].Name);
-                cout << "Enter your password : ";
+                // cout << "\nEntered Data: " << staff[tempindex].Name; //testing
 
+                cout << "Enter your password : ";
                 fflush(stdin);
                 cin >> staff[tempindex].password;
 
+                cout << "Enter your mobile no : ";
+                fflush(stdin);
+                cin >> staff[tempindex].MobNo;
+
                 //PROGRAM FOR UID ALLOTTMENT
-                if (staffCount < 1)
+                if (staffCount == 0)
                 {
                     staff[staffCount].UID = 0;
                     cout << "\nUID allotted : 0";
@@ -1931,6 +2979,7 @@ public:
                         }
                     }
                 }
+                staffCount++;
             }
             else
             {
@@ -1944,7 +2993,7 @@ public:
             userMode = -1;
         }
     }
-    //code ok
+    //code done
     void editStaff()
     {
         if (userMode == 4)
@@ -1958,6 +3007,7 @@ public:
             {
                 cout << "Enter the UID you want to edit: ";
                 int tempUID, flag = -1;
+                fflush(stdin);
                 fflush(stdin);
                 cin >> tempUID;
 
@@ -1981,10 +3031,12 @@ public:
                     string temp;
 
                     fflush(stdin);
+                    fflush(stdin);
                     cin >> choice;
                     if (choice == 1)
                     {
                         cout << "Enter new Name: \n";
+                        fflush(stdin);
                         fflush(stdin);
                         fflush(stdin);
                         getline(cin, temp);
@@ -1993,6 +3045,7 @@ public:
                     else if (choice == 2)
                     {
                         cout << "Enter new password: ";
+                        fflush(stdin);
                         fflush(stdin);
                         cin >> temp;
                         staff[flag].password = temp;
@@ -2011,7 +3064,7 @@ public:
             userMode = -1;
         }
     }
-    //code ok
+    //code done
     void removeStaff() //ritik
     {
         if (userMode == 4)
@@ -2025,6 +3078,7 @@ public:
             {
                 cout << "Enter the UID you want to Delete: ";
                 int tempUID, flag = -1;
+                fflush(stdin);
                 fflush(stdin);
                 cin >> tempUID;
 
@@ -2076,7 +3130,7 @@ public:
             userMode = -1;
         }
     }
-    //code ok
+    //code done
     void viewStaff()
     {
         int indexTemp = -1; //to run loops and store index no to operate on
@@ -2091,8 +3145,8 @@ public:
                          << indexTemp + 1
                          << "\t"
                          << staff[indexTemp].UID
-                         << "\t";
-                    //  << staff[indexTemp];
+                         << "\t"
+                         << staff[indexTemp].Name;
                 }
             }
             else
@@ -2108,7 +3162,7 @@ public:
             //above line to exit program, to mark that unauthorise access is detected
         }
     }
-    //code ok
+    //code done
     void viewOrgDetails()
     {
         if (userMode != -1)
@@ -2116,11 +3170,11 @@ public:
             cout << "Organization Details" << endl;
             if (adminCount == 1) //details are available
             {
-                cout << "Name " << admin[0].OrgName << endl;
-                cout << "Address " << admin[0].OrgAdrs << "\n";
-                cout << "Mobile Number " << admin[0].MobNo << "\n";
-                cout << "****************************************" << endl;
-                cout << "Administrator" << admin[0].Name;
+                cout << "Name: " << admin[0].OrgName << endl;
+                cout << "Address: " << admin[0].OrgAdrs << "\n";
+                cout << "Mobile Number: " << admin[0].MobNo << "\n";
+                cout << "Administrator: " << admin[0].Name;
+                cout << "\n****************************************" << endl;
             }
             else
             {
@@ -2135,7 +3189,7 @@ public:
             //above line to exit program, to mark that unauthorise access is detected
         }
     }
-    //code ok
+    //code done
     void editOrgDetails() //mehak
     {
         if (userMode == 4)
@@ -2144,6 +3198,7 @@ public:
             string temp;
             while (choice != -1)
             {
+                screenReset();
                 cout << "What Do You Want To Change\n";
                 cout << "1. Name\n";
                 cout << "2. password \n";
@@ -2152,7 +3207,7 @@ public:
                 cout << "5. MobNo\n";
                 cout << "-1 To Go Back" << endl;
 
-                cout << "Enter Your Choice" << endl;
+                cout << "Enter Your Choice_";
                 fflush(stdin);
                 cin >> choice;
 
@@ -2162,6 +3217,7 @@ public:
                 {
                     cout << "Enter New Admin Name\n";
                     fflush(stdin);
+                    fflush(stdin);
                     getline(cin, temp);
                     admin[0].Name = temp;
                 }
@@ -2170,12 +3226,14 @@ public:
                 {
                     cout << "Enter New password" << endl;
                     fflush(stdin);
+                    fflush(stdin);
                     cin >> admin[0].password;
                 }
                 break;
                 case 3:
                 {
                     cout << "Enter New Organization Name\n";
+                    fflush(stdin);
                     fflush(stdin);
                     getline(cin, temp);
                     admin[0].OrgName = temp;
@@ -2185,6 +3243,7 @@ public:
                 {
                     cout << "Enter New Organization Address\n";
                     fflush(stdin);
+                    fflush(stdin);
                     getline(cin, temp);
                     admin[0].OrgAdrs = temp;
                 }
@@ -2193,6 +3252,7 @@ public:
                 {
                     cout << "Enter New Organization Name\n";
                     fflush(stdin);
+                    fflush(stdin);
                     cin >> temp;
                     admin[0].MobNo = temp;
                 }
@@ -2200,7 +3260,6 @@ public:
                 case -1:
                 {
                     cout << "Going Back..." << endl;
-                    wait(2);
                 }
                 break;
                 }
@@ -2214,38 +3273,44 @@ public:
             //above line to exit program, to mark that unauthorise access is detected
         }
     }
-    //code ok
+    //code done
     void addOrgDetails()
     {
         string temp = "NIL";
         if (userMode == 4)
         {
+            cout << "\nUID allotted: 0";
+
             cout << "\nEnter New Admin Name_";
             fflush(stdin);
             getline(cin, temp);
             admin[0].Name = temp;
 
-            cout << "\nEnter New password_" << endl;
+            cout << "\nEnter New password_";
+            fflush(stdin);
             fflush(stdin);
             cin >> temp;
             admin[0].password = temp;
 
             cout << "\nEnter Organization Name_";
             fflush(stdin);
+            fflush(stdin);
             getline(cin, temp);
             admin[0].OrgName = temp;
 
             cout << "\nEnter Organization Address_";
+            fflush(stdin);
             fflush(stdin);
             getline(cin, temp);
             admin[0].OrgAdrs = temp;
 
             cout << "\nEnter New Contact No_";
             fflush(stdin);
+            fflush(stdin);
             cin >> temp;
             admin[0].MobNo = temp;
 
-            admin[0].UID = 1;
+            admin[0].UID = 0;
             adminCount = 1;
             cout << "Going Back..._" << endl;
             wait(2);
@@ -2266,41 +3331,11 @@ public:
 int main()
 {
     int choice = 0;
-    //changing theme of the prompt
-    cout << "\nThemes Available:";
-    cout << "\n0. Default";
-    cout << "\n1. Ocean";
-    cout << "\n2. Forest";
-    cout << "\n3. Desert";
-    cout << "\nEnter your choice_";
-    cin >> choice;
-    switch (choice)
-    {
-    case 1:
-    {
-        system("color 10");
-    }
-    break;
-    case 2:
-    {
-        system("color 20");
-    }
-    break;
-    case 3:
-    {
-        system("color 60");
-    }
-    break;
-    default:
-    {
-        system("color 07");
-    }
-    break;
-    } //switch
 
     // currentUID, UserMode, currentIndex and ARRAY currentIndexArray available if needed
 
     BookMyRide BMRobj;
+    BMRobj.setTheme();
     import();
     BMRobj.wait(3);
     BMRobj.screenReset();
@@ -2318,6 +3353,7 @@ int main()
 
     while (choice != -1)
     {
+
         BMRobj.screenReset();
         cout << "\nMain Menu";
         cout << "\n1.  Use for Bike booking & related";
@@ -2343,14 +3379,16 @@ int main()
                 int choice2 = 0;
                 while (choice2 != -1)
                 {
+                    BMRobj.screenReset();
                     cout << "\nUser(Bike) Menu";
-                    cout << "\n1. New Booking";
+                    cout << "\n1. Make Booking";
                     cout << "\n2. Show Booking Details";
                     cout << "\n3. Remove Booking";
                     cout << "\n4. Ask for help";
                     cout << "\n-1. LOG OUT";
 
                     cout << "\nEnter your choice_";
+                    fflush(stdin);
                     fflush(stdin);
                     cin >> choice2;
                     switch (choice2)
@@ -2362,12 +3400,12 @@ int main()
                     break;
                     case 2: //show booking
                     {
-                        BMRobj.showBookings();
+                        BMRobj.showMyBooking();
                     }
                     break;
                     case 3: //remove booking
                     {
-                        BMRobj.removeBooking();
+                        BMRobj.cancelBike();
                     }
                     break;
                     case 4: //help
@@ -2378,7 +3416,6 @@ int main()
                     case -1: //LOG OUT
                     {
                         cout << "\nLogging out";
-                        BMRobj.wait(2);
                     }
                     break;
                     default: //Default
@@ -2388,7 +3425,9 @@ int main()
                     break;
                     }
                     //Show your creativity here
+                    BMRobj.holdByInput();
                 } //switch closed
+
                 if (userMode == -1)
                 {
                     cout << "\nUnauthorised Access Detected!";
@@ -2410,6 +3449,7 @@ int main()
                 int choice2 = 0;
                 while (choice2 != -1)
                 {
+                    BMRobj.screenReset();
                     cout << "\nUser(Taxi) Menu";
                     cout << "\n1. New Booking";
                     cout << "\n2. Show Booking Details";
@@ -2418,6 +3458,7 @@ int main()
                     cout << "\n-1. LOG OUT";
 
                     cout << "\nEnter your choice_";
+                    fflush(stdin);
                     fflush(stdin);
                     cin >> choice2;
                     switch (choice2)
@@ -2429,12 +3470,12 @@ int main()
                     break;
                     case 2: //show booking
                     {
-                        BMRobj.showBookings();
+                        BMRobj.showMyBooking();
                     }
                     break;
                     case 3: //remove booking
                     {
-                        BMRobj.removeBooking();
+                        BMRobj.cancelTaxi();
                     }
                     break;
                     case 4: //help
@@ -2445,7 +3486,6 @@ int main()
                     case -1: //LOG OUT
                     {
                         cout << "\nLogging out";
-                        BMRobj.wait(2);
                     }
                     break;
                     default: //Default
@@ -2455,7 +3495,9 @@ int main()
                     break;
                     }
                     //Show your creativity here
-                } //switch closed
+                    BMRobj.holdByInput();
+                } //while closed
+
                 if (userMode == -1)
                 {
                     cout << "\nUnauthorised Access Detected!";
@@ -2472,38 +3514,258 @@ int main()
         case 3: //Staff Section
         {
             userMode = 3;
-            int choice2 = 0;
+            int choice2 = 0, choice3 = 0;
             if (BMRobj.authenticate(userMode))
             {
                 //Show your creativity here
                 while (choice2 != -1)
                 {
+
                     BMRobj.screenReset();
-                    cout << "\nAdmin Menu:";
-                    cout << "\n1. Add Vehicle";
-                    cout << "\n2. Edit Vehicle";
-                    cout << "\n3. Remove Vehicle";
-                    cout << "\n4. View Vehicles";
-                    cout << "\n\n5. Add Location";
-                    cout << "\n6. Edit Location";
-                    cout << "\n7. Remove Location";
-                    cout << "\n8. View Locations";
-                    cout << "\n9. View My Details";
-                    cout << "\n10. Edit My Details";
+
+                    cout << "\nSTAFF MENU:";
+                    cout << "\n1. Vehicle Menu";
+                    cout << "\n2. Location Menu";
+                    cout << "\n3. User Management";
+                    cout << "\n4. Self Menu";
                     cout << "\n-1 LOG OUT";
                     cout << "\nEnter your choice_";
                     cin >> choice2;
-                }
-            }
-            else
-            {
-                cout << "\nUnable to Authenticate as staff!";
-            }
+
+                    switch (choice2)
+                    {
+                    case 1: //vehicle related
+                    {
+                        choice3 = 0;
+                        while (choice3 != -1)
+                        {
+                            BMRobj.screenReset();
+                            cout << "\nVehicle Menu";
+                            cout << "\n1. Add Vehicle";
+                            cout << "\n2. Edit Vehicle";
+                            cout << "\n3. Remove Vehicle";
+                            cout << "\n4. View Vehicles";
+                            cout << "\n-1 Go Back";
+                            cout << "\nEnter your choice_";
+                            fflush(stdin);
+                            cin >> choice3;
+
+                            switch (choice3)
+                            {
+                            case 1:
+                            {
+                                BMRobj.addVehicle();
+                            } //Add Vehicle
+                            break;
+                            case 2:
+                            {
+                                BMRobj.editVehicle();
+                            } //Edit Vehicle
+                            break;
+                            case 3:
+                            {
+                                BMRobj.removeVehicle();
+                            } //Remove Vehicle
+                            break;
+                            case 4:
+                            {
+                                BMRobj.showVehicles();
+                            } //View Vehicles
+                            break;
+                            case -1:
+                            {
+                                cout << "\nGoing back.";
+                            } //Log Out
+                            break;
+                            default:
+                            {
+                                cout << "\nInvalid choice entered!";
+                            } //deafult
+                            } //switch closed
+                            BMRobj.holdByInput();
+                            if (userMode == -1)
+                            {
+                                cout << "\nUnauthorised Access Detected!";
+                                break; //takes out of while loop
+                            }
+                        } //while loop
+                    }
+                    break;
+                    case 2: //location related
+                    {
+                        choice3 = 0;
+                        while (choice3 != -1)
+                        {
+                            BMRobj.screenReset();
+                            cout << "\nLocation Menu";
+                            cout << "\n1. Add Location";
+                            cout << "\n2. Edit Location";
+                            cout << "\n3. Remove Location";
+                            cout << "\n4. View Locations";
+                            cout << "\n-1 Go Back";
+                            cout << "\nEnter your choice_";
+                            fflush(stdin);
+                            cin >> choice3;
+
+                            switch (choice3)
+                            {
+                            case 1:
+                            {
+                                BMRobj.addLocation();
+                            } //Add Location
+                            break;
+                            case 2:
+                            {
+                                BMRobj.editLocation();
+                            } //Edit Location
+                            break;
+                            case 3:
+                            {
+                                BMRobj.removeLocation();
+                            } //Remove Location
+                            break;
+                            case 4:
+                            {
+                                BMRobj.showLocations();
+                            } //View Location
+                            break;
+                            case -1:
+                            {
+                                cout << "\nGoing back.";
+                            } //Log Out
+                            break;
+                            default:
+                            {
+                                cout << "\nInvalid choice entered!";
+                            } //deafult
+                            }
+                            BMRobj.holdByInput();
+                            if (userMode == -1)
+                            {
+                                cout << "\nUnauthorised Access Detected!";
+                                break; //takes out of while loop
+                            }
+                        }
+                    }
+                    break;
+                    case 3: // user related
+                    {
+                        choice3 = 0;
+                        while (choice3 != -1)
+                        {
+                            BMRobj.screenReset();
+                            cout << "\nUser Management";
+                            cout << "\n1. Tick Off Booking";
+                            cout << "\n2. Resolve help";
+                            cout << "\n3. View Booking List";
+                            cout << "\n-1 GO BACK";
+                            cout << "\nEnter your choice_";
+                            fflush(stdin);
+                            cin >> choice3;
+
+                            switch (choice3)
+                            {
+                            case 1:
+                            {
+                                BMRobj.tickOff();
+                            }
+                            break;
+                            case 2:
+                            {
+                                BMRobj.resolveHelp();
+                            }
+                            break;
+                            case 3:
+                            {
+                                BMRobj.showBookingList();
+                            }
+                            break;
+                            case -1:
+                            {
+                                cout << "\nGoing back.";
+                            } //Log Out
+                            break;
+                            default:
+                            {
+                                cout << "\nInvalid choice entered!";
+                            } //deafult
+                            }
+                            BMRobj.holdByInput();
+                            if (userMode == -1)
+                            {
+                                cout << "\nUnauthorised Access Detected!";
+                                break; //takes out of while loop
+                            }
+                        }
+                    }
+                    break;
+                    case 4: //self related
+                    {
+                        choice3 = 0;
+                        while (choice3 != -1)
+                        {
+                            BMRobj.screenReset();
+                            cout << "\nSelf Menu";
+                            cout << "\n1. View My Details";
+                            cout << "\n2. Edit My Details";
+                            cout << "\n-1 Go Back";
+                            cout << "\nEnter your choice_";
+                            fflush(stdin);
+                            cin >> choice3;
+
+                            switch (choice3)
+                            {
+                            case 1:
+                            {
+                                BMRobj.showMyDetails();
+                            } //View My Details
+                            break;
+                            case 2:
+                            {
+                                BMRobj.editSelf();
+                            } //Edit My Details
+                            break;
+                            case -1:
+                            {
+                                cout << "\nGoing back.";
+                            } //Log Out
+                            break;
+                            default:
+                            {
+                                cout << "\nInvalid choice entered!";
+                            } //deafult
+                            }
+                            BMRobj.holdByInput();
+                            if (userMode == -1)
+                            {
+                                cout << "\nUnauthorised Access Detected!";
+                                break; //takes out of while loop
+                            }
+                        }
+                    }
+                    break;
+                    case -1: //Go back
+                    {
+                        cout << "\nLogged Out.";
+                    }
+                    break;
+                    default: //invalid choice
+                    {
+                        cout << "\nInvalid Choice Entered!";
+                    }
+                    }
+                    BMRobj.holdByInput();
+                    if (userMode == -1)
+                    {
+                        cout << "\nUnauthorised Access Detected!";
+                        break; //takes out of while loop
+                    }
+                } // outer while closed
+            }     //if authenticated closed
         }
         break;
         case 4: //Admin Section
         {
-
             userMode = 4;
             int choice2 = 0;
             if (BMRobj.authenticate(userMode))
@@ -2521,6 +3783,7 @@ int main()
                     cout << "\n6. Edit Org Details";
                     cout << "\n-1 LOG OUT";
                     cout << "\nEnter your choice_";
+                    fflush(stdin);
                     cin >> choice2;
 
                     switch (choice2)
@@ -2557,8 +3820,7 @@ int main()
                     break;
                     case -1:
                     {
-                        cout << "\nGoing back";
-                        BMRobj.wait(2);
+                        cout << "\nGoing back.";
                     }
                     break;
                     default:
@@ -2566,9 +3828,17 @@ int main()
                         cout << "\nInvalid choice entered!";
                     }
                     break;
+                    } //switch closed
+
+                    BMRobj.holdByInput();
+
+                    if (userMode == -1)
+                    {
+                        cout << "\nUnauthorised Access Detected!";
+                        break; //takes out of while loop
                     }
-                }
-            }
+                } //while closed
+            }     //if(authentication) closed
             else
             {
                 cout << "\nUnable to Authenticate as Admin!";
@@ -2591,6 +3861,7 @@ int main()
         userMode = 0;
     } //while closed
     backup();
+    BMRobj.wait(3);
     cout << "\n\\END OF PROGRAM.";
     return 0;
 }
