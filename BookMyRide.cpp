@@ -8,31 +8,6 @@
 #include <math.h>
 using namespace std;
 
-//for date and time related tasks
-std::string current_date();
-std::string current_time();
-
-std::string current_date()
-{
-    time_t now = time(NULL);
-    struct tm tstruct;
-    char buf[40];
-    tstruct = *localtime(&now);
-    //format: day DD-MM-YYYY
-    strftime(buf, sizeof(buf), "%A %d/%m/%Y", &tstruct);
-    return buf;
-}
-std::string current_time()
-{
-    time_t now = time(NULL);
-    struct tm tstruct;
-    char buf[40];
-    tstruct = *localtime(&now);
-    //format: HH:mm:ss
-    strftime(buf, sizeof(buf), "%X", &tstruct);
-    return buf;
-}
-
 //UID (User ID, TaxiID etc. ) rules
 
 //Max prespecified Values
@@ -584,7 +559,7 @@ public:
 
                     cout << "\nNew User Added";
                     userMode = 1;
-                    currentIndex = userBikeCount - 1;
+                    currentIndex = userBikeCount;
                     currentUID = userBike[userBikeCount].UID;
                     userBikeCount++;
                     holdByInput();
@@ -909,11 +884,7 @@ public:
     // void authorize(int n); //storing n into userMode if user verifies the passwords and all
     //otherwise store -1 in userMode
     //give three chances to enter password
-
-    // void manageBookings()
-    // {
-    // }
-    //
+    //code done
     void tickOff()
     {
         if (userMode == 3)
@@ -1208,14 +1179,14 @@ public:
 
                             taxi[taxiIndex].isAvail = 0;
                             taxi[taxiIndex].userIndex = currentIndex;
-                            cout << "\nDistance: " << dist << " km";
-                            cout << "\nExpected Time Taken: " << dist / taxiMileage << " hours";
 
                             cout << "\nBooking Details:";
                             cout << "\nFROM: " << location[loc1].locName << " (" << location[loc1].UID << ")";
                             cout << "\nTO: " << location[loc2].locName << " (" << location[loc1].UID << ")";
                             cout << "\n Taxi UID: " << userTaxi[currentIndex].TaxiUID;
                             cout << "\n Driver Contact: \t" << taxi[taxiIndex].Name << "\t" << taxi[taxiIndex].MobNo;
+                            cout << "\nDistance: " << dist << " km";
+                            cout << "\nExpected Time Taken: " << dist / taxiMileage << " hours";
                             userTaxi[currentIndex].isAllotted = 1;
                         }
                         else
@@ -2087,6 +2058,8 @@ public:
         return -1;
     }
     //code done
+
+    //HISHITA
     void addVehicle()
     {
         int choice = 0, f = 0;
@@ -2697,7 +2670,8 @@ public:
             userMode = -1;
         }
     }
-    //code done
+    //HISHITA
+    //
     void viewHelpList()
     {
         if (userMode == 3)
@@ -2747,6 +2721,7 @@ public:
         }
     }
     //code done
+    //VANSHIKA
     void showVehicles()
     {
         int indexTemp = -1;
@@ -2851,7 +2826,8 @@ public:
                     {
                         cout << "\nHelp UID\tUser Type\tUser Contact)\n";
                         cout << help[f].UID << "\t" << help[f].userMode << "\t\t";
-                        if (help[f].userMode = 0)
+
+                        if (help[f].userMode = 1)
                             for (int a = 0; a < userBikeCount; a++)
                             {
                                 if (help[f].userUID == userBike[a].UID)
@@ -2982,7 +2958,9 @@ public:
             userMode = -1;
         }
     }
-    //code done
+    //VANSHIKA
+
+    //RITIK
     void addStaff()
     {
 
@@ -3185,7 +3163,9 @@ public:
             userMode = -1;
         }
     }
-    //code done
+    //RITIK
+
+    //MEHAK
     void viewStaff()
     {
         int indexTemp = -1; //to run loops and store index no to operate on
@@ -3328,7 +3308,8 @@ public:
             //above line to exit program, to mark that unauthorise access is detected
         }
     }
-    //code done
+    //MEHAK
+
     void addOrgDetails()
     {
         string temp = "NIL";
