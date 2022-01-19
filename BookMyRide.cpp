@@ -1078,7 +1078,8 @@ public:
                         showLocations();
 
                         int loc1, loc2; //stores first UIDs, then index nos of locations
-                        int bikeIndex, dist;
+                        int bikeIndex;
+                        float dist;
 
                         cout << "\nFrom (Enter Serial No)_";
                         fflush(stdin);
@@ -1101,8 +1102,8 @@ public:
                             cout << "\nBooking Details:";
                             cout << "\nFROM: " << location[loc1].locName << " (" << location[loc1].UID << ")";
                             cout << "\nTO: " << location[loc2].locName << " (" << location[loc1].UID << ")";
-                            // cout << "\nDistance: " << dist << " km";
-                            // cout << "\nExpected Time Taken: " << (float)dist / bikeMileage << " hours";
+                            cout << "\nDistance: " << dist << " km";
+                            cout << "\nExpected Time Taken: " << dist / bikeMileage << " hours";
                             cout << "\n Bike UID: " << userBike[currentIndex].BikeUID;
                             cout << "\n Driver Contact: \t" << bike[bikeIndex].Name << "\t" << bike[bikeIndex].MobNo;
                             userBike[currentIndex].isAllotted = 1;
@@ -1187,7 +1188,8 @@ public:
                         showLocations();
 
                         int loc1, loc2; //stores first UIDs, then index nos of locations
-                        int taxiIndex, dist;
+                        int taxiIndex;
+                        float dist;
 
                         cout << "\nFrom (Enter Serial No)_";
                         fflush(stdin);
@@ -1206,12 +1208,12 @@ public:
 
                             taxi[taxiIndex].isAvail = 0;
                             taxi[taxiIndex].userIndex = currentIndex;
+                            cout << "\nDistance: " << dist << " km";
+                            cout << "\nExpected Time Taken: " << dist / taxiMileage << " hours";
 
                             cout << "\nBooking Details:";
                             cout << "\nFROM: " << location[loc1].locName << " (" << location[loc1].UID << ")";
                             cout << "\nTO: " << location[loc2].locName << " (" << location[loc1].UID << ")";
-                            // cout << "\nDistance: " << dist << " km";
-                            // cout << "\nExpected Time Taken: " << (float)dist / taxiMileage << " hours";
                             cout << "\n Taxi UID: " << userTaxi[currentIndex].TaxiUID;
                             cout << "\n Driver Contact: \t" << taxi[taxiIndex].Name << "\t" << taxi[taxiIndex].MobNo;
                             userTaxi[currentIndex].isAllotted = 1;
@@ -1304,6 +1306,10 @@ public:
                     cout << "\nFrom " << location[userBike[currentIndex].locInd1].locName;
                     cout << "To " << location[userBike[currentIndex].locInd2].locName;
                     cout << "\nBike Contact: " << bike[a].Name << " (" << bike[a].MobNo << ")";
+
+                    float dist = calculateDistance(userBike[currentIndex].locInd1, userBike[currentIndex].locInd2);
+                    cout << "\nDistance: " << dist << " km";
+                    cout << "\nExpected Time Taken: " << dist / bikeMileage << " hours";
                     cout << "\n-------------------------------";
                 }
                 else
@@ -1338,6 +1344,10 @@ public:
                     cout << "\nFrom " << location[userTaxi[currentIndex].locInd1].locName;
                     cout << "To " << location[userTaxi[currentIndex].locInd2].locName;
                     cout << "\nTaxi Contact: " << taxi[a].Name << " (" << taxi[a].MobNo << ")";
+
+                    float dist = calculateDistance(userTaxi[currentIndex].locInd1, userTaxi[currentIndex].locInd2);
+                    cout << "\nDistance: " << dist << " km";
+                    cout << "\nExpected Time Taken: " << dist / taxiMileage << " hours";
                     cout << "\n-------------------------------";
                 }
                 else
@@ -2053,11 +2063,11 @@ public:
         return -1;
     }
     //code done
-    int calculateDistance(int index1, int index2)
+    float calculateDistance(int index1, int index2)
     {
         if (index1 < locCount && index2 < locCount)
         {
-            int x1, y1, x2, y2, dist;
+            int x1, y1, x2, y2;
 
             x1 = location[index1].locX;
             y1 = location[index1].locY;
@@ -2065,12 +2075,14 @@ public:
             x2 = location[index2].locX;
             y2 = location[index2].locY;
 
+            return sqrt(pow(x2 - x1, 2) +
+                        pow(y2 - y1, 2) * 1.0);
             // cout << "\nCalculating Distance";
             // int l1 = (x2 - x1) * (x2 - x1);
             // int l2 = (y2 - y1) * (y2 - y1);
             // cout << "\t" << l1 << "\t" << l2;
             // dist = sqrtf(l1 + l2);
-            dist = 0;
+            // dist = 0;
         }
         return -1;
     }
@@ -2698,8 +2710,28 @@ public:
                 {
 
                     cout << "\n\n"
-                         << help[a].UID << "\t" << help[a].userMode << "\t" << help[a].userUID
-                         << "\nComment:" << help[a].comment;
+                         << help[a].UID << "\t" << help[a].userMode << "\t\t";
+
+                    if (help[a].userMode = 0)
+                        for (int b = 0; b < userBikeCount; b++)
+                        {
+                            if (help[a].userUID == userBike[b].UID)
+                            {
+                                cout << userBike[b].MobNo;
+                                break;
+                            }
+                        }
+                    else
+                        for (int b = 0; b < userTaxiCount; b++)
+                        {
+                            if (help[a].userUID == userTaxi[b].UID)
+                            {
+                                cout << userTaxi[b].MobNo;
+                                break;
+                            }
+                        }
+
+                    cout << "\nComment:" << help[a].comment;
                 }
                 cout << "\n-------------------------------------------------------------------";
             }
@@ -2800,9 +2832,11 @@ public:
                 while (UIDin != -1)
                 {
                     viewHelpList();
-                    cout << "\nEnter Help UID to resolve_";
+                    cout << "\nEnter Help UID to resolve(-1 to go back)_";
                     fflush(stdin);
                     cin >> UIDin;
+                    if (UIDin == -1)
+                        break;
 
                     int f = -1;
                     for (int a = 0; a < helpCount; a++)
@@ -2815,9 +2849,28 @@ public:
                     }
                     if (f >= 0)
                     {
-                        cout << "\nHelp UID\tUser Type\tUser UID\n";
-                        cout << help[f].UID << "\t" << help[f].userMode << "\t" << help[f].userUID
-                             << "\nComment:" << help[f].comment;
+                        cout << "\nHelp UID\tUser Type\tUser Contact)\n";
+                        cout << help[f].UID << "\t" << help[f].userMode << "\t\t";
+                        if (help[f].userMode = 0)
+                            for (int a = 0; a < userBikeCount; a++)
+                            {
+                                if (help[f].userUID == userBike[a].UID)
+                                {
+                                    cout << userBike[a].MobNo;
+                                    break;
+                                }
+                            }
+                        else
+                            for (int a = 0; a < userTaxiCount; a++)
+                            {
+                                if (help[f].userUID == userTaxi[a].UID)
+                                {
+                                    cout << userTaxi[a].MobNo;
+                                    break;
+                                }
+                            }
+
+                        cout << "\nComment:" << help[f].comment;
 
                         int choice2 = 0;
                         cout << "\nPress 1 to confirm, 0 to cancel_";
@@ -2848,6 +2901,8 @@ public:
                             }
                             helpCount--;
                             cout << "\nRecord Deleted.";
+                            if (helpCount == 0)
+                                UIDin = -1;
                             wait(2);
                         }
                         else
