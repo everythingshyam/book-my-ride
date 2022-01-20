@@ -2,7 +2,7 @@
 #include <stdio.h>  //for iput output
 #include <stdlib.h> //memory allocation related
 #include <string>
-#include <cstring> //for string related
+#include <cstring> //for string related operations
 #include <time.h>  //for printing time
 #include <conio.h> //for changing theme
 #include <math.h>  //for math operations, sqrt,pow
