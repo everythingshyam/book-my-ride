@@ -1,24 +1,23 @@
 #include <iostream> //for input output
 #include <cstdlib>  //memory allocation related
 #include <string>   //for string related operations
-// #include <cstring>
-#include <time.h>  //for time and date functions
-#include <conio.h> //for theme features
-#include <math.h>  //for math operations
+#include <time.h>   //for time and date functions
+#include <conio.h>  //for theme features
+#include <math.h>   //for math operations
 using namespace std;
 
 // Max prespecified Values
-const int maxAdminCount = 1;
-const int maxStaffCount = 3;
-const int maxUserCount = 5;
-const int maxVehicleCount = 10;
-const int maxLocCount = 20;
-const int maxHelpCount = 10;
+const int maxAdminCount = 1;    // max number of admins
+const int maxStaffCount = 3;    // max number of staff
+const int maxUserCount = 5;     // max number of users
+const int maxVehicleCount = 10; // max number of vehicles
+const int maxLocCount = 20;     // max number of locations
+const int maxHelpCount = 10;    // max number of help requests
 
-const int bikeMileage = 40; // km per litre
-const int taxiMileage = 60; // km per litre
+const int bikeMileage = 40; // mileage of bike in km per litre
+const int taxiMileage = 60; // mileage of taxi in km per litre
 
-// storing only name and mobile no for minimalism
+// User(Bike) struct
 struct UserBike
 {
     int UID;
@@ -33,6 +32,7 @@ struct UserBike
 } userBike[maxUserCount];
 int userBikeCount;
 
+// User(Taxi) struct
 struct UserTaxi
 {
     int UID;
@@ -47,6 +47,7 @@ struct UserTaxi
 } userTaxi[maxUserCount];
 int userTaxiCount;
 
+// Bike struct
 struct Bike
 {
     int isAvail;
@@ -60,6 +61,7 @@ struct Bike
 } bike[maxVehicleCount];
 int bikeCount;
 
+// Taxi struct
 struct Taxi
 {
     int isAvail;
@@ -72,6 +74,7 @@ struct Taxi
 } taxi[maxVehicleCount];
 int taxiCount;
 
+// Staff struct
 struct Staff
 {
     int UID;
@@ -81,6 +84,7 @@ struct Staff
 } staff[maxStaffCount];
 int staffCount;
 
+// Admin struct
 struct Admin
 {
     int UID;
@@ -92,6 +96,7 @@ struct Admin
 } admin[maxAdminCount];
 int adminCount;
 
+// Help Request struct
 struct Help
 {
     int UID;
@@ -101,6 +106,7 @@ struct Help
 } help[maxHelpCount];
 int helpCount;
 
+// Location struct
 struct Location
 {
     string locName;
@@ -110,24 +116,26 @@ struct Location
 } location[maxLocCount];
 int locCount;
 
-// following data used for user Identification
-string userModeArray[5] = {"Logged Out(Safe)", "User (Bike)", "User (Taxi)", "Staff", "Admin"};
+// These variables are used for Identification and Authentication
+string userModeNames[5] = {"Logged Out(Safe)", "User (Bike)", "User (Taxi)", "Staff", "Admin"};
 int currentNo = 0;  // stores current user serial No, zero by default
 int currentUID = 0; // stores UID of current user, zero by default
 int userMode = 0;   // stores user mode number, zero by default, refer to list below for details:
 /*
     indicates the mode user is in
-    -1: Logged out of everything(UNSAFE)____even if not handled accessing -1 serial of userModeArray will terminate the program, thereby providing security
-    0: Logged out but Safe
-    1: Logged in as User_Bike
-    2: Logged in as User_Taxi
-    3: Logged in as Staff
-    4: Logged in as Admin
+   -1: Logged out (UNSAFE)
+    0: Logged out (SAFE)
+    1: Logged in (User_Bike)
+    2: Logged in (User_Taxi)
+    3: Logged in (Staff)
+    4: Logged in (Admin)
 */
 
+// using C Functions in C++ (as I had them ready in another project)
 extern "C"
 {
-    void import() // Completed
+    // Function to import all data from text files
+    void import()
     {
         // importing from UserBike.txt
         FILE *fp = fopen("UserBike.txt", "r");
@@ -235,7 +243,8 @@ extern "C"
         // Decrypting all data
         //  decryptAll();
     }
-    ////////////////////////////////////////////////////////////////////////////////
+
+    // Function to export all data to text files
     void backup()
     {
         FILE *fp = fopen("UserBike.txt", "w");
@@ -326,11 +335,12 @@ extern "C"
         fclose(fp);
     }
 }
-// This class provides all the required utility functions
+
+// Class to provides all the required utility functions
 class Support
 {
 public:
-    // changing theme of the prompt
+    // Function to change theme of the Command Prompt
     void setTheme()
     {
         int choice = -1;
@@ -366,6 +376,8 @@ public:
         break;
         } // SWITCH CLOSED
     }
+
+    // Function to wait for a given number of seconds
     void wait(int noSec)
     {
         int f = 0;
@@ -386,6 +398,7 @@ public:
         }
     }
 
+    // Function to hold the program until user enters a character
     void holdByInput()
     {
         char holder;
@@ -394,6 +407,7 @@ public:
         cin >> holder;
     }
 
+    // Function to reset the screen (Header)
     void screenReset()
     {
         system("cls");
@@ -402,7 +416,7 @@ public:
         mytime = time(NULL);
         printf(ctime(&mytime));
         cout << "\n-------------------------[ " << admin[0].OrgName << " ]---------------------------";
-        cout << "\nUSERMODE : " << userModeArray[userMode] << "\t\t\t\t";
+        cout << "\nUSERMODE : " << userModeNames[userMode] << "\t\t\t\t";
         switch (userMode)
         {
         case 1: // userBike
@@ -424,7 +438,7 @@ public:
         printf("\n----------------------------------------------------------------------------------");
     }
 
-    ////////////////////////////////////////////////////////////////////////////////
+    // Function to authenticate user based on userMode
     bool authenticate(int userModeIn)
     {
         int UIDin;
@@ -830,25 +844,32 @@ public:
     }
 };
 
-// keep in mind follwing methods and variables as you proceed
 /*
-int userBikeCount;
-int userTaxiCount;
-int maxUserCount;
-int BikeCount;
-int TaxiCount;
-int maxVehicleCount;
-int staffCount;
-const int maxStaffCount;
-int locCount;
-const int maxLocCount;
 
-struct userBike[maxUserCount];
-struct userTaxi[maxUserCount];
-struct bike[maxVehicleCount];
-struct taxi[maxVehicleCount];
-struct staff[maxStaffCount];
-struct location[maxLocCount];
+    Keep in mind follwing methods and variables as you proceed:
+    int maxAdminCount;
+    int adminCount;
+    int maxStaffCount;
+    int staffCount;
+    int maxUserCount;
+    int userBikeCount;
+    int userTaxiCount;
+    int maxVehicleCount;
+    int BikeCount;
+    int TaxiCount;
+    const int maxLocCount;
+    int locCount;
+    int maxHelpCount;
+    int helpCount;
+
+    struct admin[maxAdminCount];
+    struct staff[maxStaffCount];
+    struct userBike[maxUserCount];
+    struct userTaxi[maxUserCount];
+    struct bike[maxVehicleCount];
+    struct taxi[maxVehicleCount];
+    struct location[maxLocCount];
+    struct help[maxHelpCount];
 
 */
 
@@ -856,6 +877,7 @@ struct location[maxLocCount];
 class BookMyRide : public Support
 {
 public:
+    // Function to tick off (mark completed) a booking
     void tickOff()
     {
         // given three chances to enter password
@@ -1009,6 +1031,7 @@ public:
         }
     }
 
+    // Function to book a bike
     void bookBike()
     {
         if (userMode == 1)
@@ -1081,6 +1104,7 @@ public:
         }
     }
 
+    // Function to cancel a bike booking
     void cancelBike()
     {
         if (userMode == 1)
@@ -1119,6 +1143,7 @@ public:
         }
     }
 
+    // Function to book a taxi
     void bookTaxi()
     {
         if (userMode == 2)
@@ -1191,6 +1216,7 @@ public:
         }
     }
 
+    // Function to cancel a taxi booking
     void cancelTaxi()
     {
         if (userMode == 2)
@@ -1229,6 +1255,7 @@ public:
         }
     }
 
+    // Function to show the booking details of the current user
     void showMyBooking()
     {
         if (userMode == 1)
@@ -1317,6 +1344,7 @@ public:
         }
     }
 
+    // Function to show the booking list
     void showBookingList()
     {
         int counter = 0;
@@ -1361,6 +1389,7 @@ public:
         }
     }
 
+    // Function to add a help request
     void getHelp()
     {
         if (userMode == 1)
@@ -1468,6 +1497,7 @@ public:
         }
     }
 
+    // Function to show list of locations
     void showLocations()
     {
         if (userMode != -1)
@@ -1494,6 +1524,7 @@ public:
         }
     }
 
+    // Function to add a new location
     void addLocation()
     {
         if (userMode == 3)
@@ -1554,6 +1585,7 @@ public:
         }
     }
 
+    // Function to edit location details
     void editLocation()
     {
         if (userMode == 3)
@@ -1643,7 +1675,7 @@ public:
         }
     }
 
-    // checks if the location user wants to remove is used in any booking
+    // Fuction to check if the location user wants to remove is used in any booking
     bool canRemoveLocation(int no)
     {
         for (int a = 1; a <= userBikeCount; a++)
@@ -1661,7 +1693,7 @@ public:
         return true;
     }
 
-    // removes location from location struct
+    // Function to remove a location from the location struct
     void removeLocation()
     {
         if (userMode = 3) // Staff Access
@@ -1724,7 +1756,7 @@ public:
         }
     }
 
-    // edit self details (staff and users)
+    // Function to edit current User details (staff and users)
     void editSelf()
     {
         if (userMode == 1) // userBike Access
@@ -1979,7 +2011,7 @@ public:
         }
     }
 
-    // checks for available bike and returns its serial no (0 if none available)
+    // Function to check for available bike and return its serial no (0 if none available)
     int isAvailBike()
     {
         if (userMode != -1)
@@ -2000,7 +2032,7 @@ public:
         return 0;
     }
 
-    // checks for available taxi and returns its serial no (0 if none available)
+    // Function to check for available taxi and return its serial no (0 if none available)
     int isAvailTaxi()
     {
         if (userMode != -1)
@@ -2021,7 +2053,7 @@ public:
         return 0;
     }
 
-    // calculates distance between two locations
+    // Function to calculate distance between two locations (given their serial nos)
     float calculateDistance(int no1, int no2)
     {
         if (no1 <= locCount && no2 <= locCount)
@@ -2040,7 +2072,7 @@ public:
         return -1;
     }
 
-    // adds a vehicle in database
+    // Function to add a vehicle
     void addVehicle()
     {
         int choice = -1, f = 0;
@@ -2181,7 +2213,7 @@ public:
         }
     }
 
-    // edit Vehicle details
+    // Function to edit a vehicle's details
     void editVehicle()
     {
         int choice = -1, choice2 = -1; // choice2 for inner switch case
@@ -2396,7 +2428,7 @@ public:
         }
     }
 
-    // checks if the bike user wants to remove is used in any booking
+    // Function to check if the bike, which user wants to remove, is used in any booking
     bool canRemoveBike(int no)
     {
         for (int a = 1; a <= userBikeCount; a++)
@@ -2408,7 +2440,7 @@ public:
         return true;
     }
 
-    // checks if the taxi user wants to remove is used in any booking
+    // Function to check if the taxi, which user wants to remove, is used in any booking
     bool canRemoveTaxi(int no)
     {
         for (int a = 1; a <= userTaxiCount; a++)
@@ -2420,7 +2452,7 @@ public:
         return true;
     }
 
-    // remove a vehicle from database
+    // Function to remove a vehicle
     void removeVehicle()
     {
         int choice = -1;
@@ -2574,7 +2606,7 @@ public:
         }
     }
 
-    // View List of Help Requests
+    // Function to view list of Help Requests
     void viewHelpList()
     {
         if (userMode == 3) // STAFF ACCESS
@@ -2700,7 +2732,7 @@ public:
         }
     }
 
-    // Mark A Help Request as Resolved
+    // Function to mark a Help Request as Resolved
     void resolveHelp()
     {
         if (userMode == 3) // STAFF ACCESS
@@ -2809,7 +2841,7 @@ public:
         }
     }
 
-    // View Current User Details (Any Type of User)
+    // Function to view current user details (LOGGED IN)
     void showMyDetails()
     {
         if (userMode != -1)
@@ -2864,7 +2896,7 @@ public:
         }
     }
 
-    // Add a new Staff
+    // Function to add a new staff
     void addStaff()
     {
 
@@ -2927,7 +2959,7 @@ public:
         }
     }
 
-    // Edit Staff Details
+    // Function to edit Staff Details
     void editStaff()
     {
         if (userMode == 4) // ADMIN ACCESS
@@ -2999,7 +3031,7 @@ public:
         }
     }
 
-    // Remove a Staff
+    // Funtion to remove a Staff
     void removeStaff()
     {
         if (userMode == 4) // ADMIN ACCESS
@@ -3058,7 +3090,7 @@ public:
         }
     }
 
-    // View List of Staff
+    // Function to view list of Staff members
     void viewStaff()
     {
         int tempNo = -1;   // to run loops and store serial no to operate on
@@ -3089,7 +3121,7 @@ public:
         }
     }
 
-    // View Admin Details
+    // Function to View current Admin Details
     void viewAdminDetails()
     {
         if (userMode != -1)
@@ -3115,7 +3147,7 @@ public:
         }
     }
 
-    // Edit Admin Details
+    // Function to edit current Admin Details
     void editAdminDetails()
     {
         if (userMode == 4) // ADMIN ACCESS
@@ -3198,7 +3230,7 @@ public:
         }
     }
 
-    // Add Admin Details
+    // Function to add new Admin
     void addAdminDetails()
     {
         string temp;
@@ -3283,11 +3315,19 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
+// MAIN FUNCTION
 int main()
 {
     int choice = -1;
 
-    // currentUID, UserMode, currentNo and ARRAY currentNoArray available if needed
+    /*
+    Use value of variables
+        -userMode
+        -userModeNames[5]
+        -currentNo
+        -currentUID
+    as and when needed
+    */
 
     BookMyRide BMR;
     BMR.setTheme();
@@ -3303,7 +3343,7 @@ int main()
         BMR.wait(2);
         userMode = 4;
         BMR.addAdminDetails();
-        userMode = 0; // resetting userMode after adding admin as user isn't logged in
+        userMode = 0; // resetting userMode after adding admin as user isn't logged in yet
     }
 
     while (choice != 0)
@@ -3810,7 +3850,8 @@ int main()
             BMR.wait(2);
             break;
         }
-        // resetting userMode and other variables here
+
+        // resetting authentication and identification variables
         userMode = 0;
         currentNo = 0;
         currentUID = 0;

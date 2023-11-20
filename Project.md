@@ -16,6 +16,8 @@
 
 -   convert C Code to C++
 
--   reduce wait time
+-   reduce, fix, add wait time wherever necessary
 
--   set 'back' as 0, indexing from 1 (indexing remaining)
+-   ~~add comments in front of each function and also wherever necessary~~
+
+-   ~~set 'back' as 0, indexing from 1 (indexing remaining)~~
