@@ -4,7 +4,16 @@
 #include <time.h>   //for time and date functions
 #include <conio.h>  //for theme features
 #include <math.h>   //for math operations
+#include <thread>   //for wait() method
+#include <chrono>   //for wait() method
 using namespace std;
+
+// defining sleep command based on platform
+#if defined(_WIN32) || defined(_WIN64)
+#define SLEEP_COMMAND "ping -n 2 127.0.0.1 > nul" // for Windows systems
+#else
+#define SLEEP_COMMAND "sleep 1" // For Unix-like systems
+#endif
 
 // Max prespecified Values
 const int maxAdminCount = 1;    // max number of admins
@@ -240,8 +249,6 @@ extern "C"
         locCount = fread(location, sizeof(struct Location), maxLocCount, fp);
         printf("\nLocation Database imported successfully.");
         fclose(fp);
-        // Decrypting all data
-        //  decryptAll();
     }
 
     // Function to export all data to text files
@@ -380,21 +387,11 @@ public:
     // Function to wait for a given number of seconds
     void wait(int noSec)
     {
-        int f = 0;
-        clock_t start_wait;
-        clock_t end_wait;
-
-        start_wait = clock();
-        end_wait = clock() + noSec * CLK_TCK;
-
-        while (clock() < end_wait)
+        for (int i = 0; i < noSec; ++i)
         {
-            if ((clock() - start_wait) % 400 == 0)
-            {
-                if (f != (clock() - start_wait))
-                    printf(".");
-                f = (clock() - start_wait);
-            }
+            cout << ".";
+            std::cout.flush();          // Ensure the dot is immediately printed
+            std::system(SLEEP_COMMAND); // Sleep for 1 second, platform-specifi
         }
     }
 
@@ -441,6 +438,7 @@ public:
     // Function to authenticate user based on userMode
     bool authenticate(int userModeIn)
     {
+        screenReset();
         int UIDin;
         string PWDin;
         int choice = -1, found = 0; // found used to check if user found or not
@@ -514,16 +512,13 @@ public:
 
                     cout << "\nEnter your name: ";
                     fflush(stdin);
-                    fflush(stdin);
                     getline(cin, userBike[userBikeCount].Name);
 
                     cout << "\nEnter new password: ";
                     fflush(stdin);
-                    fflush(stdin);
                     cin >> userBike[userBikeCount].password;
 
                     cout << "\nEnter your Mobile No: ";
-                    fflush(stdin);
                     fflush(stdin);
                     cin >> userBike[userBikeCount].MobNo;
 
@@ -588,7 +583,6 @@ public:
             cout << "\n\t2. New User";
             cout << "\nEnter your choice_";
             fflush(stdin);
-            fflush(stdin);
             cin >> choice;
             switch (choice)
             {
@@ -606,10 +600,8 @@ public:
                     cout << "\nUser Taxi Authentication";
                     cout << "\n\tEnter UID: ";
                     fflush(stdin);
-                    fflush(stdin);
                     cin >> UIDin;
                     cout << "\n\t Enter password: ";
-                    fflush(stdin);
                     fflush(stdin);
                     cin >> PWDin;
 
@@ -644,7 +636,6 @@ public:
                     cout << "\nAlright, let's get you in!";
 
                     cout << "\nEnter your name: ";
-                    fflush(stdin);
                     fflush(stdin);
                     getline(cin, userTaxi[userTaxiCount].Name);
 
@@ -716,7 +707,6 @@ public:
             cout << "\n\t1. Log In";
             cout << "\nEnter your choice_";
             fflush(stdin);
-            fflush(stdin);
             cin >> choice;
             switch (choice)
             {
@@ -734,10 +724,8 @@ public:
                     cout << "\nStaff Authentication:";
                     cout << "\n\tEnter UID: ";
                     fflush(stdin);
-                    fflush(stdin);
                     cin >> UIDin;
                     cout << "\n\t Enter password: ";
-                    fflush(stdin);
                     fflush(stdin);
                     cin >> PWDin;
 
@@ -775,7 +763,7 @@ public:
         break;
         case 4: // Admin
         {
-            cout << "\nAdmin Log In\nALERT!!! If invalid credentials are entered, Program will terminate!";
+            cout << "\nAdmin Log In";
             cout << "\n\t0. GO BACK";
             cout << "\n\t1. Log In";
             cout << "\nEnter your choice_";
@@ -783,7 +771,7 @@ public:
             cin >> choice;
             switch (choice)
             {
-            case -1:
+            case 0:
             {
                 cout << "\nGoing back";
                 wait(1);
@@ -933,7 +921,7 @@ public:
                                     bike[a - 1].userNo = 0;
                                     userBike[tempNo - 1].BikeUID = 0;
                                     cout << "\nBooking Removed.";
-                                    wait(2);
+                                    wait(1);
                                     break;
                                 }
                             }
@@ -992,7 +980,7 @@ public:
                                     taxi[a - 1].userNo = 0;
                                     userTaxi[tempNo - 1].TaxiUID = 0;
                                     cout << "\nBooking Removed.";
-                                    wait(2);
+                                    wait(1);
                                     break;
                                 }
                             }
@@ -1127,7 +1115,7 @@ public:
                         bike[a - 1].userNo = 0;
                         userBike[currentNo - 1].BikeUID = 0;
                         cout << "\nBooking Removed.";
-                        wait(2);
+                        wait(1);
                         break;
                     }
                 }
@@ -1239,7 +1227,7 @@ public:
                         taxi[a - 1].userNo = 0;
                         userTaxi[currentNo - 1].TaxiUID = 0;
                         cout << "\nBooking Removed.";
-                        wait(2);
+                        wait(1);
                         break;
                     }
                 }
@@ -1432,7 +1420,6 @@ public:
                 help[helpCount - 1].userUID = userBike[currentNo - 1].UID;
                 cout << "\nEnter details in short:\n";
                 fflush(stdin);
-                fflush(stdin);
                 getline(cin, help[helpCount - 1].comment);
                 cout << "\nWe will contact you ASAP.";
             }
@@ -1478,7 +1465,6 @@ public:
                 help[helpCount - 1].userMode = 2;
                 help[helpCount - 1].userUID = userTaxi[currentNo - 1].UID;
                 cout << "\nEnter details in short:\n";
-                fflush(stdin);
                 fflush(stdin);
                 getline(cin, help[helpCount - 1].comment);
                 cout << "\nWe will contact you ASAP.";
@@ -2085,7 +2071,6 @@ public:
             cout << "\n2. Taxi";
             cout << "\nEnter your choice_";
             fflush(stdin);
-            fflush(stdin);
             cin >> choice;
 
             switch (choice)
@@ -2106,10 +2091,8 @@ public:
                     getline(cin, bike[bikeCount].Name);
                     cout << "\nEnter Mobile no. of Driver: ";
                     fflush(stdin);
-                    fflush(stdin);
                     cin >> bike[bikeCount].MobNo;
                     cout << "\nEnter Date of Joining: ";
-                    fflush(stdin);
                     fflush(stdin);
                     cin >> bike[bikeCount].Date_Joining;
 
@@ -2161,10 +2144,8 @@ public:
                     getline(cin, taxi[taxiCount].Name);
                     cout << "\nEnter Mobile no. of Driver: ";
                     fflush(stdin);
-                    fflush(stdin);
                     cin >> taxi[taxiCount].MobNo;
                     cout << "\nEnter Date of Joining: ";
-                    fflush(stdin);
                     fflush(stdin);
                     cin >> taxi[taxiCount].Date_Joining;
 
@@ -2330,8 +2311,6 @@ public:
                     f = 0; // resetting the flag
                     cout << "\nEnter UID of taxi to edit_";
                     fflush(stdin);
-                    fflush(stdin);
-                    fflush(stdin);
                     cin >> UIDinput;
                     for (tempNo = 1; tempNo <= taxiCount; tempNo++)
                     {
@@ -2365,8 +2344,6 @@ public:
                                 cout << "\nCurrent Name:" << taxi[tempNo - 1].Name;
                                 cout << "\nEnter new Name_";
                                 fflush(stdin);
-                                fflush(stdin);
-                                fflush(stdin);
                                 cin >> dataInput;
                                 taxi[tempNo - 1].Name = dataInput;
                                 cout << "\nName of UID " << UIDinput << " changed.";
@@ -2377,8 +2354,6 @@ public:
                                 cout << "\nCurrent Mobile No:" << taxi[tempNo - 1].MobNo;
                                 cout << "\nEnter new Mobile No_";
                                 fflush(stdin);
-                                fflush(stdin);
-                                fflush(stdin);
                                 cin >> dataInput;
                                 taxi[tempNo - 1].MobNo = dataInput;
                                 cout << "\nMobNo of UID " << UIDinput << " changed.";
@@ -2388,8 +2363,6 @@ public:
                             {
                                 cout << "\nCurrent Date_Joining:" << taxi[tempNo - 1].Date_Joining;
                                 cout << "\nEnter new Date_Joining_";
-                                fflush(stdin);
-                                fflush(stdin);
                                 fflush(stdin);
                                 cin >> dataInput;
                                 taxi[tempNo - 1].Date_Joining = dataInput;
@@ -2464,7 +2437,6 @@ public:
             cout << "\n1. Bike";
             cout << "\n2. Taxi";
             cout << "\nEnter your choice_";
-            fflush(stdin);
             fflush(stdin);
             cin >> choice;
 
@@ -2546,7 +2518,6 @@ public:
                 {
                     cout << "Enter the UID of Taxi you want to Delete: ";
                     int tempUID, flag = -1;
-                    fflush(stdin);
                     fflush(stdin);
                     cin >> tempUID;
 
@@ -2820,7 +2791,7 @@ public:
                         else
                         {
                             cout << "\nCancelled. Going back.";
-                            wait(2);
+                            wait(1);
                         }
                     } // if f>0
                     else
@@ -2974,7 +2945,6 @@ public:
                 cout << "Enter the UID of staff you want to edit: ";
                 int tempUID, flag = 0;
                 fflush(stdin);
-                fflush(stdin);
                 cin >> tempUID;
 
                 for (int i = 1; i <= staffCount; staffCount++)
@@ -2998,13 +2968,10 @@ public:
                     cout << "\nEnter your choice_";
                     int choice = -1;
                     fflush(stdin);
-                    fflush(stdin);
                     cin >> choice;
                     if (choice == 1)
                     {
                         cout << "Enter new Name: \n";
-                        fflush(stdin);
-                        fflush(stdin);
                         fflush(stdin);
                         getline(cin, temp);
                         staff[flag - 1].Name = temp;
@@ -3012,7 +2979,6 @@ public:
                     else if (choice == 2)
                     {
                         cout << "Enter new password: ";
-                        fflush(stdin);
                         fflush(stdin);
                         cin >> temp;
                         staff[flag - 1].password = temp;
@@ -3045,7 +3011,6 @@ public:
             {
                 cout << "Enter the UID you want to Delete: ";
                 int tempUID, flag = 0;
-                fflush(stdin);
                 fflush(stdin);
                 cin >> tempUID;
 
@@ -3175,7 +3140,6 @@ public:
                 {
                     cout << "Enter New Admin Name\n";
                     fflush(stdin);
-                    fflush(stdin);
                     getline(cin, temp);
                     admin[currentNo - 1].Name = temp;
                 }
@@ -3184,14 +3148,12 @@ public:
                 {
                     cout << "Enter New password" << endl;
                     fflush(stdin);
-                    fflush(stdin);
                     cin >> admin[currentNo - 1].password;
                 }
                 break;
                 case 3:
                 {
                     cout << "Enter New Organization Name\n";
-                    fflush(stdin);
                     fflush(stdin);
                     getline(cin, temp);
                     admin[currentNo - 1].OrgName = temp;
@@ -3201,7 +3163,6 @@ public:
                 {
                     cout << "Enter New Organization Address\n";
                     fflush(stdin);
-                    fflush(stdin);
                     getline(cin, temp);
                     admin[currentNo - 1].OrgAdrs = temp;
                 }
@@ -3209,7 +3170,6 @@ public:
                 case 5:
                 {
                     cout << "Enter New Organization Name\n";
-                    fflush(stdin);
                     fflush(stdin);
                     cin >> temp;
                     admin[currentNo - 1].MobNo = temp;
@@ -3273,31 +3233,27 @@ public:
 
                 cout << "\nEnter New password_";
                 fflush(stdin);
-                fflush(stdin);
                 cin >> temp;
                 admin[adminCount].password = temp;
 
                 cout << "\nEnter Organization Name_";
-                fflush(stdin);
                 fflush(stdin);
                 getline(cin, temp);
                 admin[adminCount].OrgName = temp;
 
                 cout << "\nEnter Organization Address_";
                 fflush(stdin);
-                fflush(stdin);
                 getline(cin, temp);
                 admin[adminCount].OrgAdrs = temp;
 
                 cout << "\nEnter New Contact No_";
-                fflush(stdin);
                 fflush(stdin);
                 cin >> temp;
                 admin[adminCount].MobNo = temp;
 
                 adminCount++;
                 cout << "Going Back." << endl;
-                wait(2);
+                wait(1);
             }
             else
             {
@@ -3318,7 +3274,6 @@ public:
 // MAIN FUNCTION
 int main()
 {
-    int choice = -1;
 
     /*
     Use value of variables
@@ -3330,9 +3285,15 @@ int main()
     */
 
     BookMyRide BMR;
+
+    // cout << "Testing wait.";
+    // BMR.wait(5);
+    // exit(0);
+
+    int choice = -1;
     BMR.setTheme();
     import();
-    BMR.wait(3);
+    BMR.wait(1);
     BMR.screenReset();
 
     // Below code to ensure atleast one Admin is present, If not, then add one
@@ -3340,7 +3301,7 @@ int main()
     if (adminCount == 0)
     {
         cout << "\nAdmin Details Not Present.\nDirecting to add Admin Details.";
-        BMR.wait(2);
+        BMR.wait(1);
         userMode = 4;
         BMR.addAdminDetails();
         userMode = 0; // resetting userMode after adding admin as user isn't logged in yet
@@ -3383,7 +3344,6 @@ int main()
                     cout << "\n4. Ask for help";
 
                     cout << "\nEnter your choice_";
-                    fflush(stdin);
                     fflush(stdin);
                     cin >> choice2;
                     switch (choice2)
@@ -3453,7 +3413,6 @@ int main()
 
                     cout << "\nEnter your choice_";
                     fflush(stdin);
-                    fflush(stdin);
                     cin >> choice2;
                     switch (choice2)
                     {
@@ -3522,6 +3481,7 @@ int main()
                     cout << "\n3. User Management";
                     cout << "\n4. Self Menu";
                     cout << "\nEnter your choice_";
+                    fflush(stdin);
                     cin >> choice2;
 
                     switch (choice2)
@@ -3849,7 +3809,7 @@ int main()
             cout << "\nSecurity issue detected!\nExiting the program.";
             BMR.wait(2);
             break;
-        }
+        } // extra layer of security
 
         // resetting authentication and identification variables
         userMode = 0;
@@ -3857,8 +3817,9 @@ int main()
         currentUID = 0;
     } // MAIN WHILE LOOP CLOSED
     backup();
-    BMR.wait(3);
-    cout << "\n\\END OF PROGRAM.";
+    BMR.wait(1);
+    cout << "\nEND OF PROGRAM.";
+    BMR.wait(1);
     return 0;
 }
 
