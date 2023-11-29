@@ -1,3 +1,5 @@
-*.exe
-Admin.txt
+#All text files created using testing in src folder
+src/*.txt
+#All exe files created using testing in src folder
+src/*.exe
 
