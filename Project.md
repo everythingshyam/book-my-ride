@@ -6,6 +6,8 @@
 
 ### - GO TO NEXT PROJECT
 
+#### - Create a release (Windows + Ubuntu)
+
 #### - Add an option on login screen to see 'about project'
 
 #### - Add CLOSED comment besides closing curly braces if it doesn't have a sibling braces on the next line.
