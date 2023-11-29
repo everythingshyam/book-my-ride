@@ -2,6 +2,12 @@
 
 ### A detailed C++ program to manage Taxi and Bike Booking, with interactive interface for customers, drivers, application staff and admins. Made this as a team mini-project in the third semester of my college. (March, 2021)
 
+## Setup
+
+-   You can simply get the running application from releases page.
+
+-   It's a C++ Program, which means you have to simply get this repo on your local device and simply run the c++ file named `BookMyRide.cpp` located in the `src` folder.
+
 ## Team Members:
 
 -   [Shyam Tiwari](https://everythingshyam.github.io/static-personal-website/)

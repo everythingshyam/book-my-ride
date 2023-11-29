@@ -1,4 +1,5 @@
 #include <iostream> //for input output
+#include <fstream>  //for file handling
 #include <cstdlib>  //memory allocation related
 #include <string>   //for string related operations
 #include <time.h>   //for time and date functions
@@ -130,217 +131,214 @@ string userModeNames[5] = {"Logged Out(Safe)", "User (Bike)", "User (Taxi)", "St
 int currentNo = 0;  // stores current user serial No, zero by default
 int currentUID = 0; // stores UID of current user, zero by default
 int userMode = 0;   // stores user mode number, zero by default, refer to list below for details:
-/*
-    indicates the mode user is in
-   -1: Logged out (UNSAFE)
-    0: Logged out (SAFE)
-    1: Logged in (User_Bike)
-    2: Logged in (User_Taxi)
-    3: Logged in (Staff)
-    4: Logged in (Admin)
-*/
+                    /*
+                        indicates the mode user is in
+                       -1: Logged out (UNSAFE)
+                        0: Logged out (SAFE)
+                        1: Logged in (User_Bike)
+                        2: Logged in (User_Taxi)
+                        3: Logged in (Staff)
+                        4: Logged in (Admin)
+                    */
 
-// using C Functions in C++ (as I had them ready in another project)
-extern "C"
+// Function to import all data from text files
+void import()
 {
-    // Function to import all data from text files
-    void import()
+    // importing from UserBike.txt
+    ifstream file1("UserBike.txt", ios::binary);
+    if (!file1)
     {
-        // importing from UserBike.txt
-        FILE *fp = fopen("UserBike.txt", "r");
-        if (fp == NULL)
-        {
-            printf("\nBike Users Database Not Found!");
-            fp = fopen("UserBike.txt", "w");
-            printf("\nNew Bike Users Database has been created.");
-            fclose(fp);
-        }
-        userBikeCount = fread(userBike, sizeof(struct UserBike), maxUserCount, fp);
-        printf("\nBike Users Database imported successfully.");
-        fclose(fp);
-
-        // importing from UserTaxi.txt
-        fp = fopen("UserTaxi.txt", "r");
-        if (fp == NULL)
-        {
-            printf("\nTaxi Users Database Not Found!");
-            fp = fopen("UserTaxi.txt", "w");
-            printf("\nNew Taxi Users Database has been created.");
-            fclose(fp);
-        }
-        userTaxiCount = fread(userTaxi, sizeof(struct UserTaxi), maxUserCount, fp);
-        printf("\nTaxi Users Database imported successfully.");
-        fclose(fp);
-
-        // importing from Bike Database
-        fp = fopen("Bike.txt", "r");
-        if (fp == NULL)
-        {
-            printf("\nBike Database Not Found!");
-            fp = fopen("Bike.txt", "w");
-            cout << "\nNew Bike Database has been created.";
-            fclose(fp);
-        }
-        bikeCount = fread(bike, sizeof(struct Bike), maxVehicleCount, fp);
-        printf("\nBike Database imported successfully.");
-        fclose(fp);
-
-        // importing from Taxi Database
-        fp = fopen("Taxi.txt", "r");
-        if (fp == NULL)
-        {
-            printf("\nTaxi Database Not Found!");
-            fp = fopen("Taxi.txt", "w");
-            cout << "\nNew Taxi Database has been created.";
-            fclose(fp);
-        }
-        taxiCount = fread(taxi, sizeof(struct Taxi), maxVehicleCount, fp);
-        printf("\nTaxi Database imported successfully.");
-        fclose(fp);
-
-        // importing from Staff Database
-        fp = fopen("Staff.txt", "r");
-        if (fp == NULL)
-        {
-            printf("\nStaff Database Not Found!");
-            fp = fopen("Staff.txt", "w");
-            cout << "\nNew Staff Database has been created.";
-            fclose(fp);
-        }
-        staffCount = fread(staff, sizeof(struct Staff), maxStaffCount, fp);
-        printf("\nStaff Database imported successfully.");
-        fclose(fp);
-
-        // importing from Admin Database
-        fp = fopen("Admin.txt", "r");
-        if (fp == NULL)
-        {
-            printf("\nAdmin Database Not Found!");
-            fp = fopen("Admin.txt", "w");
-            cout << "\nNew Admin Database has been created.";
-            fclose(fp);
-        }
-        adminCount = fread(admin, sizeof(struct Admin), maxAdminCount, fp);
-        printf("\nAdmin Database imported successfully.");
-        fclose(fp);
-
-        // importing from Help Database
-        fp = fopen("Help.txt", "r");
-        if (fp == NULL)
-        {
-            printf("\nHelp Database Not Found!");
-            fp = fopen("Help.txt", "w");
-            cout << "\nNew help Database has been created.";
-            fclose(fp);
-        }
-        helpCount = fread(help, sizeof(struct Help), maxHelpCount, fp);
-        printf("\nHelp Database imported successfully.");
-        fclose(fp);
-
-        // importing from Location Database
-        fp = fopen("Location.txt", "r");
-        if (fp == NULL)
-        {
-            printf("\nLocation Database Not Found!");
-            fp = fopen("Location.txt", "w");
-            cout << "\nNew Location Database has been created.";
-            fclose(fp);
-        }
-        locCount = fread(location, sizeof(struct Location), maxLocCount, fp);
-        printf("\nLocation Database imported successfully.");
-        fclose(fp);
+        printf("\nBike Users Database Not Found!");
+        ofstream createFile("UserBike.txt");
+        printf("\nNew Bike Users Database has been created.");
     }
+    file1.read(reinterpret_cast<char *>(&userBike[0]), sizeof(struct UserBike) * maxUserCount);
+    userBikeCount = file1.gcount() / sizeof(struct UserBike);
+    printf("\nBike Users Database imported successfully.");
+    file1.close();
 
-    // Function to export all data to text files
-    void backup()
+    // importing from UserTaxi.txt
+    ifstream file2("UserTaxi.txt", ios::binary);
+    if (!file2)
     {
-        FILE *fp = fopen("UserBike.txt", "w");
-        if (fp == NULL)
-        {
-            printf("/nBike Users Database is empty!");
-            exit(1);
-        }
-        fwrite(userBike, sizeof(struct UserBike), userBikeCount, fp);
-        printf("\nBike Users Database updated successfully.");
-        fclose(fp);
-
-        // updating UserTaxi.txt
-        fp = fopen("UserTaxi.txt", "w");
-        if (fp == NULL)
-        {
-            printf("/nTaxi Users Database is empty!");
-            exit(1);
-        }
-        fwrite(userTaxi, sizeof(struct UserTaxi), userTaxiCount, fp);
-        printf("\nTaxi Users Database updated successfully.");
-        fclose(fp);
-
-        // updating Bike.txt
-        fp = fopen("Bike.txt", "w");
-        if (fp == NULL)
-        {
-            printf("/nBike Database is empty!");
-            exit(1);
-        }
-        fwrite(bike, sizeof(struct Bike), bikeCount, fp);
-        printf("\nBike Database updated successfully.");
-        fclose(fp);
-
-        // updating Taxi.txt
-        fp = fopen("Taxi.txt", "w");
-        if (fp == NULL)
-        {
-            printf("/nTaxi Database is empty!");
-            exit(1);
-        }
-        fwrite(taxi, sizeof(struct Taxi), taxiCount, fp);
-        printf("\nTaxi Database updated successfully.");
-        fclose(fp);
-
-        // updating Staff.txt
-        fp = fopen("Staff.txt", "w");
-        if (fp == NULL)
-        {
-            printf("/nStaff Database is empty!");
-            exit(1);
-        }
-        fwrite(staff, sizeof(struct Staff), staffCount, fp);
-        printf("\nStaff Database updated successfully.");
-        fclose(fp);
-
-        // updating Admin.txt
-        FILE *fp9 = fopen("Admin.txt", "w");
-        if (fp9 == NULL)
-        {
-            printf("/nAdmin Database is empty!");
-            exit(1);
-        }
-        fwrite(admin, sizeof(struct Admin), adminCount, fp9);
-        printf("\nAdmin Database updated successfully.");
-        fclose(fp9);
-
-        // updating Help.txt
-        fp = fopen("Help.txt", "w");
-        if (fp == NULL)
-        {
-            printf("/nHelp Database is empty!");
-            exit(1);
-        }
-        fwrite(help, sizeof(struct Help), helpCount, fp);
-        printf("\nHelp Database updated successfully.");
-        fclose(fp);
-
-        // updating Location.txt
-        fp = fopen("Location.txt", "w");
-        if (fp == NULL)
-        {
-            printf("/nLocation Database is empty!");
-            exit(1);
-        }
-        fwrite(location, sizeof(struct Location), locCount, fp);
-        printf("\nLocation Database updated successfully.");
-        fclose(fp);
+        printf("\nTaxi Users Database Not Found!");
+        ofstream createFile("UserTaxi.txt");
+        printf("\nNew Taxi Users Database has been created.");
     }
+    file2.read(reinterpret_cast<char *>(&userTaxi[0]), sizeof(struct UserTaxi) * maxUserCount);
+    userTaxiCount = file2.gcount() / sizeof(struct UserTaxi);
+    printf("\nTaxi Users Database imported successfully.");
+    file2.close();
+
+    // importing from Bike Database
+    ifstream file3("Bike.txt", ios::binary);
+    if (!file3)
+    {
+        printf("\nBike Database Not Found!");
+        ofstream createFile("Bike.txt");
+        printf("\nNew Bike Database has been created.");
+    }
+    file3.read(reinterpret_cast<char *>(&bike[0]), sizeof(struct Bike) * maxVehicleCount);
+    bikeCount = file3.gcount() / sizeof(struct Bike);
+    printf("\nBike Database imported successfully.");
+    file3.close();
+
+    // importing from Taxi Database
+    ifstream file4("Taxi.txt", ios::binary);
+    if (!file4)
+    {
+        printf("\nTaxi Database Not Found!");
+        ofstream createFile("Taxi.txt");
+        printf("\nNew Taxi Database has been created.");
+    }
+    file4.read(reinterpret_cast<char *>(&taxi[0]), sizeof(struct Taxi) * maxVehicleCount);
+    taxiCount = file4.gcount() / sizeof(struct Taxi);
+    printf("\nTaxi Database imported successfully.");
+    file4.close();
+
+    // importing from Staff Database
+    ifstream file5("Staff.txt", ios::binary);
+    if (!file5)
+    {
+        printf("\nStaff Database Not Found!");
+        ofstream createFile("Staff.txt");
+        printf("\nNew Staff Database has been created.");
+    }
+    file5.read(reinterpret_cast<char *>(&staff[0]), sizeof(struct Staff) * maxStaffCount);
+    staffCount = file5.gcount() / sizeof(struct Staff);
+    printf("\nStaff Database imported successfully.");
+    file5.close();
+
+    // importing from Admin Database
+    ifstream file6("Admin.txt", ios::binary);
+    if (!file6)
+    {
+        printf("\nAdmin Database Not Found!");
+        ofstream createFile("Admin.txt");
+        printf("\nNew Admin Database has been created.");
+    }
+    file6.read(reinterpret_cast<char *>(&admin[0]), sizeof(struct Admin) * maxAdminCount);
+    adminCount = file6.gcount() / sizeof(struct Admin);
+    printf("\nAdmin Database imported successfully.");
+    file6.close();
+
+    // importing from Help Database
+    ifstream file7("Help.txt", ios::binary);
+    if (!file7)
+    {
+        printf("\nHelp Database Not Found!");
+        ofstream createFile("Help.txt");
+        printf("\nNew Help Database has been created.");
+    }
+    file7.read(reinterpret_cast<char *>(&help[0]), sizeof(struct Help) * maxHelpCount);
+    helpCount = file7.gcount() / sizeof(struct Help);
+    printf("\nHelp Database imported successfully.");
+    file7.close();
+
+    // importing from Location Database
+    ifstream file8("Location.txt", ios::binary);
+    if (!file8)
+    {
+        printf("\nLocation Database Not Found!");
+        ofstream createFile("Location.txt");
+        printf("\nNew Location Database has been created.");
+    }
+    file8.read(reinterpret_cast<char *>(&location[0]), sizeof(struct Location) * maxLocCount);
+    locCount = file8.gcount() / sizeof(struct Location);
+    printf("\nLocation Database imported successfully.");
+    file8.close();
+}
+
+// Function to export all data to text files
+void backup()
+{
+    // updating UserBike.txt
+    ofstream file1("UserBike.txt", ios::binary);
+    if (!file1)
+    {
+        printf("/nUnable to locate UserBike.txt!");
+        exit(1);
+    }
+    file1.write(reinterpret_cast<char *>(&userBike[0]), sizeof(struct UserBike) * userBikeCount);
+    printf("\nBike Users Database updated successfully.");
+    file1.close();
+
+    // updating UserTaxi.txt
+    ofstream file2("UserTaxi.txt", ios::binary);
+    if (!file2)
+    {
+        printf("/nUnable to locate UserTaxi.txt!");
+        exit(1);
+    }
+    file2.write(reinterpret_cast<char *>(&userTaxi[0]), sizeof(struct UserTaxi) * userTaxiCount);
+    printf("\nTaxi Users Database updated successfully.");
+    file2.close();
+
+    // updating Bike.txt
+    ofstream file3("Bike.txt", ios::binary);
+    if (!file3)
+    {
+        printf("/nUnable to locate Bike.txt!");
+        exit(1);
+    }
+    file3.write(reinterpret_cast<char *>(&bike[0]), sizeof(struct Bike) * bikeCount);
+    printf("\nBike Database updated successfully.");
+    file3.close();
+
+    // updating Taxi.txt
+    ofstream file4("Taxi.txt", ios::binary);
+    if (!file4)
+    {
+        printf("/nUnable to locate Taxi.txt!");
+        exit(1);
+    }
+    file4.write(reinterpret_cast<char *>(&taxi[0]), sizeof(struct Taxi) * taxiCount);
+    printf("\nTaxi Database updated successfully.");
+    file4.close();
+
+    // updating Staff.txt
+    ofstream file5("Staff.txt", ios::binary);
+    if (!file5)
+    {
+        printf("/nUnable to locate Staff.txt!");
+        exit(1);
+    }
+    file5.write(reinterpret_cast<char *>(&staff[0]), sizeof(struct Staff) * staffCount);
+    printf("\nStaff Database updated successfully.");
+    file5.close();
+
+    // updating Admin.txt
+    ofstream file6("Admin.txt", ios::binary);
+    if (!file6)
+    {
+        printf("/nUnable to locate Admin.txt!");
+        exit(1);
+    }
+    file6.write(reinterpret_cast<char *>(&admin[0]), sizeof(struct Admin) * adminCount);
+    printf("\nAdmin Database updated successfully.");
+    file6.close();
+
+    // updating Help.txt
+    ofstream file7("Help.txt", ios::binary);
+    if (!file7)
+    {
+        printf("/nUnable to locate Help.txt!");
+        exit(1);
+    }
+    file7.write(reinterpret_cast<char *>(&help[0]), sizeof(struct Help) * helpCount);
+    printf("\nHelp Database updated successfully.");
+    file7.close();
+
+    // updating Location.txt
+    ofstream file8("Location.txt", ios::binary);
+    if (!file8)
+    {
+        printf("/nUnable to locate Location.txt!");
+        exit(1);
+    }
+    file8.write(reinterpret_cast<char *>(&location[0]), sizeof(struct Location) * locCount);
+    printf("\nLocation Database updated successfully.");
+    file8.close();
 }
 
 // Class to provides all the required utility functions
