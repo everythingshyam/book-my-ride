@@ -1,5 +1,11 @@
 # To-Do List (Latest to Oldest)
 
+#### - Fix gitignore file
+
+---
+
+### - GO TO NEXT PROJECT
+
 #### - Add an option on login screen to see 'about project'
 
 #### - Add CLOSED comment besides closing curly braces if it doesn't have a sibling braces on the next line.
@@ -16,7 +22,7 @@
 
 #### - Get the util class in another file, import from there.
 
-#### - Convert C Code to C++.
+#### - ~~Convert C Code to C++.~~
 
 #### - ~~Reduce, fix, add wait time wherever necessary.~~
 
