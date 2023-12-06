@@ -2,4 +2,5 @@
 src/*.txt
 #All exe files created using testing in src folder
 src/*.exe
-
+#VS Code Folder
+.vscode/
