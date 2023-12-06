@@ -427,7 +427,7 @@ public:
             cout << admin[currentNo - 1].Name << " (" << admin[currentNo - 1].UID << ")";
             break;
         default:
-            cout << "NIL";
+            cout << "-";
             break;
         }
         printf("\n----------------------------------------------------------------------------------");
@@ -1085,7 +1085,6 @@ public:
         }
         else
         {
-            cout << "\nUnauthorised Access Detected!";
             userMode = -1;
         }
     }
@@ -1125,7 +1124,8 @@ public:
         }
         else
         {
-            cout << "\nYou aren't allowed to perform this change.";
+            // cout << "\nYou aren't allowed to perform this change.";
+            userMode = -1;
         }
     }
 
@@ -1197,7 +1197,6 @@ public:
         }
         else
         {
-            cout << "\nUnauthorised Access Detected!";
             userMode = -1;
         }
     }
@@ -1325,7 +1324,6 @@ public:
         }
         else
         {
-            cout << "\nUnauthorised Access Detected!";
             userMode = -1;
         }
     }
@@ -1370,7 +1368,6 @@ public:
         }
         else
         {
-            cout << "\nUnauthorised access detected!";
             userMode = -1;
         }
     }
@@ -1476,8 +1473,7 @@ public:
         }
         else
         {
-            cout << "\nUnauthorised access detected!";
-            userMode = -1; // if not already
+            userMode = -1;
         }
     }
 
@@ -1564,7 +1560,6 @@ public:
         }
         else
         {
-            cout << "\nUnauthorised Access Detected!";
             userMode = -1;
         }
     }
@@ -1654,7 +1649,6 @@ public:
         }
         else
         {
-            cout << "\nUnauthorised Access Detected!";
             userMode = -1;
         }
     }
@@ -1735,7 +1729,6 @@ public:
         }
         else
         {
-            cout << "\nUnauthorised access detected!";
             userMode = -1;
         }
     }
@@ -1990,7 +1983,6 @@ public:
         }
         else
         {
-            cout << "\nUnauthorised access detected!";
             userMode = -1;
         }
     }
@@ -2394,7 +2386,6 @@ public:
         }
         else
         {
-            cout << "\nUnauthorised access detected!";
             userMode = -1;
         }
     }
@@ -2620,7 +2611,6 @@ public:
         }
         else
         {
-            cout << "\nUnauthorised Access Detected!";
             userMode = -1;
         }
     }
@@ -2696,7 +2686,6 @@ public:
         }
         else
         {
-            cout << "\nUnauthorised access detected!";
             userMode = -1;
         }
     }
@@ -2805,7 +2794,6 @@ public:
         }
         else
         {
-            cout << "\nUnauthorised access detected!";
             userMode = -1;
         }
     }
@@ -2855,12 +2843,11 @@ public:
             }
             else
             {
-                cout << "\nUSERMODE ERROR!";
+                cout << "\nUSERMODE INVALID!";
             }
         }
         else
         {
-            cout << "\nUnauthorised access detected!";
             userMode = -1;
         }
     }
@@ -2923,7 +2910,6 @@ public:
         }
         else
         {
-            cout << "UNAUTHORISED ACCESS DETECTED!";
             userMode = -1;
         }
     }
@@ -2990,7 +2976,6 @@ public:
         }
         else
         {
-            cout << "Access not allowed !";
             userMode = -1;
         }
     }
@@ -3048,7 +3033,6 @@ public:
         }
         else
         {
-            cout << "UNAUTHORISED ACCESS DETECTED!";
             userMode = -1;
         }
     }
@@ -3079,7 +3063,6 @@ public:
         }
         else
         {
-            cout << "\nUnauthorised access detected!";
             userMode = -1;
         }
     }
@@ -3105,7 +3088,6 @@ public:
         }
         else
         {
-            cout << "\nUnauthorised access detected!";
             userMode = -1;
         }
     }
@@ -3183,7 +3165,6 @@ public:
         }
         else
         {
-            cout << "\nUnauthorised access detected!";
             userMode = -1;
         }
     }
@@ -3261,7 +3242,6 @@ public:
 
         else
         {
-            cout << "\nUnauthorised access detected!";
             userMode = -1;
         }
     }
@@ -3382,7 +3362,6 @@ int main()
 
                 if (userMode == -1)
                 {
-                    cout << "\nUnauthorised Access Detected!";
                     break;
                 }
             } // IF AUTHENTICATE CLOSED
@@ -3450,7 +3429,6 @@ int main()
 
                 if (userMode == -1)
                 {
-                    cout << "\nUnauthorised Access Detected!";
                     break;
                 }
             }
@@ -3535,7 +3513,6 @@ int main()
                             BMR.holdByInput();
                             if (userMode == -1)
                             {
-                                cout << "\nUnauthorised Access Detected!";
                                 break;
                             }
                         } // WHILE LOOP CLOSED
@@ -3592,7 +3569,6 @@ int main()
                             BMR.holdByInput();
                             if (userMode == -1)
                             {
-                                cout << "\nUnauthorised Access Detected!";
                                 break;
                             }
                         }
@@ -3641,9 +3617,8 @@ int main()
                             }
                             } // SWITCH CLOSED
                             BMR.holdByInput();
-                            if (userMode == 0)
+                            if (userMode == -1)
                             {
-                                cout << "\nUnauthorised Access Detected!";
                                 break;
                             }
                         }
@@ -3688,7 +3663,6 @@ int main()
                             BMR.holdByInput();
                             if (userMode == -1)
                             {
-                                cout << "\nUnauthorised Access Detected!";
                                 break;
                             }
                         }
@@ -3707,7 +3681,6 @@ int main()
                     BMR.holdByInput();
                     if (userMode == -1)
                     {
-                        cout << "\nUnauthorised Access Detected!";
                         break;
                     }
                 } // OUTER WHILE CLOSED
@@ -3784,7 +3757,6 @@ int main()
 
                     if (userMode == -1)
                     {
-                        cout << "\nUnauthorised Access Detected!";
                         break;
                     }
                 } // WHILE LOOP CLOSED
@@ -3804,7 +3776,7 @@ int main()
         } // SWITCH CLOSED
         if (userMode == -1)
         {
-            cout << "\nSecurity issue detected!\nExiting the program.";
+            cout << "\nSecurity issue(s) detected!\nExiting the program.";
             BMR.wait(2);
             break;
         } // extra layer of security

@@ -1,5 +1,7 @@
 # To-Do List (Latest to Oldest)
 
+## STATUS : Not started next issue yet
+
 #### - Fix gitignore file
 
 ---
@@ -20,9 +22,7 @@
 
 #### - Make the choice variable global.
 
-#### - In place of if(userMode), use blank returns.
-
-#### - Get the util class in another file, import from there.
+#### - ~~In place of if(userMode), use blank returns. Remove redundancy in usermode safety message printing.~~
 
 #### - ~~Convert C Code to C++.~~
 
