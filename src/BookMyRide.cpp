@@ -867,7 +867,7 @@ public:
     void tickOff()
     {
         // given three chances to enter password
-        if (userMode == 3)
+        if (userMode == 3) // STAFF ACCESS
         {
             int choice = -1;
             cout << "\nWhich type of booking to tick off?";
@@ -1020,7 +1020,7 @@ public:
     // Function to book a bike
     void bookBike()
     {
-        if (userMode == 1)
+        if (userMode == 1) // USERBIKE ACCESS
         {
             int bikeAvailNo = isAvailBike();
             if (bikeAvailNo != 0)
@@ -1092,7 +1092,7 @@ public:
     // Function to cancel a bike booking
     void cancelBike()
     {
-        if (userMode == 1)
+        if (userMode == 1) // USERBIKE ACCESS
         {
             if (userBike[currentNo - 1].isAllotted)
             {
@@ -1132,7 +1132,7 @@ public:
     // Function to book a taxi
     void bookTaxi()
     {
-        if (userMode == 2)
+        if (userMode == 2) // USERTAXI ACCESS
         {
             int taxiAvailNo = isAvailTaxi();
             if (taxiAvailNo != 0)
@@ -1204,7 +1204,7 @@ public:
     // Function to cancel a taxi booking
     void cancelTaxi()
     {
-        if (userMode == 2)
+        if (userMode == 2) // USERTAXI ACCESS
         {
             if (userTaxi[currentNo - 1].isAllotted)
             {
@@ -1243,7 +1243,7 @@ public:
     // Function to show the booking details of the current user
     void showMyBooking()
     {
-        if (userMode == 1)
+        if (userMode == 1) // USERBIKE ACCESS
         {
             if (userBike[currentNo - 1].isAllotted == 1)
             {
@@ -1282,7 +1282,7 @@ public:
                 cout << "\nYou haven't booked any travel yet.";
             }
         }
-        else if (userMode == 2)
+        else if (userMode == 2) // USERTAXI ACCESS
         {
             if (userTaxi[currentNo - 1].isAllotted == 1)
             {
@@ -1332,7 +1332,7 @@ public:
     void showBookingList()
     {
         int counter = 0;
-        if (userMode == 3 || userMode == 4)
+        if (userMode == 3 || userMode == 4) // STAFF OR ADMIN ACCESS
         {
             // for bike
             counter = 0;
@@ -1375,7 +1375,7 @@ public:
     // Function to add a help request
     void getHelp()
     {
-        if (userMode == 1)
+        if (userMode == 1) // USERBIKE ACCESS
         {
             if (helpCount < maxHelpCount)
             {
@@ -1426,7 +1426,7 @@ public:
                 cout << "\nBy the way, you may contact us directly IFF URGENT.\nContact: " << admin[0].MobNo;
         }
 
-        else if (userMode == 2)
+        else if (userMode == 2) // USERTAXI ACCESS
         {
             if (helpCount < maxHelpCount)
             {
@@ -1507,7 +1507,7 @@ public:
     // Function to add a new location
     void addLocation()
     {
-        if (userMode == 3)
+        if (userMode == 3) // STAFF ACCESS
         {
             if (locCount < maxLocCount)
             {
@@ -1567,7 +1567,7 @@ public:
     // Function to edit location details
     void editLocation()
     {
-        if (userMode == 3)
+        if (userMode == 3) // STAFF ACCESS
         {
             if (locCount > 0)
             {
@@ -1736,7 +1736,7 @@ public:
     // Function to edit current User details (staff and users)
     void editSelf()
     {
-        if (userMode == 1) // userBike Access
+        if (userMode == 1) // USERBIKE ACCESS
         {
             if (userBikeCount > 0)
             {
@@ -1818,7 +1818,7 @@ public:
                 userMode = -1;
             }
         }
-        else if (userMode == 2) // userTaxi Access
+        else if (userMode == 2) // USERTAXI ACCESS
         {
             if (userTaxiCount > 0)
             {
@@ -1899,7 +1899,7 @@ public:
                 userMode = -1;
             }
         }
-        else if (userMode == 3) // staff access
+        else if (userMode == 3) // STAFF ACCESS
         {
             if (staffCount > 0)
             {
@@ -2053,7 +2053,7 @@ public:
     {
         int choice = -1, f = 0;
 
-        if (userMode == 3 || userMode == 4) // staff and admin access
+        if (userMode == 3 || userMode == 4) // STAFF AND ADMIN ACCESS
         {
             cout << "Which vehicle details do you want to add-";
             cout << "\0. GO BACK";
@@ -2192,7 +2192,7 @@ public:
         int UIDinput;
         string dataInput;
         int f = 0;                          // flag to check if entered UID is found or not
-        if (userMode == 3 || userMode == 4) // STAFF AND ADMIN ACCESS
+        if (userMode == 3 || userMode == 4) // STAFF OR ADMIN ACCESS
         {
             cout << "Which vehicle do you want to edit-";
             cout << "\n0. GO BACK";
@@ -2419,7 +2419,7 @@ public:
     {
         int choice = -1;
 
-        if (userMode == 3 || userMode == 4) // STAFF AND ADMIN ACCESS
+        if (userMode == 3 || userMode == 4) // STAFF OR ADMIN ACCESS
         {
             cout << "Which vehicle details do you want to remove-";
             cout << "\n0. GO BACK";
@@ -2619,7 +2619,7 @@ public:
     void showVehicles()
     {
         int tempNo = 0;
-        if (userMode == 3 || userMode == 4) // STAFF AND ADMIN ACCESS
+        if (userMode == 3 || userMode == 4) // STAFF OR ADMIN ACCESS
         {
             int choice = -1;
             while (choice != 0)
@@ -3173,7 +3173,7 @@ public:
     void addAdminDetails()
     {
         string temp;
-        if (userMode == 4)
+        if (userMode == 4) // ADMIN ACCESS
         {
             if (adminCount < maxAdminCount)
             {
@@ -3360,7 +3360,7 @@ int main()
                     BMR.holdByInput();
                 } // SWITCH CLOSED
 
-                if (userMode == -1)
+                if (userMode == -1) // SAFETY CHECK
                 {
                     break;
                 }
@@ -3427,7 +3427,7 @@ int main()
                     BMR.holdByInput();
                 } // WHILE LOOP CLOSED
 
-                if (userMode == -1)
+                if (userMode == -1) // SAFETY CHECK
                 {
                     break;
                 }
@@ -3511,7 +3511,7 @@ int main()
                             }
                             } // SWITCH CLOSED
                             BMR.holdByInput();
-                            if (userMode == -1)
+                            if (userMode == -1) // SAFETY CHECK
                             {
                                 break;
                             }
@@ -3567,7 +3567,7 @@ int main()
                             }
                             } // SWITCH CLOSED
                             BMR.holdByInput();
-                            if (userMode == -1)
+                            if (userMode == -1) // SAFETY CHECK
                             {
                                 break;
                             }
@@ -3617,7 +3617,7 @@ int main()
                             }
                             } // SWITCH CLOSED
                             BMR.holdByInput();
-                            if (userMode == -1)
+                            if (userMode == -1) // SAFETY CHECK
                             {
                                 break;
                             }
@@ -3661,7 +3661,7 @@ int main()
                             }
                             } // SWITCH CLOSED
                             BMR.holdByInput();
-                            if (userMode == -1)
+                            if (userMode == -1) // SAFETY CHECK
                             {
                                 break;
                             }
@@ -3679,7 +3679,7 @@ int main()
                     }
                     } // SWITCH CLOSED
                     BMR.holdByInput();
-                    if (userMode == -1)
+                    if (userMode == -1) // SAFETY CHECK
                     {
                         break;
                     }
@@ -3755,7 +3755,7 @@ int main()
 
                     BMR.holdByInput();
 
-                    if (userMode == -1)
+                    if (userMode == -1) // SAFETY CHECK
                     {
                         break;
                     }
@@ -3773,8 +3773,8 @@ int main()
             cout << "\nINVALID CHOICE ENTERED";
         }
         break;
-        } // SWITCH CLOSED
-        if (userMode == -1)
+        }                   // SWITCH CLOSED
+        if (userMode == -1) // SAFETY CHECK
         {
             cout << "\nSecurity issue(s) detected!\nExiting the program.";
             BMR.wait(2);
