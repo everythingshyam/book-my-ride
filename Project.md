@@ -16,9 +16,7 @@
 
 #### - Test the app
 
-#### - Add an option on login screen to see 'about project'
-
-#### - Add CLOSED comment besides closing curly braces if it doesn't have a sibling braces on the next line.
+#### - ~~Add an option on login screen to see 'about project'~~
 
 #### - ~~Program is unnecessarily finding the serial number from UID (which is obtained from the serial number (currentNo) itself). Fix that redundancy.\_\_\_It can't be done as when search is being performed, its for userMode who's not logged in, such as userBike, and that has to be searched manuall, when (say) staff is looking for a user.~~
 

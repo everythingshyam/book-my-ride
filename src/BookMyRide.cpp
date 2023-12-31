@@ -3295,6 +3295,7 @@ int main()
         cout << "\n2. Use for Taxi booking & related";
         cout << "\n3. Login as Staff";
         cout << "\n4. Login as Admin";
+        cout << "\n5. About the Application";
         cout << "\nEnter your Choice_";
         fflush(stdin);
         cin >> choice;
@@ -3766,6 +3767,16 @@ int main()
                 cout << "\nUnable to Authenticate as Admin!";
                 userMode = -1; // extra layer of security
             }
+        }
+        break;
+        case 5: // About the Application
+        {
+            BMR.screenReset();
+            cout << "\nABOUT THE APPLICATION";
+            cout << "\nName: Book My Ride";
+            cout << "\nAuthors: Shyam Tiwari, Ritik Wandale, Hishita Thakkar, Mehak Chib, Vanshika Dhar";
+            cout << "\nMade as a mini project in 2nd year of our college.";
+            BMR.holdByInput();
         }
         break;
         default:
