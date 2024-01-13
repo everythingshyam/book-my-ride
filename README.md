@@ -10,7 +10,7 @@
 
 ## Team Members:
 
--   [Shyam Tiwari](https://everythingshyam.github.io/static-personal-website/)
+-   [Shyam Tiwari](https://github.com/everythingshyam)
 -   [Ritik Wandale](https://github.com/Ritiksw)
 -   [Hishita Thakkar](https://github.com/hishita01)
 -   [Mehak Chib](https://www.linkedin.com/in/mehak-chib-336b49212/)
@@ -49,4 +49,4 @@ After making a complete project in C, I was really motivated this semester to wo
 
 This was the first real project in which we used git and GitHub extensively. That really helped us explore a lot about how open source works and was one of the initial stages that led to the extent to which I use version control now.
 
-#
+---

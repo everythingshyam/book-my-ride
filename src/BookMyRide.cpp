@@ -771,7 +771,7 @@ public:
             {
             case 0:
             {
-                cout << "\nGoing back";
+                cout << "\nGoing back.";
                 wait(1);
             }
             break;
@@ -780,7 +780,7 @@ public:
                 // authenticating with the records
                 if (adminCount > 0)
                 {
-                    cout << "\nadmin Authentication:";
+                    cout << "\nAdmin Authentication: ";
                     cout << "\n\tEnter UID: ";
                     fflush(stdin);
                     cin >> UIDin;
@@ -1075,7 +1075,7 @@ public:
                 }
                 else
                 {
-                    cout << "\nLocation Details are insufficient! Contact the organisation.";
+                    cout << "\nLocation Details are insufficient! Contact the Organization.";
                 }
             }
             else
@@ -1187,7 +1187,7 @@ public:
                 }
                 else
                 {
-                    cout << "\nLocation Details are insufficient! Contact the organisation.";
+                    cout << "\nLocation Details are insufficient! Contact the Organization.";
                 }
             }
             else
@@ -3072,7 +3072,8 @@ public:
     {
         if (userMode != -1)
         {
-            cout << "Admin Details" << endl;
+            cout << "\n****************************************" << endl;
+            cout << "\n\nOrganization Details Details" << endl;
             if (adminCount > 0)
             {
                 cout << "Name: " << admin[currentNo - 1].OrgName << endl;
@@ -3102,7 +3103,7 @@ public:
             while (choice != 0)
             {
                 screenReset();
-                cout << "What Do You Want To Change?\n";
+                cout << "\nWhat Do You Want To Change?\n";
                 cout << "0. GO BACK\n";
                 cout << "1. Name\n";
                 cout << "2. password \n";
@@ -3774,7 +3775,7 @@ int main()
             BMR.screenReset();
             cout << "\nABOUT THE APPLICATION";
             cout << "\nName: Book My Ride";
-            cout << "\nAuthors: Shyam Tiwari, Ritik Wandale, Hishita Thakkar, Mehak Chib, Vanshika Dhar";
+            cout << "\nAuthors: Shyam Tiwari, Ritik Wandale, Hishita Thakkar, Mehak Chib and Vanshika Dhar";
             cout << "\nMade as a mini project in 2nd year of our college.";
             BMR.holdByInput();
         }
