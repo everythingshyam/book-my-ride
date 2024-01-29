@@ -830,35 +830,6 @@ public:
     }
 };
 
-/*
-
-    Keep in mind follwing methods and variables as you proceed:
-    int maxAdminCount;
-    int adminCount;
-    int maxStaffCount;
-    int staffCount;
-    int maxUserCount;
-    int userBikeCount;
-    int userTaxiCount;
-    int maxVehicleCount;
-    int BikeCount;
-    int TaxiCount;
-    const int maxLocCount;
-    int locCount;
-    int maxHelpCount;
-    int helpCount;
-
-    struct admin[maxAdminCount];
-    struct staff[maxStaffCount];
-    struct userBike[maxUserCount];
-    struct userTaxi[maxUserCount];
-    struct bike[maxVehicleCount];
-    struct taxi[maxVehicleCount];
-    struct location[maxLocCount];
-    struct help[maxHelpCount];
-
-*/
-
 // Main Class
 class BookMyRide : public Support
 {
@@ -1700,20 +1671,21 @@ public:
                     // shift all elements (just after to-be-deleted) to left
                     for (int b = a; b < locCount; b++)
                     {
-                        string tempStr;
-                        int tempIn;
+                        location[a - 1] = location[a];
+                        // string tempStr;
+                        // int tempIn;
 
-                        tempStr = location[a - 1].locName;
-                        location[a - 1].locName = location[a].locName;
-                        location[a].locName = tempStr;
+                        // tempStr = location[a - 1].locName;
+                        // location[a - 1].locName = location[a].locName;
+                        // location[a].locName = tempStr;
 
-                        tempIn = location[a - 1].locX;
-                        location[a - 1].locX = location[a].locX;
-                        location[a].locX = tempIn;
+                        // tempIn = location[a - 1].locX;
+                        // location[a - 1].locX = location[a].locX;
+                        // location[a].locX = tempIn;
 
-                        tempIn = location[a - 1].locY;
-                        location[a - 1].locY = location[a].locY;
-                        location[a].locY = tempIn;
+                        // tempIn = location[a - 1].locY;
+                        // location[a - 1].locY = location[a].locY;
+                        // location[a].locY = tempIn;
                     }
                     locCount--;
                 }
@@ -2470,21 +2442,22 @@ public:
                             int tempN;
                             for (int i = flag; i < bikeCount; i++)
                             {
-                                tempN = bike[i - 1].UID;
-                                bike[i - 1].UID = bike[i].UID;
-                                bike[i].UID = tempN;
+                                bike[i - 1] = bike[i];
+                                // tempN = bike[i - 1].UID;
+                                // bike[i - 1].UID = bike[i].UID;
+                                // bike[i].UID = tempN;
 
-                                temp = bike[i - 1].Name;
-                                bike[i - 1].Name = bike[i].Name;
-                                bike[i].Name = temp;
+                                // temp = bike[i - 1].Name;
+                                // bike[i - 1].Name = bike[i].Name;
+                                // bike[i].Name = temp;
 
-                                temp = bike[i - 1].MobNo;
-                                bike[i - 1].MobNo = bike[i].MobNo;
-                                bike[i].MobNo = temp;
+                                // temp = bike[i - 1].MobNo;
+                                // bike[i - 1].MobNo = bike[i].MobNo;
+                                // bike[i].MobNo = temp;
 
-                                temp = bike[i - 1].Date_Joining;
-                                bike[i - 1].Date_Joining = bike[i].Date_Joining;
-                                bike[i].Date_Joining = temp;
+                                // temp = bike[i - 1].Date_Joining;
+                                // bike[i - 1].Date_Joining = bike[i].Date_Joining;
+                                // bike[i].Date_Joining = temp;
                             }
                             bikeCount--;
                         }
@@ -2998,7 +2971,7 @@ public:
                 fflush(stdin);
                 cin >> tempUID;
 
-                for (int i = 1; i <= staffCount; staffCount++)
+                for (int i = 1; i <= staffCount; i++)
                 {
                     if (tempUID == staff[i - 1].UID)
                     {
@@ -3008,29 +2981,32 @@ public:
                 }
                 if (flag == 0)
                 {
-                    cout << "Entered UID not found !";
+                    cout << "Entered UID not found !" << endl;
                 }
                 else
                 {
                     string temp;
                     int tempN;
+                    cout << "Staff with UID " << staff[flag - 1].UID << " and name " << staff[flag - 1].Name << " removed." << endl;
                     for (int i = flag; i < staffCount; i++)
                     {
-                        tempN = staff[i - 1].UID;
-                        staff[i - 1].UID = staff[i].UID;
-                        staff[i].UID = tempN;
+                        staff[i - 1] = staff[i];
 
-                        temp = staff[i - 1].Name;
-                        staff[i - 1].Name = staff[i].Name;
-                        staff[i].Name = temp;
+                        // tempN = staff[i - 1].UID;
+                        // staff[i - 1].UID = staff[i].UID;
+                        // staff[i].UID = tempN;
 
-                        temp = staff[i - 1].password;
-                        staff[i - 1].password = staff[i].password;
-                        staff[i].password = temp;
+                        // temp = staff[i - 1].Name;
+                        // staff[i - 1].Name = staff[i].Name;
+                        // staff[i].Name = temp;
 
-                        temp = staff[i - 1].MobNo;
-                        staff[i - 1].MobNo = staff[i].MobNo;
-                        staff[i].MobNo = temp;
+                        // temp = staff[i - 1].password;
+                        // staff[i - 1].password = staff[i].password;
+                        // staff[i].password = temp;
+
+                        // temp = staff[i - 1].MobNo;
+                        // staff[i - 1].MobNo = staff[i].MobNo;
+                        // staff[i].MobNo = temp;
                     }
                     staffCount--;
                 }
@@ -3078,13 +3054,18 @@ public:
         if (userMode != -1)
         {
             cout << "\n****************************************" << endl;
-            cout << "Organization Details Details" << endl;
+            cout << "Organization Details" << endl;
             if (adminCount > 0)
             {
-                cout << "Name: " << admin[currentNo - 1].OrgName << endl;
-                cout << "Address: " << admin[currentNo - 1].OrgAdrs << "\n";
-                cout << "Mobile Number: " << admin[currentNo - 1].MobNo << "\n";
-                cout << "Administrator: " << admin[currentNo - 1].Name;
+                // cout << "Name: " << admin[currentNo - 1].OrgName << endl;
+                // cout << "Address: " << admin[currentNo - 1].OrgAdrs << "\n";
+                // cout << "Mobile Number: " << admin[currentNo - 1].MobNo << "\n";
+                // cout << "Administrator: " << admin[currentNo - 1].Name;
+
+                cout << "Name: " << admin[0].OrgName << endl;
+                cout << "Address: " << admin[0].OrgAdrs << "\n";
+                cout << "Mobile Number: " << admin[0].MobNo << "\n";
+                cout << "Administrator: " << admin[0].Name;
                 cout << "\n****************************************" << endl;
             }
             else
@@ -3183,10 +3164,12 @@ public:
         {
             if (adminCount < maxAdminCount)
             {
+                // int tempNo;
                 // UID Allotment
                 if (adminCount == 0)
                 {
-                    admin[0].UID = 1;
+                    admin[adminCount].UID = 1;
+                    // tempNo=1;
                     cout << "\nUID allotted: 1";
                 }
                 else
@@ -3206,6 +3189,7 @@ public:
                         {
                             cout << "\nUID allotted: " << a;
                             admin[adminCount].UID = a;
+                            // tempNo=a;
                             break;
                         }
                     }

@@ -2,17 +2,19 @@
 
 ## STATUS : Working on **App Test**
 
--   ISSUE Staff Add/Delete not working properly
+-   TASK Test the app (User Menus)
 
 -   ISSUE App Sometimes halts at Printing org name and then exits after few seconds
-
--   Test the app
 
 -   Create a release (Windows + Ubuntu)
 
 -   GO TO NEXT PROJECT
 
 ---
+
+-   ~~Admin Section Tested OK~~
+
+-   ~~ISSUE Staff Add/Delete not working properly~~
 
 -   ~~Fix gitignore file~~
 
