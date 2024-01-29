@@ -2860,6 +2860,7 @@ public:
         {
             if (staffCount < maxStaffCount)
             {
+                cout << "Staff Count is " << staffCount << endl;
                 int tempNo = staffCount;
 
                 cout << "Enter your name : ";
@@ -2896,7 +2897,7 @@ public:
                         if (f != 1)
                         {
                             cout << "\nUID allotted : " << a;
-                            staff[tempNo - 1].UID = a;
+                            staff[tempNo].UID = a;
                             break;
                         }
                     }
@@ -3026,6 +3027,10 @@ public:
                         temp = staff[i - 1].password;
                         staff[i - 1].password = staff[i].password;
                         staff[i].password = temp;
+
+                        temp = staff[i - 1].MobNo;
+                        staff[i - 1].MobNo = staff[i].MobNo;
+                        staff[i].MobNo = temp;
                     }
                     staffCount--;
                 }
@@ -3073,7 +3078,7 @@ public:
         if (userMode != -1)
         {
             cout << "\n****************************************" << endl;
-            cout << "\n\nOrganization Details Details" << endl;
+            cout << "Organization Details Details" << endl;
             if (adminCount > 0)
             {
                 cout << "Name: " << admin[currentNo - 1].OrgName << endl;
@@ -3270,7 +3275,7 @@ int main()
     // exit(0);
 
     int choice = -1;
-    BMR.setTheme();
+    // BMR.setTheme(); //@TODO uncomment this once testing is done
     import();
     BMR.wait(1);
     BMR.screenReset();
