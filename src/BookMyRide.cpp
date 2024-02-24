@@ -2085,7 +2085,6 @@ public:
                             }
                         }
                     }
-                    ///////////////////////////////
                     bike[bikeCount].isAvail = 1;
                     bikeCount++;
                 }
@@ -2112,7 +2111,7 @@ public:
                     cin >> taxi[taxiCount].Date_Joining;
 
                     // Code for UID allotment
-                    if (taxiCount < 1)
+                    if (taxiCount == 0)
                     {
                         taxi[taxiCount].UID = 1;
                         cout << "\nUID allotted : 1";

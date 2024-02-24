@@ -8,6 +8,14 @@
 
 -   It's a C++ Program, which means you have to simply get this repo on your local device and simply run the c++ file named `BookMyRide.cpp` located in the `src` folder.
 
+### Testing
+
+-   While testing the app, for consistency and ease of access, it is recommended to use the following data. However, this is just a recommendation. You can test it anyway you want.
+    -   Mobile No : 0123456789
+    -   Date : 02/02/02 (use this format only)
+    -   Password : password
+    -   For names, use one word only
+
 ## Team Members:
 
 -   [Shyam Tiwari](https://github.com/everythingshyam)

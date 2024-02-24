@@ -6,9 +6,19 @@
 
 -   ISSUE App Sometimes halts at Printing org name and then exits after few seconds
 
+-   ISSUE Adding Taxi > Index allotted 1 and then 0
+
+-   ISSUE Bike booking taking details properly but 'Show booking details' shows none
+
 -   Create a release (Windows + Ubuntu)
 
 -   GO TO NEXT PROJECT
+
+-   Handle invalid inputs
+
+-   Fix too many 'Press any key to go back'
+
+-   Replace 'Serial No' with 'Sr No' wherever printing
 
 ---
 
