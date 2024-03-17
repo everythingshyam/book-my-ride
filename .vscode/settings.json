@@ -2,6 +2,7 @@
 	"files.associations": {
 		"xstring": "cpp",
 		"iostream": "cpp",
-		"thread": "cpp"
+		"thread": "cpp",
+		"chrono": "cpp"
 	}
 }

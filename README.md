@@ -6,7 +6,12 @@
 
 -   You can simply get the running application from releases page.
 
--   It's a C++ Program, which means you have to simply get this repo on your local device and simply run the c++ file named `BookMyRide.cpp` located in the `src` folder.
+-   Or you can clone this repo on your local device and simply run the c++ file named `BookMyRide.cpp` located in the `src` folder:
+    ```bash
+    git clone https://github.com/everythingshyam/book-my-ride.git
+    g++ src/BookMyRide.cpp -o BookMyRide
+    ./BookMyRide
+    ```
 
 ### Testing
 

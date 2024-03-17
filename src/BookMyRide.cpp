@@ -3,14 +3,16 @@
 #include <cstdlib>  //memory allocation related
 #include <string>   //for string related operations
 #include <time.h>   //for time and date functions
-#include <conio.h>  //for theme features
-#include <math.h>   //for math operations
-#include <thread>   //for wait() method
-#include <chrono>   //for wait() method
+
+// #include <conio.h>  //for theme features
+#include <math.h> //for math operations
+#include <thread> //for wait() method
+#include <chrono> //for wait() method
 using namespace std;
 
 // defining sleep command based on platform
 #if defined(_WIN32) || defined(_WIN64)
+#include <conio.h>                                //for theme features
 #define SLEEP_COMMAND "ping -n 2 127.0.0.1 > nul" // for Windows systems
 #else
 #define SLEEP_COMMAND "sleep 1" // For Unix-like systems
@@ -345,7 +347,7 @@ void backup()
 class Support
 {
 public:
-    // Function to change theme of the Command Prompt
+    // Function to change theme of the Command Prompt (only for Windows)
     void setTheme()
     {
         int choice = -1;
@@ -356,7 +358,8 @@ public:
         cout << "\n3. Desert";
         cout << "\nEnter your choice_";
         fflush(stdin);
-        cin >> choice;
+        choice = numericInput();
+        // cin>>choice;
         switch (choice)
         {
         case 1:
@@ -402,14 +405,31 @@ public:
         cin >> holder;
     }
 
+    // Function to handle numeric inputs
+    int numericInput()
+    {
+        string input;
+        cin >> input;
+        while (input.find_first_not_of("0123456789") != string::npos)
+        {
+            cout << "\nInvalid input. Please enter a number: ";
+            cin >> input;
+        }
+        return stoi(input);
+    }
+
     // Function to reset the screen (Header)
     void screenReset()
     {
+#if defined(_WIN32) || defined(_WIN64)
         system("cls");
+#else
+        system("clear");
+#endif
         cout << "\n---------------------------------------------------------";
         time_t mytime;
         mytime = time(NULL);
-        printf(ctime(&mytime));
+        printf("%s", ctime(&mytime));
         cout << "\n-------------------------[ " << admin[0].OrgName << " ]---------------------------";
         cout << "\nUSERMODE : " << userModeNames[userMode] << "\t\t\t\t";
         switch (userMode)
@@ -455,7 +475,8 @@ public:
             cout << "\n\t2. New User";
             cout << "\nEnter your choice_";
             fflush(stdin);
-            cin >> choice;
+            // cin >> choice;
+            choice = numericInput();
             switch (choice)
             {
             case 0:
@@ -472,7 +493,8 @@ public:
                     cout << "\nUser Bike Authentication";
                     cout << "\n\tEnter UID: ";
                     fflush(stdin);
-                    cin >> UIDin;
+                    UIDin = numericInput();
+                    // cin >> UIDin;
                     cout << "\n\t Enter password: ";
                     fflush(stdin);
                     cin >> PWDin;
@@ -581,7 +603,8 @@ public:
             cout << "\n\t2. New User";
             cout << "\nEnter your choice_";
             fflush(stdin);
-            cin >> choice;
+            choice = numericInput();
+            // cin>>choice;
             switch (choice)
             {
             case 0:
@@ -598,7 +621,8 @@ public:
                     cout << "\nUser Taxi Authentication";
                     cout << "\n\tEnter UID: ";
                     fflush(stdin);
-                    cin >> UIDin;
+                    UIDin = numericInput();
+                    // cin >> UIDin;
                     cout << "\n\t Enter password: ";
                     fflush(stdin);
                     cin >> PWDin;
@@ -678,9 +702,9 @@ public:
 
                     cout << "\nNew User Added";
                     userTaxiCount++;
-                    currentUID = userTaxi[userTaxiCount - 1].UID;
                     userMode = 2;
                     currentNo = userTaxiCount;
+                    currentUID = userTaxi[userTaxiCount - 1].UID;
                     holdByInput();
                     return true;
                 } // if there is still space, closed
@@ -705,7 +729,8 @@ public:
             cout << "\n\t1. Log In";
             cout << "\nEnter your choice_";
             fflush(stdin);
-            cin >> choice;
+            choice = numericInput();
+            // cin>>choice;
             switch (choice)
             {
             case 0:
@@ -722,7 +747,8 @@ public:
                     cout << "\nStaff Authentication:";
                     cout << "\n\tEnter UID: ";
                     fflush(stdin);
-                    cin >> UIDin;
+                    UIDin = numericInput();
+                    // cin >> UIDin;
                     cout << "\n\t Enter password: ";
                     fflush(stdin);
                     cin >> PWDin;
@@ -766,7 +792,8 @@ public:
             cout << "\n\t1. Log In";
             cout << "\nEnter your choice_";
             fflush(stdin);
-            cin >> choice;
+            choice = numericInput();
+            // cin>>choice;
             switch (choice)
             {
             case 0:
@@ -783,7 +810,8 @@ public:
                     cout << "\nAdmin Authentication: ";
                     cout << "\n\tEnter UID: ";
                     fflush(stdin);
-                    cin >> UIDin;
+                    UIDin = numericInput();
+                    // cin >> UIDin;
                     cout << "\n\t Enter password: ";
                     fflush(stdin);
                     cin >> PWDin;
@@ -847,7 +875,8 @@ public:
             cout << "\n2. Taxi";
             cout << "\nEnter your choice_";
             fflush(stdin);
-            cin >> choice;
+            choice = numericInput();
+            // cin>>choice;
             switch (choice)
             {
             case 1: // bike
@@ -858,8 +887,9 @@ public:
                     int tempNo;
                     cout << "\nEnter the UID of the user_";
                     fflush(stdin);
-                    cin >> UIDin;
-                    // looking for user serial no based on UID input
+                    UIDin = numericInput();
+                    // cin >> UIDin;
+                    //  looking for user serial no based on UID input
                     for (int a = 1; a <= userBikeCount; a++)
                     {
                         if (userBike[a - 1].UID == UIDin)
@@ -919,7 +949,8 @@ public:
                     int tempNo;
                     cout << "\nEnter the UID of the user_";
                     fflush(stdin);
-                    cin >> UIDin;
+                    UIDin = numericInput();
+                    // cin >> UIDin;
                     for (int a = 1; a <= userTaxiCount; a++)
                     {
                         if (userTaxi[a - 1].UID == UIDin)
@@ -1009,10 +1040,12 @@ public:
 
                         cout << "\nFrom (Enter Serial No)_";
                         fflush(stdin);
-                        cin >> loc1;
+                        loc1 = numericInput();
+                        // cin >> loc1;
                         cout << "\nTo (Enter Serial No)_";
                         fflush(stdin);
-                        cin >> loc2;
+                        loc2 = numericInput();
+                        // cin >> loc2;
 
                         if (loc1 <= locCount && loc2 <= locCount)
                         {
@@ -1020,6 +1053,7 @@ public:
                             bikeNo = bikeAvailNo;
                             userBike[currentNo - 1].locNo1 = loc1;
                             userBike[currentNo - 1].locNo2 = loc2;
+                            userBike[currentNo - 1].isAllotted = 1;
                             dist = calculateDistance(loc1, loc2);
 
                             bike[bikeNo - 1].isAvail = 0;
@@ -1027,12 +1061,11 @@ public:
 
                             cout << "\nBooking Details:";
                             cout << "\nFROM: " << location[loc1 - 1].locName << " (" << location[loc1 - 1].UID << ")";
-                            cout << "\nTO: " << location[loc2 - 1].locName << " (" << location[loc1 - 1].UID << ")";
+                            cout << "\nTO: " << location[loc2 - 1].locName << " (" << location[loc2 - 1].UID << ")";
                             cout << "\nDistance: " << dist << " km";
                             cout << "\nExpected Time Taken: " << dist / bikeMileage << " hours";
                             cout << "\n Bike UID: " << userBike[currentNo - 1].BikeUID;
                             cout << "\n Driver Contact: \t" << bike[bikeNo - 1].Name << "\t" << bike[bikeNo - 1].MobNo;
-                            userBike[currentNo].isAllotted = 1;
                         }
                         else
                         {
@@ -1121,10 +1154,12 @@ public:
 
                         cout << "\nFrom (Enter Serial No)_";
                         fflush(stdin);
-                        cin >> loc1;
+                        loc1 = numericInput();
+                        // cin >> loc1;
                         cout << "\nTo (Enter Serial No)_";
                         fflush(stdin);
-                        cin >> loc2;
+                        loc2 = numericInput();
+                        // cin >> loc2;
 
                         if (loc1 <= locCount && loc2 <= locCount)
                         {
@@ -1132,6 +1167,7 @@ public:
                             taxiNo = taxiAvailNo;
                             userTaxi[currentNo - 1].locNo1 = loc1;
                             userTaxi[currentNo - 1].locNo2 = loc2;
+                            userTaxi[currentNo - 1].isAllotted = 1;
                             dist = calculateDistance(loc1, loc2);
 
                             taxi[taxiNo - 1].isAvail = 0;
@@ -1139,12 +1175,11 @@ public:
 
                             cout << "\nBooking Details:";
                             cout << "\nFROM: " << location[loc1 - 1].locName << " (" << location[loc1 - 1].UID << ")";
-                            cout << "\nTO: " << location[loc2 - 1].locName << " (" << location[loc1 - 1].UID << ")";
+                            cout << "\nTO: " << location[loc2 - 1].locName << " (" << location[loc2 - 1].UID << ")";
                             cout << "\nDistance: " << dist << " km";
                             cout << "\nExpected Time Taken: " << dist / taxiMileage << " hours";
                             cout << "\n Taxi UID: " << userTaxi[currentNo - 1].TaxiUID;
                             cout << "\n Driver Contact: \t" << taxi[taxiNo - 1].Name << "\t" << taxi[taxiNo - 1].MobNo;
-                            userTaxi[currentNo].isAllotted = 1;
                         }
                         else
                         {
@@ -1234,7 +1269,7 @@ public:
                     cout << "\nBike booking details";
 
                     cout << "\nFrom " << location[userBike[currentNo - 1].locNo1 - 1].locName;
-                    cout << "To " << location[userBike[currentNo - 1].locNo2 - 1].locName;
+                    cout << "\nTo " << location[userBike[currentNo - 1].locNo2 - 1].locName;
                     cout << "\nBike Contact: " << bike[a - 1].Name << " (" << bike[a - 1].MobNo << ")";
 
                     float dist = calculateDistance(userBike[currentNo - 1].locNo1, userBike[currentNo - 1].locNo2);
@@ -1273,7 +1308,7 @@ public:
                     cout << "\nTaxi booking details";
 
                     cout << "\nFrom " << location[userTaxi[currentNo - 1].locNo1 - 1].locName;
-                    cout << "To " << location[userTaxi[currentNo - 1].locNo2 - 1].locName;
+                    cout << "\nTo " << location[userTaxi[currentNo - 1].locNo2 - 1].locName;
                     cout << "\nTaxi Contact: " << taxi[a - 1].Name << " (" << taxi[a - 1].MobNo << ")";
 
                     float dist = calculateDistance(userTaxi[currentNo - 1].locNo1, userTaxi[currentNo - 1].locNo2);
@@ -1490,10 +1525,12 @@ public:
                 cout << "\nCoordinates: ";
                 cout << "\nX: ";
                 fflush(stdin);
-                cin >> location[locCount].locX;
+                location[locCount].locX = numericInput();
+                // cin >> location[locCount].locX;
                 cout << "\nY: ";
                 fflush(stdin);
-                cin >> location[locCount].locY;
+                location[locCount].locY = numericInput();
+                // cin >> location[locCount].locY;
 
                 // PROGRAM FOR UID ALLOTTMENT
                 if (locCount == 0)
@@ -1545,7 +1582,8 @@ public:
                 int UIDin;
                 cout << "\nEnter UID of Location to edit_";
                 fflush(stdin);
-                cin >> UIDin;
+                UIDin = numericInput();
+                // cin >> UIDin;
 
                 int f = 0, a = 0; // a stores the serial no of required position
 
@@ -1570,7 +1608,8 @@ public:
                         cout << "\n3. Y-Coordinate";
                         cout << "\nEnter your choice_";
                         fflush(stdin);
-                        cin >> choice;
+                        choice = numericInput();
+                        // cin>>choice;
 
                         switch (choice)
                         {
@@ -1585,14 +1624,16 @@ public:
                         {
                             cout << "\nEnter new x-coordinate_";
                             fflush(stdin);
-                            cin >> location[a - 1].locX;
+                            location[a - 1].locX = numericInput();
+                            // cin >> location[a - 1].locX;
                         }
                         break;
                         case 3: // y coordinate
                         {
                             cout << "\nEnter new y-coordinate_";
                             fflush(stdin);
-                            cin >> location[a - 1].locY;
+                            location[a - 1].locY = numericInput();
+                            // cin >> location[a - 1].locY;
                         }
                         break;
                         case 0: // Go back
@@ -1645,12 +1686,13 @@ public:
     // Function to remove a location from the location struct
     void removeLocation()
     {
-        if (userMode = 3) // Staff Access
+        if (userMode == 3) // Staff Access
         {
             int UIDin;
             cout << "\nEnter UID of Location to delete_";
             fflush(stdin);
-            cin >> UIDin;
+            UIDin = numericInput();
+            // cin >> UIDin;
 
             int f = 0, a = 0; // a stores the serial no of required position
 
@@ -1742,7 +1784,8 @@ public:
                         cout << "\n3. Mobile No";
                         cout << "\nEnter your choice_";
                         fflush(stdin);
-                        cin >> choice;
+                        choice = numericInput();
+                        // cin>>choice;
 
                         switch (choice)
                         {
@@ -1823,7 +1866,8 @@ public:
                         cout << "\n0. GO BACK";
                         cout << "\nEnter your choice_";
                         fflush(stdin);
-                        cin >> choice;
+                        choice = numericInput();
+                        // cin>>choice;
 
                         switch (choice)
                         {
@@ -1905,7 +1949,8 @@ public:
                         cout << "\n3. Mobile No";
                         cout << "\nEnter your choice_";
                         fflush(stdin);
-                        cin >> choice;
+                        choice = numericInput();
+                        // cin>>choice;
 
                         switch (choice)
                         {
@@ -2033,7 +2078,8 @@ public:
             cout << "\n2. Taxi";
             cout << "\nEnter your choice_";
             fflush(stdin);
-            cin >> choice;
+            choice = numericInput();
+            // cin>>choice;
 
             switch (choice)
             {
@@ -2172,7 +2218,8 @@ public:
             cout << "\nEnter your choice_";
             fflush(stdin);
             fflush(stdin);
-            cin >> choice;
+            choice = numericInput();
+            // cin>>choice;
 
             switch (choice)
             {
@@ -2188,7 +2235,8 @@ public:
                     f = 0; // resetting the flag
                     cout << "\nEnter UID of Bike to edit_";
                     fflush(stdin);
-                    cin >> UIDinput;
+                    UIDinput = numericInput();
+                    // cin >> UIDinput;
                     for (tempNo = 1; tempNo <= bikeCount; tempNo++)
                     {
                         if (bike[tempNo - 1].UID == UIDinput)
@@ -2208,7 +2256,8 @@ public:
                             cout << "\n3. Date_Joining";
                             cout << "\nEnter your choice";
                             fflush(stdin);
-                            cin >> choice2;
+                            choice2 = numericInput();
+                            // cin >> choice2;
                             switch (choice2)
                             {
                             case 0: // Go back
@@ -2272,7 +2321,8 @@ public:
                     f = 0; // resetting the flag
                     cout << "\nEnter UID of taxi to edit_";
                     fflush(stdin);
-                    cin >> UIDinput;
+                    UIDinput = numericInput();
+                    // cin >> UIDinput;
                     for (tempNo = 1; tempNo <= taxiCount; tempNo++)
                     {
                         if (taxi[tempNo - 1].UID == UIDinput)
@@ -2292,7 +2342,8 @@ public:
                             cout << "\n3. Date_Joining";
                             cout << "\nEnter your choice";
                             fflush(stdin);
-                            cin >> choice2;
+                            choice2 = numericInput();
+                            // cin >> choice2;
                             switch (choice2)
                             {
                             case 0: // Go back
@@ -2366,7 +2417,7 @@ public:
     {
         for (int a = 1; a <= userBikeCount; a++)
         {
-            if (userBike[a - 1].isAllotted = 1)
+            if (userBike[a - 1].isAllotted == 1)
                 if (userBike[a - 1].BikeUID == bike[no - 1].UID)
                     return false;
         }
@@ -2378,7 +2429,7 @@ public:
     {
         for (int a = 1; a <= userTaxiCount; a++)
         {
-            if (userTaxi[a - 1].isAllotted = 1)
+            if (userTaxi[a - 1].isAllotted == 1)
                 if (userTaxi[a - 1].TaxiUID == taxi[no - 1].UID)
                     return false;
         }
@@ -2398,7 +2449,8 @@ public:
             cout << "\n2. Taxi";
             cout << "\nEnter your choice_";
             fflush(stdin);
-            cin >> choice;
+            choice = numericInput();
+            // cin>>choice;
 
             switch (choice)
             {
@@ -2419,7 +2471,8 @@ public:
                     cout << "Enter the UID of bike you want to Delete: ";
                     int tempUID, flag = 0;
                     fflush(stdin);
-                    cin >> tempUID;
+                    tempUID = numericInput();
+                    // cin >> tempUID;
 
                     for (int i = 1; i <= bikeCount; bikeCount++)
                     {
@@ -2480,7 +2533,8 @@ public:
                     cout << "Enter the UID of Taxi you want to Delete: ";
                     int tempUID, flag = -1;
                     fflush(stdin);
-                    cin >> tempUID;
+                    tempUID = numericInput();
+                    // cin >> tempUID;
 
                     for (int i = 1; i <= taxiCount; taxiCount++)
                     {
@@ -2553,7 +2607,7 @@ public:
                     cout << "\n\n"
                          << help[a - 1].UID << "\t" << help[a - 1].userMode << "\t\t";
 
-                    if (help[a - 1].userMode = 0)
+                    if (help[a - 1].userMode == 0)
                         for (int b = 1; b <= userBikeCount; b++)
                         {
                             if (help[a - 1].userUID == userBike[b - 1].UID)
@@ -2603,7 +2657,8 @@ public:
                 cout << "\n2. Taxi List";
                 cout << "\nEnter your choice_";
                 fflush(stdin);
-                cin >> choice;
+                choice = numericInput();
+                // cin>>choice;
                 switch (choice)
                 {
                 case 1: // View Bike List
@@ -2675,7 +2730,8 @@ public:
                     viewHelpList();
                     cout << "\nEnter Help UID to resolve(0 to GO BACK)_";
                     fflush(stdin);
-                    cin >> UIDin;
+                    UIDin = numericInput();
+                    // cin >> UIDin;
                     if (UIDin == 0)
                         break;
 
@@ -2693,7 +2749,7 @@ public:
                         cout << "\nHelp UID\tUser Type\tUser Contact)\n";
                         cout << help[f - 1].UID << "\t" << help[f - 1].userMode << "\t\t";
 
-                        if (help[f].userMode = 1) // userBike
+                        if (help[f].userMode == 1) // userBike
                             for (int a = 1; a <= userBikeCount; a++)
                             {
                                 if (help[f - 1].userUID == userBike[a - 1].UID)
@@ -2717,7 +2773,8 @@ public:
                         int choice2 = -1;
                         cout << "\nPress 1 to confirm, 0 to CANCEL_";
                         fflush(stdin);
-                        cin >> choice2;
+                        choice2 = numericInput();
+                        // cin >> choice2;
                         if (choice2 == 1) // delete the help record (confirmed)
                         {
                             for (int b = f; b < helpCount; b++)
@@ -2783,8 +2840,8 @@ public:
                 cout << "\nUID: " << userBike[currentNo - 1].UID;
                 cout << "\nMobile No: " << userBike[currentNo - 1].MobNo;
 
-                cout << "\nBooking Status: " << (userBike[currentNo - 1].isAllotted == 1) ? "Booked" : "Not Booked";
-                cout << "\n------------------------------------------";
+                string isBooked = (userBike[currentNo - 1].isAllotted == 1) ? "Booked" : "Not Booked";
+                cout << "\nBooking Status: " << isBooked << "\n------------------------------------------";
             }
             else if (userMode == 2) // USERTAXI ACCESS
             {
@@ -2794,7 +2851,9 @@ public:
                 cout << "\nUID: " << userTaxi[currentNo - 1].UID;
                 cout << "\nMobile No: " << userTaxi[currentNo - 1].MobNo;
 
-                cout << "\nBooking Status: " << (userTaxi[currentNo - 1].isAllotted == 1) ? "Booked" : "Not BookTaxi";
+                string isBooked = (userTaxi[currentNo - 1].isAllotted == 1) ? "Booked" : "Not BookTaxi";
+
+                cout << "\nBooking Status: " << isBooked;
                 cout << "\n------------------------------------------";
             }
             else if (userMode == 3) // STAFF ACCESS
@@ -2902,7 +2961,8 @@ public:
                 cout << "Enter the UID of staff you want to edit: ";
                 int tempUID, flag = 0;
                 fflush(stdin);
-                cin >> tempUID;
+                tempUID = numericInput();
+                // cin >> tempUID;
 
                 for (int i = 1; i <= staffCount; staffCount++)
                 {
@@ -2925,7 +2985,8 @@ public:
                     cout << "\nEnter your choice_";
                     int choice = -1;
                     fflush(stdin);
-                    cin >> choice;
+                    choice = numericInput();
+                    // cin>>choice;
                     if (choice == 1)
                     {
                         cout << "Enter new Name: \n";
@@ -2937,7 +2998,8 @@ public:
                     {
                         cout << "Enter new password: ";
                         fflush(stdin);
-                        cin >> temp;
+                        temp = numericInput();
+                        // cin>>temp;
                         staff[flag - 1].password = temp;
                     }
                     else
@@ -2968,7 +3030,8 @@ public:
                 cout << "Enter the UID you want to Delete: ";
                 int tempUID, flag = 0;
                 fflush(stdin);
-                cin >> tempUID;
+                tempUID = numericInput();
+                // cin >> tempUID;
 
                 for (int i = 1; i <= staffCount; i++)
                 {
@@ -3098,7 +3161,8 @@ public:
 
                 cout << "Enter Your Choice_";
                 fflush(stdin);
-                cin >> choice;
+                choice = numericInput();
+                // cin>>choice;
 
                 switch (choice)
                 {
@@ -3137,6 +3201,7 @@ public:
                 {
                     cout << "Enter New Organization Name\n";
                     fflush(stdin);
+                    // temp = numericInput();
                     cin >> temp;
                     admin[currentNo - 1].MobNo = temp;
                 }
@@ -3201,6 +3266,7 @@ public:
 
                 cout << "\nEnter New password_";
                 fflush(stdin);
+                // temp = numericInput();
                 cin >> temp;
                 admin[adminCount].password = temp;
 
@@ -3216,6 +3282,7 @@ public:
 
                 cout << "\nEnter New Contact No_";
                 fflush(stdin);
+                // temp = numericInput();
                 cin >> temp;
                 admin[adminCount].MobNo = temp;
 
@@ -3258,7 +3325,9 @@ int main()
     // exit(0);
 
     int choice = -1;
-    // BMR.setTheme(); //@TODO uncomment this once testing is done
+#if defined(_WIN32) || defined(_WIN64)
+    BMR.setTheme(); //@TODO uncomment this once testing is done
+#endif
     import();
     BMR.wait(1);
     BMR.screenReset();
@@ -3287,7 +3356,9 @@ int main()
         cout << "\n5. About the Application";
         cout << "\nEnter your Choice_";
         fflush(stdin);
-        cin >> choice;
+        choice = BMR.numericInput();
+        // cin >> choice;
+
         switch (choice)
         {
         case 0: // EXIT
@@ -3313,7 +3384,8 @@ int main()
 
                     cout << "\nEnter your choice_";
                     fflush(stdin);
-                    cin >> choice2;
+                    choice2 = BMR.numericInput();
+                    // cin >> choice2;
                     switch (choice2)
                     {
                     case 1: // new booking
@@ -3380,7 +3452,8 @@ int main()
 
                     cout << "\nEnter your choice_";
                     fflush(stdin);
-                    cin >> choice2;
+                    choice2 = BMR.numericInput();
+                    // cin >> choice2;
                     switch (choice2)
                     {
                     case 1: // new booking
@@ -3448,7 +3521,8 @@ int main()
                     cout << "\n4. Self Menu";
                     cout << "\nEnter your choice_";
                     fflush(stdin);
-                    cin >> choice2;
+                    choice2 = BMR.numericInput();
+                    // cin >> choice2;
 
                     switch (choice2)
                     {
@@ -3466,7 +3540,8 @@ int main()
                             cout << "\n4. View Vehicles";
                             cout << "\nEnter your choice_";
                             fflush(stdin);
-                            cin >> choice3;
+                            choice3 = BMR.numericInput();
+                            // cin >> choice3;
 
                             switch (choice3)
                             {
@@ -3522,7 +3597,8 @@ int main()
                             cout << "\n4. View Locations";
                             cout << "\nEnter your choice_";
                             fflush(stdin);
-                            cin >> choice3;
+                            choice3 = BMR.numericInput();
+                            // cin >> choice3;
 
                             switch (choice3)
                             {
@@ -3577,7 +3653,8 @@ int main()
                             cout << "\n3. View Booking List";
                             cout << "\nEnter your choice_";
                             fflush(stdin);
-                            cin >> choice3;
+                            choice3 = BMR.numericInput();
+                            // cin >> choice3;
 
                             switch (choice3)
                             {
@@ -3625,8 +3702,10 @@ int main()
                             cout << "\n1. View My Details";
                             cout << "\n2. Edit My Details";
                             cout << "\nEnter your choice_";
+
                             fflush(stdin);
-                            cin >> choice3;
+                            choice3 = BMR.numericInput();
+                            // cin >> choice3;
 
                             switch (choice3)
                             {
@@ -3697,7 +3776,8 @@ int main()
                     cout << "\n6. Edit Org Details";
                     cout << "\nEnter your choice_";
                     fflush(stdin);
-                    cin >> choice2;
+                    // cin >> choice2;
+                    choice2 = BMR.numericInput();
 
                     switch (choice2)
                     {
