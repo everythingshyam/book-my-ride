@@ -1,8 +1,6 @@
 # To-Do List
 
-## STATUS : Working on **App Test**
-
--   Create a release (Windows + Ubuntu)
+## STATUS : Release 1.0 done
 
 -   GO TO NEXT PROJECT
 
@@ -13,6 +11,8 @@
 -   Replace 'Serial No' with 'Sr No' wherever printing
 
 ---
+
+-   ~~Create a release (Windows + Ubuntu)~~
 
 -   ~~Handle invalid inputs for numeric values~~
 
