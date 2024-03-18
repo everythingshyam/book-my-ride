@@ -2,8 +2,6 @@
 
 ## STATUS : Release 1.0 done
 
--   GO TO NEXT PROJECT
-
 -   ISSUE App Sometimes halts at Printing org name and then exits after few seconds
 
 -   Fix too many 'Press any key to go back'
@@ -11,6 +9,8 @@
 -   Replace 'Serial No' with 'Sr No' wherever printing
 
 ---
+
+-   ~~GO TO NEXT PROJECT~~
 
 -   ~~Create a release (Windows + Ubuntu)~~
 
