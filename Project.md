@@ -1,6 +1,6 @@
 # To-Do List
 
-## STATUS : Release 1.0 done
+## STATUS : Release 1.0 DONE
 
 -   ISSUE App Sometimes halts at Printing org name and then exits after few seconds
 
